@@ -12,6 +12,6 @@
 */
 
 
-Route::get('/', function () {
+Route::get('/bot', function () {
     return view('welcome');
 });
