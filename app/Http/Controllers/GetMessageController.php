@@ -88,7 +88,8 @@ class GetMessageController extends Controller
             $text =  json_encode($userMessage, JSON_UNESCAPED_UNICODE );
             $projectId = 'remiai-29f47';
             $sessionId = '123456';
-            $a =  $this->detect_intent_texts($projectId, $text, $sessionId);
+            $languageCode = 'th';
+            $a =  $this->detect_intent_texts($projectId, $text, $sessionId,$languageCode);
             $textMessageBuilder = new TextMessageBuilder($a);
 
         }
@@ -108,7 +109,7 @@ class GetMessageController extends Controller
 
 
 
-function detect_intent_texts($projectId, $text, $sessionId , $languageCode = 'th')
+function detect_intent_texts($projectId, $text, $sessionId , $languageCode)
 {
     // new session
     $test = array('credentials' => 'client-secret.json');
