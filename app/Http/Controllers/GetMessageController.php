@@ -108,7 +108,7 @@ class GetMessageController extends Controller
 function detect_intent_texts($projectId, $text, $sessionId , $languageCode = 'th')
 {
     // new session
-    $test = array('credentials' => 'public/client-secret.json');
+    $test = array('credentials' => 'client-secret.json');
     $sessionsClient = new SessionsClient($test);
     $session = $sessionsClient->sessionName($projectId, $sessionId ?: uniqid());
     // printf('Session path: %s' . PHP_EOL, $session);
