@@ -84,7 +84,7 @@ class GetMessageController extends Controller
 
             //   $a = 'ชื่ออะไร';
             // $textMessageBuilder = new TextMessageBuilder($a);
-             $a =  $this->detect_intent_texts('remiai-29f47',json_encode($userMessage, JSON_UNESCAPED_UNICODE ),'123456');
+             $a =  detect_intent_texts('remiai-29f47',json_encode($userMessage, JSON_UNESCAPED_UNICODE ),'123456');
                  $textMessageBuilder = new TextMessageBuilder($a);
 
         }
@@ -104,42 +104,42 @@ class GetMessageController extends Controller
 
 
 
-// public function detect_intent_texts($projectId, $text, $sessionId , $languageCode = 'th')
-// {
-//     // new session
-//     $test = array('credentials' => 'client-secret.json');
-//     $sessionsClient = new SessionsClient($test);
-//     $session = $sessionsClient->sessionName($projectId, $sessionId ?: uniqid());
-//     // printf('Session path: %s' . PHP_EOL, $session);
+public function detect_intent_texts($projectId, $text, $sessionId , $languageCode = 'th')
+{
+    // new session
+    $test = array('credentials' => 'client-secret.json');
+    $sessionsClient = new SessionsClient($test);
+    $session = $sessionsClient->sessionName($projectId, $sessionId ?: uniqid());
+    // printf('Session path: %s' . PHP_EOL, $session);
  
-//     // create text input
-//     $textInput = new TextInput();
-//     $textInput->setText($text);
-//     $textInput->setLanguageCode($languageCode);
+    // create text input
+    $textInput = new TextInput();
+    $textInput->setText($text);
+    $textInput->setLanguageCode($languageCode);
  
-//     // create query input
-//     $queryInput = new QueryInput();
-//     $queryInput->setText($textInput);
+    // create query input
+    $queryInput = new QueryInput();
+    $queryInput->setText($textInput);
  
-//     // get response and relevant info
-//     $response = $sessionsClient->detectIntent($session, $queryInput);
-//     $queryResult = $response->getQueryResult();
-//     $queryText = $queryResult->getQueryText();
-//     $intent = $queryResult->getIntent();
-//     $displayName = $intent->getDisplayName();
-//     $confidence = $queryResult->getIntentDetectionConfidence();
-//     $fulfilmentText = $queryResult->getFulfillmentText();
+    // get response and relevant info
+    $response = $sessionsClient->detectIntent($session, $queryInput);
+    $queryResult = $response->getQueryResult();
+    $queryText = $queryResult->getQueryText();
+    $intent = $queryResult->getIntent();
+    $displayName = $intent->getDisplayName();
+    $confidence = $queryResult->getIntentDetectionConfidence();
+    $fulfilmentText = $queryResult->getFulfillmentText();
 
-//     // output relevant info
-//     // print(str_repeat("=", 20) . PHP_EOL);
-//     // printf('Query text: %s' . PHP_EOL, $queryText);
-//     // printf('Detected intent: %s (confidence: %f)' . PHP_EOL, $displayName,
-//     //     $confidence);
-//     // print(PHP_EOL);
-//     // printf('Fulfilment text: %s' . PHP_EOL, $fulfilmentText);
+    // output relevant info
+    // print(str_repeat("=", 20) . PHP_EOL);
+    // printf('Query text: %s' . PHP_EOL, $queryText);
+    // printf('Detected intent: %s (confidence: %f)' . PHP_EOL, $displayName,
+    //     $confidence);
+    // print(PHP_EOL);
+    // printf('Fulfilment text: %s' . PHP_EOL, $fulfilmentText);
     
-//     $sessionsClient->close();
-//      return $fulfilmentText;
+    $sessionsClient->close();
+     return $fulfilmentText;
    
-// }
+}
 }
