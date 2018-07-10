@@ -6,9 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 
-use Google\Cloud\Dialogflow\V2\SessionsClient;
-use Google\Cloud\Dialogflow\V2\TextInput;
-use Google\Cloud\Dialogflow\V2\QueryInput;
+
 
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient;
@@ -43,6 +41,10 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
+
+use Google\Cloud\Dialogflow\V2\SessionsClient;
+use Google\Cloud\Dialogflow\V2\TextInput;
+use Google\Cloud\Dialogflow\V2\QueryInput;
 
 
 
@@ -79,8 +81,11 @@ class GetMessageController extends Controller
             $textMessageBuilder = new TextMessageBuilder($a);
 
         }else{
-             $a =  $this->detect_intent_texts('remiai-29f47',json_encode($userMessage, JSON_UNESCAPED_UNICODE ),'123456');
-                 $textMessageBuilder = new TextMessageBuilder($a);
+
+              $a = 'ชื่ออะไร';
+            $textMessageBuilder = new TextMessageBuilder($a);
+             // $a =  $this->detect_intent_texts('remiai-29f47',json_encode($userMessage, JSON_UNESCAPED_UNICODE ),'123456');
+             //     $textMessageBuilder = new TextMessageBuilder($a);
 
         }
 
