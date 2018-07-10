@@ -42,7 +42,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
 
-require __DIR__.'/vendor/autoload.php';
+
 use Google\Cloud\Dialogflow\V2\SessionsClient;
 use Google\Cloud\Dialogflow\V2\TextInput;
 use Google\Cloud\Dialogflow\V2\QueryInput;
@@ -52,7 +52,7 @@ use Google\Cloud\Dialogflow\V2\QueryInput;
 class GetMessageController extends Controller
 {
 
-
+      require __DIR__.'/vendor/autoload.php';
     /**
      * Display a listing of the resource.
      *
