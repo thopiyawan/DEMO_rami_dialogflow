@@ -82,15 +82,16 @@ class GetMessageController extends Controller
             $textMessageBuilder = new TextMessageBuilder($a);
 
         }else{
-
+           $a = 'ชื่ออะไร';
+            $textMessageBuilder = new TextMessageBuilder($a);
             //   $a = 'ชื่ออะไร';
             // $textMessageBuilder = new TextMessageBuilder($a);
-            $text =  json_encode($userMessage, JSON_UNESCAPED_UNICODE );
-            $projectId = 'remiai-29f47';
-            $sessionId = '123456';
-            $languageCode = 'th';
-            $a =  $this->detect_intent_texts($projectId, $text, $sessionId,$languageCode);
-            $textMessageBuilder = new TextMessageBuilder($a);
+            // $text =  json_encode($userMessage, JSON_UNESCAPED_UNICODE );
+            // $projectId = 'remiai-29f47';
+            // $sessionId = '123456';
+            // $languageCode = 'th';
+            // $a =  $this->detect_intent_texts($projectId, $text, $sessionId,$languageCode);
+            // $textMessageBuilder = new TextMessageBuilder($a);
 
         }
 
