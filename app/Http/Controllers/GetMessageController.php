@@ -52,7 +52,7 @@ use Google\Cloud\Dialogflow\V2\QueryInput;
 class GetMessageController extends Controller
 {
 
-      require __DIR__.'/vendor/autoload.php';
+      // require __DIR__.'/vendor/autoload.php';
     /**
      * Display a listing of the resource.
      *
