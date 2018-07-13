@@ -77,7 +77,7 @@ class GetMessageController extends Controller
         //ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
         // $textMessageBuilder = new TextMessageBuilder(json_encode($events));
 
-        if($userMessage == 'สนใจ'){
+        if($userMessage == 'สวัสดี'){
             $a = 'ชื่ออะไร';
             $textMessageBuilder = new TextMessageBuilder($a);
 
