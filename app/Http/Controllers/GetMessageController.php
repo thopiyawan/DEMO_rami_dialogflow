@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 
 
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\ServiceAccount;
+use Kreait\Firebase\Database;
 
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient;
