@@ -3372,7 +3372,7 @@ class GetMessageController extends Controller
              return (new ReplyMessageController)->replymessage($replyToken,$userMessage,$case);
     }
 
-    function detect_intent_texts($projectId, $text, $sessionId , $languageCode)
+    public function detect_intent_texts($projectId, $text, $sessionId , $languageCode)
 {
     // new session
     $test = array('credentials' => 'client-secret.json');
