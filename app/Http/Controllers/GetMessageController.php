@@ -3355,9 +3355,10 @@ class GetMessageController extends Controller
             $projectId = 'remiai-29f47';
             $sessionId = '123456';
             $languageCode = 'th';
-            $a =  $this->detect_intent_texts($projectId, $text, $sessionId,$languageCode);
-            $textMessageBuilder = new TextMessageBuilder($a);
-            
+             $case = 1;
+            $userMessage =  $this->detect_intent_texts($projectId, $text, $sessionId,$languageCode);
+           
+
            }else{
                   $case = 1;
                   $comma_separated = implode("\n", $da);
