@@ -89,11 +89,12 @@ class GetMessageController extends Controller
             $type_message = $events['events'][0]['message']['type'];
             }
                 return $this->checkmessage($replyToken,$userMessage,$user,$bot );
-            }elseif($type_message =='sticker' && $sequentsteps->seqcode == '0000'){
-               $case = 29 ;
-               $userMessage= '0';
-                return (new ReplyMessageController)->replymessage($replyToken,$userMessage,$case);
             }
+            // elseif($type_message =='sticker' && $sequentsteps->seqcode == '0000'){
+            //    $case = 29 ;
+            //    $userMessage= '0';
+            //     return (new ReplyMessageController)->replymessage($replyToken,$userMessage,$case);
+            // }
 
      
 
