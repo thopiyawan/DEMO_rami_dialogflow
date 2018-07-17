@@ -71,23 +71,49 @@ class GetMessageController extends Controller
          
         // แปลงข้อความรูปแบบ JSON  ให้อยู่ในโครงสร้างตัวแปร array
         $events = json_decode($content, true);
-        if(!is_null($events)){
-            // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
-            $replyToken = $events['events'][0]['replyToken'];
-            $userMessage = $events['events'][0]['message']['text'];
+        // if(!is_null($events)){
+        //     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
+        //     $replyToken = $events['events'][0]['replyToken'];
+        //     $userMessage = $events['events'][0]['message']['text'];
             
-        }
-        //ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
-        // $textMessageBuilder = new TextMessageBuilder(json_encode($events));
+        //}
+         $sequentsteps =  (new SqlController)->sequentsteps_seqcode($user);
 
-        if($userMessage == 'สวัสดี'){
+          
+            if($type_message =='text'){
+                if(!is_null($events)){
+            // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
+            $replyToken  = $events['events'][0]['replyToken'];
+            $user = $events['events'][0]['source']['userId'];
+            $userMessage = $events['events'][0]['message']['text'];
+            $type_message = $events['events'][0]['message']['type'];
+            }
+                return $this->checkmessage($replyToken,$userMessage,$user,$bot );
+            }elseif($type_message =='sticker' && $sequentsteps->seqcode == '0000'){
+               $case = 29 ;
+               $userMessage= '0';
+                return (new ReplyMessageController)->replymessage($replyToken,$userMessage,$case);
+            }
+
+     
+
+   
+   
+
+
+    }
+
+     public function checkmessage($replyToken,$userMessage,$user,$bot)
+    {      
+       
+
+
+   if($userMessage == 'สวัสดี'){
             $a = 'ชื่ออะไร';
             $textMessageBuilder = new TextMessageBuilder($a);
 
         }else{
 
-            //   $a = 'ชื่ออะไร';
-            // $textMessageBuilder = new TextMessageBuilder($a);
             $text =  json_encode($userMessage, JSON_UNESCAPED_UNICODE );
             $projectId = 'remiai-29f47';
             $sessionId = '123456';
@@ -96,60 +122,48 @@ class GetMessageController extends Controller
             $textMessageBuilder = new TextMessageBuilder($a);
 
         }
-
-   
-   
-    $response = $bot->replyMessage($replyToken,$textMessageBuilder);
-
-            }
+            $response = $bot->replyMessage($replyToken,$textMessageBuilder);
 
 
+    }
+    public function detect_intent_texts($projectId, $text, $sessionId , $languageCode)
+    {
+        // new session
+        $test = array('credentials' => 'client-secret.json');
 
 
+        $sessionsClient = new SessionsClient($test);
+        $session = $sessionsClient->sessionName($projectId, $sessionId ?: uniqid());
+        // printf('Session path: %s' . PHP_EOL, $session);
+     
+        // create text input
+        $textInput = new TextInput();
+        $textInput->setText($text);
+        $textInput->setLanguageCode($languageCode);
+     
+        // create query input
+        $queryInput = new QueryInput();
+        $queryInput->setText($textInput);
+     
+        // get response and relevant info
+        $response = $sessionsClient->detectIntent($session, $queryInput);
+        $queryResult = $response->getQueryResult();
+        $queryText = $queryResult->getQueryText();
+        $intent = $queryResult->getIntent();
+        $displayName = $intent->getDisplayName();
+        $confidence = $queryResult->getIntentDetectionConfidence();
+        $fulfilmentText = $queryResult->getFulfillmentText();
 
-
-
-
-
-
-function detect_intent_texts($projectId, $text, $sessionId , $languageCode)
-{
-    // new session
-    $test = array('credentials' => 'client-secret.json');
-
-
-    $sessionsClient = new SessionsClient($test);
-    $session = $sessionsClient->sessionName($projectId, $sessionId ?: uniqid());
-    // printf('Session path: %s' . PHP_EOL, $session);
- 
-    // create text input
-    $textInput = new TextInput();
-    $textInput->setText($text);
-    $textInput->setLanguageCode($languageCode);
- 
-    // create query input
-    $queryInput = new QueryInput();
-    $queryInput->setText($textInput);
- 
-    // get response and relevant info
-    $response = $sessionsClient->detectIntent($session, $queryInput);
-    $queryResult = $response->getQueryResult();
-    $queryText = $queryResult->getQueryText();
-    $intent = $queryResult->getIntent();
-    $displayName = $intent->getDisplayName();
-    $confidence = $queryResult->getIntentDetectionConfidence();
-    $fulfilmentText = $queryResult->getFulfillmentText();
-
-    // output relevant info
-    // print(str_repeat("=", 20) . PHP_EOL);
-    // printf('Query text: %s' . PHP_EOL, $queryText);
-    // printf('Detected intent: %s (confidence: %f)' . PHP_EOL, $displayName,
-    //     $confidence);
-    // print(PHP_EOL);
-    // printf('Fulfilment text: %s' . PHP_EOL, $fulfilmentText);
-    
-    $sessionsClient->close();
-     return $fulfilmentText;
-   
-}
+        // output relevant info
+        // print(str_repeat("=", 20) . PHP_EOL);
+        // printf('Query text: %s' . PHP_EOL, $queryText);
+        // printf('Detected intent: %s (confidence: %f)' . PHP_EOL, $displayName,
+        //     $confidence);
+        // print(PHP_EOL);
+        // printf('Fulfilment text: %s' . PHP_EOL, $fulfilmentText);
+        
+        $sessionsClient->close();
+         return $fulfilmentText;
+       
+    }
 }
