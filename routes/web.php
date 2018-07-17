@@ -27,7 +27,7 @@ Route::get('graph/{id}', 'noticeController@graph');
 Route::get('notice_monday','noticeController@notice_monday');
 Route::get('notice_day','noticeController@notice_day');
 Route::get('api','ApiController@api');
-Route::get('index','testController@index');
+// Route::get('index','testController@index');
 
 Route::get('notice_breakfast','noticeController@notice_breakfast');
 Route::get('notice_lunch','noticeController@notice_lunch');
