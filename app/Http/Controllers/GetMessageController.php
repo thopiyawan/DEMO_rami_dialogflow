@@ -108,7 +108,7 @@ class GetMessageController extends Controller
        
 
 
-   if($userMessage == 'สวัสดี'){
+        if($userMessage == 'สวัสดี'){
             $a = 'ชื่ออะไร';
             $textMessageBuilder = new TextMessageBuilder($a);
 
@@ -118,7 +118,7 @@ class GetMessageController extends Controller
             $projectId = 'remiai-29f47';
             $sessionId = '123456';
             $languageCode = 'th';
-            $a =  $this->detect_intent_texts($projectId, $text, $sessionId,$languageCode);
+            $a =  $this->detect_intent_texts($projectId, $text, $sessionId, $languageCode);
             $textMessageBuilder = new TextMessageBuilder($a);
 
         }
