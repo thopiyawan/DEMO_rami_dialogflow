@@ -79,7 +79,14 @@ class GetMessageController extends Controller
         //}
          //$sequentsteps =  (new SqlController)->sequentsteps_seqcode($user);
 
-          
+            if(!is_null($events)){
+            // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
+            $replyToken  = $events['events'][0]['replyToken'];
+            $user = $events['events'][0]['source']['userId'];
+            // $userMessage = $events['events'][0]['message']['text'];
+            $type_message = $events['events'][0]['message']['type'];
+            }
+             
             if($type_message =='text'){
                 if(!is_null($events)){
             // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
