@@ -12,9 +12,9 @@
 */
 
 
-// Route::get('/bot', function () {
-//     return view('welcome');
-// });
+Route::get('/bot', function () {
+    return view('welcome');
+});
 
 
 // Route::get('/', function (Request $request) {
