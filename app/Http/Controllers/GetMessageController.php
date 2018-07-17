@@ -77,7 +77,7 @@ class GetMessageController extends Controller
         //     $userMessage = $events['events'][0]['message']['text'];
             
         //}
-         $sequentsteps =  (new SqlController)->sequentsteps_seqcode($user);
+         //$sequentsteps =  (new SqlController)->sequentsteps_seqcode($user);
 
           
             if($type_message =='text'){
