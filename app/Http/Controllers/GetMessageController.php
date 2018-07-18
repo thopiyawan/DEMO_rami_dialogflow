@@ -142,7 +142,760 @@ class GetMessageController extends Controller
             //      $case = 26;
 
             // }elseif (strpos($userMessage, 'อาหารเช้า') !== false ||strpos($userMessage, 'อาหารกลางวัน') !== false ||strpos($userMessage, 'อาหารเย็น') !== false||strpos($userMessage, 'อาหารว่าง') !== false){
-          }elseif ($userMessage== 'อาหารเช้า'||$userMessage=='อาหารกลางวัน' ||$userMessage== 'อาหารเย็น'||$userMessage== 'อาหารว่าง'){
+      
+            }elseif ($userMessage == 'ไม่สนใจ'  ) {
+                
+                  $userMessage = 'ไว้โอกาสหน้าให้เราได้เป็นผู้ช่วยของคุณนะคะ:)';
+                  $case = 1; 
+                   
+            }elseif ($userMessage == 'ไม่ถูกต้อง'  ) {
+                  $userMessage = 'กรุณาพิมพ์ใหม่';
+                  $case = 1;      
+////ans name        
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0005' ) {
+                if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+                      $case = 1;
+                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+                  }else{
+                  $user_name = $userMessage;
+                  $case = 1;
+                  $seqcode = '0007';
+                  $nextseqcode = '0009';
+                  $userMessage  = (new SqlController)->sequents_question($seqcode);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  $user_insert = (new SqlController)->user_insert($user,$user_name);
+                }
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0007' ) {
+
+                  if(is_numeric($userMessage) !== false){
+                        $answer = $userMessage;
+                        $today_years = date("Y");
+                        $yearsofbirth = $today_years - $userMessage;
+                        $dateofbirth = $yearsofbirth.'-01-01';
+                        $case = 1;
+                        $update = 2;
+                        $seqcode = '0009';
+                        $nextseqcode = '0011';
+                        $userMessage  = (new SqlController)->sequents_question($seqcode);
+                        $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                        $user_update = (new SqlController)->user_update($user,$answer,$update);
+                        $update_dateofbirth = (new SqlController)->update_dateofbirth($dateofbirth,$user);
+
+                  }else{
+                     $case = 1;
+                     $userMessage  = 'อายุตอบเป็นตัวเลขเท่านั้นนะคะ กรุณาพิมพ์ใหม่';
+                  }
+
+        
+
+            }elseif (is_string($userMessage) !== false  && $sequentsteps->seqcode == '0009' ) {
+
+                if(is_numeric($userMessage) !== false && $userMessage<200 ){
+                  $answer = $userMessage;
+                  $case = 1;
+                  $update = 3;
+                  $seqcode = '0011';
+                  $nextseqcode = '0013';
+                  $userMessage  = (new SqlController)->sequents_question($seqcode);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  $user_update = (new SqlController)->user_update($user,$answer,$update);
+                }else{
+                     $case = 1;
+                     $userMessage  = 'ส่วนสูงตอบเป็นตัวเลขเท่านั้น หน่วยเซนติเมตรนะคะ กรุณาพิมพ์ใหม่';
+                }
+                    
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0011' ) {
+               if(is_numeric($userMessage) !== false && $userMessage<150 && $userMessage>0){
+                  $answer = $userMessage;
+                  $case = 1;
+                  $update = 4;
+                  $seqcode = '0013';
+                  $nextseqcode = '0015';
+                  $userMessage  = (new SqlController)->sequents_question($seqcode);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  $user_update = (new SqlController)->user_update($user,$answer,$update);
+               }else{
+                     $case = 1;
+                     $userMessage  = 'น้ำหนักตอบเป็นตัวเลขเท่านั้น หน่วยเป็นกิโลกรัม กรุณาพิมพ์ใหม่';
+                }
+                
+            }elseif ($userMessage == 'ครั้งสุดท้ายที่มีประจำเดือน'  && $sequentsteps->seqcode == '0013' ) {
+                  $answer = $userMessage;
+                  $case = 1;
+                  // $update = 5;
+                  $seqcode = '1015';
+                  $nextseqcode = '0017';
+                  $userMessage  = 'ขอทราบครั้งสุดท้ายที่คุณมีประจำเดือนเพื่อคำนวณอายุครรภ์ค่ะ (กรุณาตอบวันที่และเดือนเป็นตัวเลขนะคะ เช่น 17 04 คือ วันที่ 17 เมษายน)';
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  // $user_update = $this->user_update($user,$answer,$update);
+            }elseif ($userMessage == 'กำหนดการคลอด'  && $sequentsteps->seqcode == '0013' ) {
+                  $answer = $userMessage;
+                  $case = 1;
+                  // $update = 5;
+                  $seqcode = '2015';
+                  $nextseqcode = '0017';
+                  $userMessage  = 'ขอทราบกำหนดการคลอดของคุณหน่อยค่ะ (กรุณาตอบวันที่และเดือนเป็นตัวเลขนะคะ เช่น 17 04 คือ วันที่ 17 เมษายน)';
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  // $user_update = $this->user_update($user,$answer,$update);
+
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0013' ) {
+                  
+                if(is_numeric($userMessage) !== false && $userMessage<150 && $userMessage>0){
+                  $answer = $userMessage;
+                  $case = 2;
+                  $update = 5;
+                  $seqcode = '0015';
+                  $nextseqcode = '0017';
+                  $userMessage  = (new SqlController)->sequents_question($seqcode);
+                  //$sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  $user_update = (new SqlController)->user_update($user,$answer,$update);
+                }else{
+                     $case = 1;
+                     $userMessage  = 'น้ำหนักตอบเป็นตัวเลขเท่านั้น หน่วยเป็นกิโลกรัม กรุณาพิมพ์ใหม่';
+                }
+
+           
+            }elseif ($userMessage == 'อายุครรภ์ถูกต้อง'  && ($sequentsteps->seqcode == '1015' ||  $sequentsteps->seqcode == '2015')  ) {
+                  $answer = $sequentsteps->answer;
+                  $case = 1;
+                  $update = 6;
+                  $seqcode = '0017';
+                  $nextseqcode = '0019';
+                  $userMessage  = (new SqlController)->sequents_question($seqcode);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+
+            }elseif ( is_string($userMessage) !== false && ($sequentsteps->seqcode == '1015' || $sequentsteps->seqcode == '2015') ) {
+                  $seqcode = $sequentsteps->seqcode;
+                  $userMessage = (new CalController)->pregnancy_calculator($user,$userMessage,$seqcode);
+
+                  if($userMessage == 'ดูเหมือนคุณจะพิมพ์ไม่ถูกต้อง' || strpos($userMessage, 'วันเท่านั้น') !== false  || strpos($userMessage, 'ฉันคิดว่า') !== false ){
+                     $case = 1;
+                  }else{
+                     $case = 3;
+                  }
+            }elseif (is_string($userMessage)!== false && $sequentsteps->seqcode == '0017'  ) {
+
+                if(is_numeric($userMessage) !== false && strlen($userMessage) == 10){
+                      $answer = $userMessage;
+                                $case = 1;
+                                $update = 7;
+                                $seqcode = '0019';
+                                $nextseqcode = '0021';
+                                $userMessage  = (new SqlController)->sequents_question($seqcode);
+                                $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                                $user_update = (new SqlController)->user_update($user,$answer,$update);
+                }else{
+                  $case = 1;
+                  $userMessage = 'ฉันคิดว่าคุณพิมพ์เบอร์โทรศัพท์ผิดนะคะ กรุณาพิมพ์ใหม่';
+                }
+                   
+
+            }elseif (is_string($userMessage)!== false && $sequentsteps->seqcode == '0019'  ) {
+
+              if(strpos($userMessage, '@') !== false){
+                      $answer = $userMessage;
+                      $case = 17;
+                      $update = 8;
+                      $seqcode = '0021';
+                      $nextseqcode = '0023';
+                      $userMessage  = (new SqlController)->sequents_question($seqcode);
+                      $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                      $user_update = (new SqlController)->user_update($user,$answer,$update); 
+              }else{
+                $case = 1;
+                $userMessage = 'ฉันคิดว่าคุณพิมพ์อีเมลผิดนะ กรุณาพิมพ์ใหม่';
+              }
+                 
+
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0021'  ) {
+                  $answer = $userMessage;
+                  $case = 10;
+                  $update = 9;
+                  $seqcode = '0027';
+                  $nextseqcode = '0025';
+                  $userMessage  = (new SqlController)->sequents_question($seqcode);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+
+            // }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0023'  ) {
+            //       $answer = $userMessage;
+            //       $case = 10;
+            //       $update = 10;
+            //       //$seqcode = '0025';
+            //       $seqcode = '0027';
+            //       $nextseqcode = '0027';
+            //       $userMessage  = $this->sequents_question($seqcode);
+            //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+            //       $user_update = $this->user_update($user,$answer,$update);
+
+            // }elseif ($userMessage == 'แพ้ยา' && $sequentsteps->seqcode == '0025'  ) {
+            //       $answer = $userMessage;
+            //       $case = 1;
+            //       $userMessage  = 'คุณแพ้ยาอะไรคะ?';
+            //       $seqcode = '0025_1';
+            //       $nextseqcode = '0031';
+            //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+
+            // }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0025_1'  ) {
+            //       $answer = $userMessage;
+            //       $case = 10;
+            //       $update = 11;
+            //       $seqcode = '0027';
+            //       $nextseqcode = '0029';
+            //       $userMessage  = $this->sequents_question($seqcode);
+            //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+            //       $user_update = $this->user_update($user,$answer,$update); 
+
+            }elseif ($userMessage == 'แพ้อาหาร' && $sequentsteps->seqcode == '0027'  ) {
+                  $answer = $userMessage;
+                  $case = 1;
+                  $userMessage  = 'คุณแพ้อาหารอะไรคะ?';
+                  $seqcode = '0027_1';
+                  $nextseqcode = '0031';
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+////ans Food allergy
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0027_1'  ) {
+                if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+                      $case = 1;
+                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+                  }else{
+                  $answer = $userMessage;
+                  $case = 4;
+                  $update = 12;
+                  $seqcode = '0029';
+                  $nextseqcode = '0031';
+                  $userMessage  = (new SqlController)->sequents_question($seqcode);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                }
+
+            // }elseif ($userMessage == 'ไม่แพ้ยา' && $sequentsteps->seqcode == '0025'  ) {
+            //       $answer = $userMessage;
+            //       $case = 10;
+            //       $update = 11;
+            //       $seqcode = '0027';
+            //       $nextseqcode = '0029';
+            //       $userMessage  = $this->sequents_question($seqcode);
+            //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+            //       $user_update = $this->user_update($user,$answer,$update); 
+
+            // }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0027'  ) {
+            //       $answer = $userMessage;
+            //       $case = 4;
+            //       $update = 12;
+            //       $seqcode = '0029';
+            //       $nextseqcode = '0031';
+            //       $userMessage  = (new SqlController)->sequents_question($seqcode);
+            //       $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+            //       $user_update = (new SqlController)->user_update($user,$answer,$update); 
+
+
+            }elseif ($userMessage == 'ไม่แพ้อาหาร' && $sequentsteps->seqcode == '0025'  ) {
+                  $answer = $userMessage;
+                  $case = 4;
+                  $update = 11;
+                  $seqcode = '0029';
+                  $nextseqcode = '0031';
+                  $userMessage  = (new SqlController)->sequents_question($seqcode);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+
+            }elseif ($userMessage == 'เบา' ||$userMessage == 'ปานกลาง' || $userMessage == 'หนัก' ) {
+                    //||$userMessage== 'ดูข้อมูล'
+                    if ($userMessage=='หนัก'  ) {
+                      $answer= 3;
+                    }elseif($userMessage=='ปานกลาง') {
+                      $answer = 2;
+                    }else{
+                      $answer = 1;
+                    }
+                  $case = 5;
+                  $update = 13;
+                  // if($userMessage== 'ดูข้อมูล'){
+                  //    $seqcode = '0041';
+                  //    $nextseqcode = '0000';
+                  //    $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+
+                  // }
+                  $userMessage  = (new checkmessageController)->user_data($user);
+                  $user_update = (new SqlController)->user_update($user,$answer,$update);
+                  $seqcode = '0029';
+                  $nextseqcode = '0031';
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                
+
+
+
+                  $reward_count = (new SqlController)->reward_count($user);
+
+                if($reward_count == 0 ){
+                  $point = 0;
+                  $feq_ans_meals = 0;
+                  $feq_ans_week =0;
+                  $reward_ins =  (new SqlController)->ins_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+                }
+                
+
+        
+            }elseif (($userMessage == 'ยืนยันข้อมูล' && $sequentsteps->seqcode == '0029') || ($userMessage == 'ยืนยันข้อมูล' && $sequentsteps->seqcode == '0040' ) || $userMessage == 'ยืนยันข้อมูล' ) {
+                      //Model::count()
+                  
+                
+              $num = RecordOfPregnancy::where('user_id', $user)
+                                    ->whereNull('deleted_at')
+                                    ->count();
+      
+                  $users_register = (new SqlController)->users_register_select($user);
+                  $preg_week = $users_register->preg_week;
+                  $user_Pre_weight = $users_register->user_Pre_weight;
+                  $user_weight = $users_register->user_weight;
+
+                  $user_height =  $users_register->user_height;
+                  $status =  $users_register->status;
+
+                  $bmi  = (new CalController)->bmi_calculator($user_Pre_weight,$user_height);
+                  
+                  $user_age =  $users_register->user_age;
+                  $active_lifestyle =  $users_register->active_lifestyle;
+                  $weight_criteria  = (new CalController)->weight_criteria($bmi);
+                  $cal  = (new CalController)->cal_calculator($user_age,$active_lifestyle,$user_Pre_weight,$preg_week);
+
+                if ($bmi>=24.9 ) {
+                    $text = 'น้ำหนักของคุณเกินเกณฑ์ ลองปรับการรับประทานอาหารหรือออกกำลังกายดูไหมคะ'."\n".
+                       'หากคุณแม่ไม่ทราบว่าจะทานอะไรดีหรือออกกำลังกายแบบไหนดีสามารถกดที่ MENU ด้านล่างได้เลยนะคะ';
+                }else{
+                    $text = 'หากคุณแม่ไม่ทราบว่าจะทานอะไรดีหรือออกกำลังกายแบบไหนดีสามารถกดที่ MENU ด้านล่างได้เลยนะคะ';
+                }
+               
+                // if( $sequentsteps->seqcode == '0029'){
+
+                if($num==0){  
+                        $RecordOfPregnancy = (new SqlController)->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
+                 }else{
+
+                   $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
+                       ->whereNull('deleted_at')
+                       ->orderBy('updated_at', 'asc')
+                       ->first();
+                   $created_at = $RecordOfPregnancy->created_at;
+               
+                    $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
+                          ->where('created_at', $created_at)
+                          ->where('preg_week',$preg_week)
+                          ->update(['preg_weight' =>$user_weight,'preg_week' =>$preg_week]);
+
+                        $num1 =  RecordOfPregnancy::where('user_id', $user)
+                                    ->where('preg_week',$preg_week)
+                                    ->count(); 
+
+                       if($num1 == 0){
+                          $RecordOfPregnancy = (new SqlController)->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
+                       }else{
+                         $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
+                          // ->where('created_at', $created_at)
+                          ->where('preg_week',$preg_week)
+                          ->update(['preg_weight' =>$user_weight,'preg_week' =>$preg_week]);
+                       }
+                        
+                 }
+               if($status == '4'){
+                         $users_register = users_register::where('user_id', $user)
+                                                          ->whereNull('deleted_at')
+                                                          ->update(['status' => '1']);
+                           
+               }
+    
+                // }else{
+                // $delete = $this->RecordOfPregnancy_delete($user);
+                // $RecordOfPregnancy = $this->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
+                // }
+/////////////////รูปกราฟ//////////////////////
+                $format = (new SqlController)->sequentsteps_update2($user,$cal);
+                $seqcode = '0000';
+                $nextseqcode = '0000';
+                $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                $a = (new ReplyMessageController)->replymessage_result($replyToken,$preg_week,$bmi,$cal,$weight_criteria,$text,$user);
+
+    
+        
+                  //    $url = "https://peat.none.codes/graph/".$user; 
+               
+                  // //call Google PageSpeed Insights API
+                  // $googlePagespeedData = file_get_contents("https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url=$url&screenshot=true");
+
+                  // // //decode json data
+                  // $googlePagespeedData = json_decode($googlePagespeedData, true);
+
+                  // //screenshot data
+                  // $screenshot = $googlePagespeedData['screenshot']['data'];
+                  // $screenshot = str_replace(array('_','-'),array('/','+'),$screenshot);
+                  // $name_of_screenshot = uniqid().'.png';
+
+                  // // // display screenshot image
+                  // $data = "data:image/jpeg;base64,".$screenshot;
+
+
+                  // $img = Image::make($data);
+                  // $filename  = uniqid().'.jpg';
+                  // $path = 'uploads/' . $filename;
+                  // $img->save($path);
+
+                  // $sequentsteps = sequentsteps::where('sender_id', $user)
+                  //                             ->update(['answer'=>$filename]);
+////////////////////////////////////////////////////////////////////////////////////////
+            }elseif ($userMessage == 'ทารกในครรภ์') {
+                $users_register = (new SqlController)->users_register_select($user);     
+                $preg_week = $users_register->preg_week;
+                $pregnants = (new SqlController)->pregnants($preg_week);
+                $descript = $pregnants->descript;
+                $userMessage  =  $descript;
+                $case = 1; 
+
+            }elseif ($userMessage == 'ข้อมูลโภชนาการ') {
+                  $users_register = (new SqlController)->users_register_select($user);
+                
+                  $preg_week = $users_register->preg_week;
+
+                  $user_Pre_weight = $users_register->user_Pre_weight;
+                  $user_weight = $users_register->user_weight;
+                  $user_height =  $users_register->user_height;
+
+                  $bmi  = (new CalController)->bmi_calculator($user_Pre_weight,$user_height);
+                  
+                  $user_age =  $users_register->user_age;
+                  $active_lifestyle =  $users_register->active_lifestyle;
+                  $weight_criteria  = (new CalController)->weight_criteria($bmi);
+                  $cal  = (new CalController)->cal_calculator($user_age,$active_lifestyle,$user_Pre_weight,$preg_week);
+
+                   $meal_planing = (new checkmessageController)->meal_planing($cal);
+                   $userMessage  = $meal_planing;
+                   $case = 1;  
+            }elseif ($userMessage == 'แก้ไขข้อมูล') {
+
+                   $seqcode = '0040';
+                   $nextseqcode = '0000';
+                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                   $userMessage = 'พิมพ์เพียงแค่เลขตามด้านล่างนี้เพื่อแก้ไข'. "\n".
+                                  'พิมพ์ "1" ชื่อ '. "\n".
+                                  'พิมพ์ "2" อายุ '. "\n".
+                                  'พิมพ์ "3" ส่วนสูง '."\n".
+                                  'พิมพ์ "4" น้ำหนักก่อนตั้งครรภ์ '."\n".
+                                  'พิมพ์ "5" น้ำหนักปัจจุบัน '."\n".
+                                  'พิมพ์ "6" อายุครรภ์ '."\n".
+                                  'พิมพ์ "7" เบอร์โทรศัพท์ '."\n".
+                                  'พิมพ์ "8" อีเมล '."\n".
+                                  'พิมพ์ "9" โรงพยาบาลที่ฝากครรภ์ '."\n".
+                                  // 'พิมพ์ "10" เลขประจำตัวผู้ป่วย '."\n".
+                                  // 'พิมพ์ "11" แพ้ยา '."\n".
+                                  'พิมพ์ "10" แพ้อาหาร ';
+                   $case = 1;  
+            }elseif (is_numeric($userMessage) !== false && $sequentsteps->seqcode == '0040' && $userMessage <=12) {
+                switch($userMessage) {
+                 case '1' : 
+                       $userMessage = 'ขอทราบชื่อและนามสกุลของคุณแม่อีกครั้งค่ะ';
+                       $case = 1;
+                       $seqcode = '0140' ;
+                       $nextseqcode = '0000';
+                    
+                    break;
+                 case '2' : 
+                       $seqcode = '0007' ;
+                       $case = 1;
+                       $userMessage  = (new SqlController)->sequents_question($seqcode);
+                       $seqcode = '0240' ;
+                       $nextseqcode = '0000';
+        
+                    break;
+                 case '3' : 
+                       $seqcode = '0009' ;
+                       $case = 1;
+                       $userMessage  = (new SqlController)->sequents_question($seqcode);
+                       $seqcode = '0340' ;
+                       $nextseqcode = '0000';
+                    break;
+                 case '4' : 
+                       $seqcode = '0011' ;
+                       $case = 1;
+                       $userMessage  = (new SqlController)->sequents_question($seqcode);
+                       $seqcode = '0440' ;
+                       $nextseqcode = '0000';
+                    break;
+                 case '5' : 
+                       $seqcode = '0013' ;
+                       $case = 1;
+                       $userMessage  = (new SqlController)->sequents_question($seqcode);
+                       $seqcode = '0540' ;
+                       $nextseqcode = '0000';
+
+                    break;
+                 case '6' : 
+                       $seqcode = '0015' ;
+                       $case = 1;
+                       $userMessage  = (new SqlController)->sequents_question($seqcode);
+                       $seqcode = '0640' ;
+                       $nextseqcode = '0000';
+                       $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                       $case = 2;
+                        return (new ReplyMessageController)->replymessage($replyToken,$userMessage,$case);
+                    break;
+                 case '7' : 
+                       $seqcode = '0017' ;
+                       $case = 1;
+                       $userMessage  = (new SqlController)->sequents_question($seqcode);
+                       $seqcode = '0740' ;
+                       $nextseqcode = '0000';
+                    break;
+                 case '8' : 
+                       $seqcode = '0019' ;
+                       $case = 1;
+                       $userMessage  = (new SqlController)->sequents_question($seqcode);
+                       $seqcode = '0840' ;
+                       $nextseqcode = '0000';
+                    break;
+                 case '9' : 
+                       $seqcode = '0021' ;
+                       $case = 17;
+                       $userMessage  = (new SqlController)->sequents_question($seqcode);
+                       $seqcode = '0940' ;
+                       $nextseqcode = '0000';
+                    break;
+                 // case '10' : 
+                 //       $seqcode = '0023' ;
+                 //       $case = 1;
+                 //       $userMessage  = $this->sequents_question($seqcode);
+                 //       $seqcode = '1040' ;
+                 //       $nextseqcode = '0000';
+                 //    break;
+                 // case '11' : 
+                 //       $seqcode = '0025' ;
+                 //       $case = 9;
+                 //       $userMessage  = $this->sequents_question($seqcode);
+                 //       $seqcode = '1140' ;
+                 //       $nextseqcode = '0000';
+                 //    break;
+                 case '10' : 
+                       $seqcode = '0027' ;
+                       $case = 10;
+                       $userMessage  = (new SqlController)->sequents_question($seqcode);
+                       $seqcode = '1240' ;
+                       $nextseqcode = '0000';
+                    break;
+                }
+                   
+                    $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0140') {
+       
+                  $answer = $userMessage;
+                  $case = 5;
+                  $seqcode = '0040';
+                  $nextseqcode = '0000';
+                  $update = 1;
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                  $userMessage  = (new checkmessageController)->user_data($user);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0240') {
+
+                if(is_numeric($userMessage) !== false){
+                  $answer = $userMessage;
+                  $today_years = date("Y");
+                  $yearsofbirth = $today_years - $userMessage;
+                  $dateofbirth = $yearsofbirth.'-01-01';
+                  $case = 5;
+                  $seqcode = '0040';
+                  $nextseqcode = '0000';
+                  $update = 2;
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                  $userMessage  = (new checkmessageController)->user_data($user);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  $update_dateofbirth = (new SqlController)->update_dateofbirth($dateofbirth,$user);
+                       
+  
+                }else{
+                  $case = 1;
+                  $userMessage = 'อายุตอบเป็นตัวเลขเท่านั้นนะคะ กรุณาพิมพ์ใหม่';
+                }
+
+             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0340') {
+
+               if(is_numeric($userMessage) !== false && $userMessage<200){
+                  $answer = $userMessage;
+                  $case = 5;
+                  $seqcode = '0040';
+                  $nextseqcode = '0000';
+                  $update = 3;
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                  $userMessage  = (new checkmessageController)->user_data($user);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+
+                }else{
+                  $case = 1;
+                  $userMessage = 'ส่วนสูงตอบเป็นตัวเลขเท่านั้น หน่วยเซนติเมตรนะคะ กรุณาพิมพ์ใหม่';
+                }
+             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0440') {
+
+                if(is_numeric($userMessage) !== false && $userMessage<150 && $userMessage>0){
+                  $answer = $userMessage;
+                  $case = 5;
+                  $seqcode = '0040';
+                  $nextseqcode = '0000';
+                  $update = 4;
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                  $userMessage  = (new checkmessageController)->user_data($user);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                }else{
+                  $case = 1;
+                  $userMessage = 'น้ำหนักตอบเป็นตัวเลขเท่านั้น หน่วยเป็นกิโลกรัม กรุณาพิมพ์ใหม่';
+                }
+                 
+
+             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0540') {
+                if(is_numeric($userMessage) !== false && $userMessage<150 && $userMessage>0){
+                  $answer = $userMessage;
+                  $case = 5;
+                  $seqcode = '0040';
+                  $nextseqcode = '0000';
+                  $update = 5;
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                  $userMessage  = (new checkmessageController)->user_data($user);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+
+                }else{
+                  $case = 1;
+                  $userMessage = 'น้ำหนักตอบเป็นตัวเลขเท่านั้น หน่วยเป็นกิโลกรัม กรุณาพิมพ์ใหม่';
+                }
+                 
+
+             }elseif ($userMessage == 'ครั้งสุดท้ายที่มีประจำเดือน' && $sequentsteps->seqcode == '0640') {
+                  $answer = $userMessage;
+                  $case = 1;
+                  $seqcode = '10640';
+                  $nextseqcode = '0000';
+                  $userMessage  = 'ขอทราบครั้งสุดท้ายที่คุณมีประจำเดือนเพื่อคำนวณอายุครรภ์ค่ะ (กรุณาตอบวันที่และเดือนเป็นตัวเลขนะคะ เช่น 17 04 คือ วันที่ 17 เมษายน)';
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+
+             }elseif ($userMessage == 'กำหนดการคลอด' && $sequentsteps->seqcode == '0640') {
+                 $answer = $userMessage;
+                  $case = 1;
+                  $seqcode = '20640';
+                  $nextseqcode = '0000';
+                  $userMessage  = 'ขอทราบกำหนดการคลอดของคุณหน่อยค่ะ (กรุณาตอบวันที่และเดือนเป็นตัวเลขนะคะ เช่น 17 04 คือ วันที่ 17 เมษายน';
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+             }elseif ($userMessage == 'อายุครรภ์ถูกต้อง'  && ($sequentsteps->seqcode == '10640' ||  $sequentsteps->seqcode == '20640')  ) {
+                  $answer = $sequentsteps->answer;
+                  $case = 5;
+                  $seqcode = '0040';
+                  $nextseqcode = '0000';
+                  $update = 6;
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                  $userMessage  = (new checkmessageController)->user_data($user);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+
+            }elseif ( is_string($userMessage) !== false   && ($sequentsteps->seqcode == '10640' || $sequentsteps->seqcode == '20640') ) {
+                  $seqcode = $sequentsteps->seqcode;
+                  $userMessage = (new CalController)->pregnancy_calculator($user,$userMessage,$seqcode);
+
+            if($userMessage == 'ดูเหมือนคุณจะพิมพ์ไม่ถูกต้อง' || strpos($userMessage, 'วันเท่านั้น') !== false ||strpos($userMessage, 'ฉันคิดว่า') !== false ){
+                     $case = 1;
+                  }else{
+                     $case = 3;
+                  }
+      
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0740') {
+
+                if(is_numeric($userMessage) !== false && strlen($userMessage) == 10){
+                  $answer = $userMessage;
+                  $case = 5;
+                  $seqcode = '0040';
+                  $nextseqcode = '0000';
+                  $update = 7;
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                $userMessage  = (new checkmessageController)->user_data($user);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                }else{
+                  $case = 1;
+                  $userMessage = 'ฉันคิดว่าคุณพิมพ์เบอร์โทรศัพท์ผิดนะคะ กรุณาพิมพ์ใหม่';
+                }
+                      
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0840') {
+        
+
+                 if(strpos($userMessage, '@') !== false){
+                      $answer = $userMessage;
+                      $case = 5;
+                      $seqcode = '0040';
+                      $nextseqcode = '0000';
+                      $update = 8;
+                      $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                      $userMessage  = (new checkmessageController)->user_data($user);
+                      $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                  }else{
+                    $case = 1;
+                    $userMessage = 'ฉันคิดว่าคุณพิมพ์อีเมลผิดนะ กรุณาพิมพ์ใหม่';
+                  }
+                
+
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0940') {
+       
+                  $answer = $userMessage;
+                  $case = 5;
+                  $seqcode = '0040';
+                  $nextseqcode = '0000';
+                  $update = 9;
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                  $userMessage  = (new checkmessageController)->user_data($user);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+                             
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '1040') {
+       
+                  $answer = $userMessage;
+                  $case = 5;
+                  $seqcode = '0040';
+                  $nextseqcode = '0000';
+                  $update = 10;
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                  $userMessage  = (new checkmessageController)->user_data($user);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+            }elseif (  $userMessage == 'แพ้ยา'&& $sequentsteps->seqcode == '1140') {
+    
+                  $answer = $userMessage;
+                  $case = 1;
+                  $userMessage  = 'คุณแพ้ยาอะไรคะ?';
+                  // $seqcode = '0040';
+                  // $nextseqcode = '0000';
+                  // $update = 11;
+                  // $user_update = $this->user_update($user,$answer,$update); 
+                  // $userMessage  = $this->user_data($user);
+                  // $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '1140') {
+      
+                  $answer = $userMessage;
+                  $case = 5;
+                  $seqcode = '0040';
+                  $nextseqcode = '0000';
+                  $update = 11;
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                  $userMessage  = (new checkmessageController)->user_data($user);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+            }elseif (  $userMessage == 'แพ้อาหาร'&& $sequentsteps->seqcode == '1240') {
+    
+                  $answer = $userMessage;
+                  $case = 1;
+                  $userMessage  = 'คุณแพ้อาหารอะไรคะ?';
+            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '1240') {
+       
+                  $answer = $userMessage;
+                  $case = 5;
+                  $seqcode = '0040';
+                  $nextseqcode = '0000';
+                  $update = 12;
+                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
+                  $userMessage  = (new checkmessageController)->user_data($user);
+                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+               }elseif ($userMessage== 'อาหารเช้า'||$userMessage=='อาหารกลางวัน' ||$userMessage== 'อาหารเย็น'||$userMessage== 'อาหารว่าง'){
                $users_register = (new SqlController)->users_register_select($user);
                 
                   $preg_week = $users_register->preg_week;
@@ -930,758 +1683,6 @@ class GetMessageController extends Controller
             //   //      $userMessage  = 'คุณแม่เลือกกดคำตอบข้อใดข้อหนึ่งจากด้านบนเท่านั้นนะคะ';
             //   // }
 // ///////////////////////////////////////////////
-            }elseif ($userMessage == 'ไม่สนใจ'  ) {
-                
-                  $userMessage = 'ไว้โอกาสหน้าให้เราได้เป็นผู้ช่วยของคุณนะคะ:)';
-                  $case = 1; 
-                   
-            }elseif ($userMessage == 'ไม่ถูกต้อง'  ) {
-                  $userMessage = 'กรุณาพิมพ์ใหม่';
-                  $case = 1;      
-////ans name        
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0005' ) {
-                if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                  }else{
-                  $user_name = $userMessage;
-                  $case = 1;
-                  $seqcode = '0007';
-                  $nextseqcode = '0009';
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $user_insert = (new SqlController)->user_insert($user,$user_name);
-                }
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0007' ) {
-
-                  if(is_numeric($userMessage) !== false){
-                        $answer = $userMessage;
-                        $today_years = date("Y");
-                        $yearsofbirth = $today_years - $userMessage;
-                        $dateofbirth = $yearsofbirth.'-01-01';
-                        $case = 1;
-                        $update = 2;
-                        $seqcode = '0009';
-                        $nextseqcode = '0011';
-                        $userMessage  = (new SqlController)->sequents_question($seqcode);
-                        $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                        $user_update = (new SqlController)->user_update($user,$answer,$update);
-                        $update_dateofbirth = (new SqlController)->update_dateofbirth($dateofbirth,$user);
-
-                  }else{
-                     $case = 1;
-                     $userMessage  = 'อายุตอบเป็นตัวเลขเท่านั้นนะคะ กรุณาพิมพ์ใหม่';
-                  }
-
-        
-
-            }elseif (is_string($userMessage) !== false  && $sequentsteps->seqcode == '0009' ) {
-
-                if(is_numeric($userMessage) !== false && $userMessage<200 ){
-                  $answer = $userMessage;
-                  $case = 1;
-                  $update = 3;
-                  $seqcode = '0011';
-                  $nextseqcode = '0013';
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $user_update = (new SqlController)->user_update($user,$answer,$update);
-                }else{
-                     $case = 1;
-                     $userMessage  = 'ส่วนสูงตอบเป็นตัวเลขเท่านั้น หน่วยเซนติเมตรนะคะ กรุณาพิมพ์ใหม่';
-                }
-                    
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0011' ) {
-               if(is_numeric($userMessage) !== false && $userMessage<150 && $userMessage>0){
-                  $answer = $userMessage;
-                  $case = 1;
-                  $update = 4;
-                  $seqcode = '0013';
-                  $nextseqcode = '0015';
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $user_update = (new SqlController)->user_update($user,$answer,$update);
-               }else{
-                     $case = 1;
-                     $userMessage  = 'น้ำหนักตอบเป็นตัวเลขเท่านั้น หน่วยเป็นกิโลกรัม กรุณาพิมพ์ใหม่';
-                }
-                
-            }elseif ($userMessage == 'ครั้งสุดท้ายที่มีประจำเดือน'  && $sequentsteps->seqcode == '0013' ) {
-                  $answer = $userMessage;
-                  $case = 1;
-                  // $update = 5;
-                  $seqcode = '1015';
-                  $nextseqcode = '0017';
-                  $userMessage  = 'ขอทราบครั้งสุดท้ายที่คุณมีประจำเดือนเพื่อคำนวณอายุครรภ์ค่ะ (กรุณาตอบวันที่และเดือนเป็นตัวเลขนะคะ เช่น 17 04 คือ วันที่ 17 เมษายน)';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  // $user_update = $this->user_update($user,$answer,$update);
-            }elseif ($userMessage == 'กำหนดการคลอด'  && $sequentsteps->seqcode == '0013' ) {
-                  $answer = $userMessage;
-                  $case = 1;
-                  // $update = 5;
-                  $seqcode = '2015';
-                  $nextseqcode = '0017';
-                  $userMessage  = 'ขอทราบกำหนดการคลอดของคุณหน่อยค่ะ (กรุณาตอบวันที่และเดือนเป็นตัวเลขนะคะ เช่น 17 04 คือ วันที่ 17 เมษายน)';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  // $user_update = $this->user_update($user,$answer,$update);
-
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0013' ) {
-                  
-                if(is_numeric($userMessage) !== false && $userMessage<150 && $userMessage>0){
-                  $answer = $userMessage;
-                  $case = 2;
-                  $update = 5;
-                  $seqcode = '0015';
-                  $nextseqcode = '0017';
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  //$sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $user_update = (new SqlController)->user_update($user,$answer,$update);
-                }else{
-                     $case = 1;
-                     $userMessage  = 'น้ำหนักตอบเป็นตัวเลขเท่านั้น หน่วยเป็นกิโลกรัม กรุณาพิมพ์ใหม่';
-                }
-
-           
-            }elseif ($userMessage == 'อายุครรภ์ถูกต้อง'  && ($sequentsteps->seqcode == '1015' ||  $sequentsteps->seqcode == '2015')  ) {
-                  $answer = $sequentsteps->answer;
-                  $case = 1;
-                  $update = 6;
-                  $seqcode = '0017';
-                  $nextseqcode = '0019';
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-
-            }elseif ( is_string($userMessage) !== false && ($sequentsteps->seqcode == '1015' || $sequentsteps->seqcode == '2015') ) {
-                  $seqcode = $sequentsteps->seqcode;
-                  $userMessage = (new CalController)->pregnancy_calculator($user,$userMessage,$seqcode);
-
-                  if($userMessage == 'ดูเหมือนคุณจะพิมพ์ไม่ถูกต้อง' || strpos($userMessage, 'วันเท่านั้น') !== false  || strpos($userMessage, 'ฉันคิดว่า') !== false ){
-                     $case = 1;
-                  }else{
-                     $case = 3;
-                  }
-            }elseif (is_string($userMessage)!== false && $sequentsteps->seqcode == '0017'  ) {
-
-                if(is_numeric($userMessage) !== false && strlen($userMessage) == 10){
-                      $answer = $userMessage;
-                                $case = 1;
-                                $update = 7;
-                                $seqcode = '0019';
-                                $nextseqcode = '0021';
-                                $userMessage  = (new SqlController)->sequents_question($seqcode);
-                                $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                                $user_update = (new SqlController)->user_update($user,$answer,$update);
-                }else{
-                  $case = 1;
-                  $userMessage = 'ฉันคิดว่าคุณพิมพ์เบอร์โทรศัพท์ผิดนะคะ กรุณาพิมพ์ใหม่';
-                }
-                   
-
-            }elseif (is_string($userMessage)!== false && $sequentsteps->seqcode == '0019'  ) {
-
-              if(strpos($userMessage, '@') !== false){
-                      $answer = $userMessage;
-                      $case = 17;
-                      $update = 8;
-                      $seqcode = '0021';
-                      $nextseqcode = '0023';
-                      $userMessage  = (new SqlController)->sequents_question($seqcode);
-                      $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                      $user_update = (new SqlController)->user_update($user,$answer,$update); 
-              }else{
-                $case = 1;
-                $userMessage = 'ฉันคิดว่าคุณพิมพ์อีเมลผิดนะ กรุณาพิมพ์ใหม่';
-              }
-                 
-
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0021'  ) {
-                  $answer = $userMessage;
-                  $case = 10;
-                  $update = 9;
-                  $seqcode = '0027';
-                  $nextseqcode = '0025';
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-
-            // }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0023'  ) {
-            //       $answer = $userMessage;
-            //       $case = 10;
-            //       $update = 10;
-            //       //$seqcode = '0025';
-            //       $seqcode = '0027';
-            //       $nextseqcode = '0027';
-            //       $userMessage  = $this->sequents_question($seqcode);
-            //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
-            //       $user_update = $this->user_update($user,$answer,$update);
-
-            // }elseif ($userMessage == 'แพ้ยา' && $sequentsteps->seqcode == '0025'  ) {
-            //       $answer = $userMessage;
-            //       $case = 1;
-            //       $userMessage  = 'คุณแพ้ยาอะไรคะ?';
-            //       $seqcode = '0025_1';
-            //       $nextseqcode = '0031';
-            //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
-
-            // }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0025_1'  ) {
-            //       $answer = $userMessage;
-            //       $case = 10;
-            //       $update = 11;
-            //       $seqcode = '0027';
-            //       $nextseqcode = '0029';
-            //       $userMessage  = $this->sequents_question($seqcode);
-            //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
-            //       $user_update = $this->user_update($user,$answer,$update); 
-
-            }elseif ($userMessage == 'แพ้อาหาร' && $sequentsteps->seqcode == '0027'  ) {
-                  $answer = $userMessage;
-                  $case = 1;
-                  $userMessage  = 'คุณแพ้อาหารอะไรคะ?';
-                  $seqcode = '0027_1';
-                  $nextseqcode = '0031';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-////ans Food allergy
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0027_1'  ) {
-                if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                  }else{
-                  $answer = $userMessage;
-                  $case = 4;
-                  $update = 12;
-                  $seqcode = '0029';
-                  $nextseqcode = '0031';
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                }
-
-            // }elseif ($userMessage == 'ไม่แพ้ยา' && $sequentsteps->seqcode == '0025'  ) {
-            //       $answer = $userMessage;
-            //       $case = 10;
-            //       $update = 11;
-            //       $seqcode = '0027';
-            //       $nextseqcode = '0029';
-            //       $userMessage  = $this->sequents_question($seqcode);
-            //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
-            //       $user_update = $this->user_update($user,$answer,$update); 
-
-            // }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0027'  ) {
-            //       $answer = $userMessage;
-            //       $case = 4;
-            //       $update = 12;
-            //       $seqcode = '0029';
-            //       $nextseqcode = '0031';
-            //       $userMessage  = (new SqlController)->sequents_question($seqcode);
-            //       $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-            //       $user_update = (new SqlController)->user_update($user,$answer,$update); 
-
-
-            }elseif ($userMessage == 'ไม่แพ้อาหาร' && $sequentsteps->seqcode == '0025'  ) {
-                  $answer = $userMessage;
-                  $case = 4;
-                  $update = 11;
-                  $seqcode = '0029';
-                  $nextseqcode = '0031';
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-
-            }elseif ($userMessage == 'เบา' ||$userMessage == 'ปานกลาง' || $userMessage == 'หนัก' ) {
-                    //||$userMessage== 'ดูข้อมูล'
-                    if ($userMessage=='หนัก'  ) {
-                      $answer= 3;
-                    }elseif($userMessage=='ปานกลาง') {
-                      $answer = 2;
-                    }else{
-                      $answer = 1;
-                    }
-                  $case = 5;
-                  $update = 13;
-                  // if($userMessage== 'ดูข้อมูล'){
-                  //    $seqcode = '0041';
-                  //    $nextseqcode = '0000';
-                  //    $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
-
-                  // }
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  $user_update = (new SqlController)->user_update($user,$answer,$update);
-                  $seqcode = '0029';
-                  $nextseqcode = '0031';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                
-
-
-
-                  $reward_count = (new SqlController)->reward_count($user);
-
-                if($reward_count == 0 ){
-                  $point = 0;
-                  $feq_ans_meals = 0;
-                  $feq_ans_week =0;
-                  $reward_ins =  (new SqlController)->ins_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
-                }
-                
-
-        
-            }elseif (($userMessage == 'ยืนยันข้อมูล' && $sequentsteps->seqcode == '0029') || ($userMessage == 'ยืนยันข้อมูล' && $sequentsteps->seqcode == '0040' ) || $userMessage == 'ยืนยันข้อมูล' ) {
-                      //Model::count()
-                  
-                
-              $num = RecordOfPregnancy::where('user_id', $user)
-                                    ->whereNull('deleted_at')
-                                    ->count();
-      
-                  $users_register = (new SqlController)->users_register_select($user);
-                  $preg_week = $users_register->preg_week;
-                  $user_Pre_weight = $users_register->user_Pre_weight;
-                  $user_weight = $users_register->user_weight;
-
-                  $user_height =  $users_register->user_height;
-                  $status =  $users_register->status;
-
-                  $bmi  = (new CalController)->bmi_calculator($user_Pre_weight,$user_height);
-                  
-                  $user_age =  $users_register->user_age;
-                  $active_lifestyle =  $users_register->active_lifestyle;
-                  $weight_criteria  = (new CalController)->weight_criteria($bmi);
-                  $cal  = (new CalController)->cal_calculator($user_age,$active_lifestyle,$user_Pre_weight,$preg_week);
-
-                if ($bmi>=24.9 ) {
-                    $text = 'น้ำหนักของคุณเกินเกณฑ์ ลองปรับการรับประทานอาหารหรือออกกำลังกายดูไหมคะ'."\n".
-                       'หากคุณแม่ไม่ทราบว่าจะทานอะไรดีหรือออกกำลังกายแบบไหนดีสามารถกดที่ MENU ด้านล่างได้เลยนะคะ';
-                }else{
-                    $text = 'หากคุณแม่ไม่ทราบว่าจะทานอะไรดีหรือออกกำลังกายแบบไหนดีสามารถกดที่ MENU ด้านล่างได้เลยนะคะ';
-                }
-               
-                // if( $sequentsteps->seqcode == '0029'){
-
-                if($num==0){  
-                        $RecordOfPregnancy = (new SqlController)->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
-                 }else{
-
-                   $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
-                       ->whereNull('deleted_at')
-                       ->orderBy('updated_at', 'asc')
-                       ->first();
-                   $created_at = $RecordOfPregnancy->created_at;
-               
-                    $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
-                          ->where('created_at', $created_at)
-                          ->where('preg_week',$preg_week)
-                          ->update(['preg_weight' =>$user_weight,'preg_week' =>$preg_week]);
-
-                        $num1 =  RecordOfPregnancy::where('user_id', $user)
-                                    ->where('preg_week',$preg_week)
-                                    ->count(); 
-
-                       if($num1 == 0){
-                          $RecordOfPregnancy = (new SqlController)->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
-                       }else{
-                         $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
-                          // ->where('created_at', $created_at)
-                          ->where('preg_week',$preg_week)
-                          ->update(['preg_weight' =>$user_weight,'preg_week' =>$preg_week]);
-                       }
-                        
-                 }
-               if($status == '4'){
-                         $users_register = users_register::where('user_id', $user)
-                                                          ->whereNull('deleted_at')
-                                                          ->update(['status' => '1']);
-                           
-               }
-    
-                // }else{
-                // $delete = $this->RecordOfPregnancy_delete($user);
-                // $RecordOfPregnancy = $this->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
-                // }
-/////////////////รูปกราฟ//////////////////////
-                $format = (new SqlController)->sequentsteps_update2($user,$cal);
-                $seqcode = '0000';
-                $nextseqcode = '0000';
-                $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                $a = (new ReplyMessageController)->replymessage_result($replyToken,$preg_week,$bmi,$cal,$weight_criteria,$text,$user);
-
-    
-        
-                  //    $url = "https://peat.none.codes/graph/".$user; 
-               
-                  // //call Google PageSpeed Insights API
-                  // $googlePagespeedData = file_get_contents("https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url=$url&screenshot=true");
-
-                  // // //decode json data
-                  // $googlePagespeedData = json_decode($googlePagespeedData, true);
-
-                  // //screenshot data
-                  // $screenshot = $googlePagespeedData['screenshot']['data'];
-                  // $screenshot = str_replace(array('_','-'),array('/','+'),$screenshot);
-                  // $name_of_screenshot = uniqid().'.png';
-
-                  // // // display screenshot image
-                  // $data = "data:image/jpeg;base64,".$screenshot;
-
-
-                  // $img = Image::make($data);
-                  // $filename  = uniqid().'.jpg';
-                  // $path = 'uploads/' . $filename;
-                  // $img->save($path);
-
-                  // $sequentsteps = sequentsteps::where('sender_id', $user)
-                  //                             ->update(['answer'=>$filename]);
-////////////////////////////////////////////////////////////////////////////////////////
-            }elseif ($userMessage == 'ทารกในครรภ์') {
-                $users_register = (new SqlController)->users_register_select($user);     
-                $preg_week = $users_register->preg_week;
-                $pregnants = (new SqlController)->pregnants($preg_week);
-                $descript = $pregnants->descript;
-                $userMessage  =  $descript;
-                $case = 1; 
-
-            }elseif ($userMessage == 'ข้อมูลโภชนาการ') {
-                  $users_register = (new SqlController)->users_register_select($user);
-                
-                  $preg_week = $users_register->preg_week;
-
-                  $user_Pre_weight = $users_register->user_Pre_weight;
-                  $user_weight = $users_register->user_weight;
-                  $user_height =  $users_register->user_height;
-
-                  $bmi  = (new CalController)->bmi_calculator($user_Pre_weight,$user_height);
-                  
-                  $user_age =  $users_register->user_age;
-                  $active_lifestyle =  $users_register->active_lifestyle;
-                  $weight_criteria  = (new CalController)->weight_criteria($bmi);
-                  $cal  = (new CalController)->cal_calculator($user_age,$active_lifestyle,$user_Pre_weight,$preg_week);
-
-                   $meal_planing = (new checkmessageController)->meal_planing($cal);
-                   $userMessage  = $meal_planing;
-                   $case = 1;  
-            }elseif ($userMessage == 'แก้ไขข้อมูล') {
-
-                   $seqcode = '0040';
-                   $nextseqcode = '0000';
-                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                   $userMessage = 'พิมพ์เพียงแค่เลขตามด้านล่างนี้เพื่อแก้ไข'. "\n".
-                                  'พิมพ์ "1" ชื่อ '. "\n".
-                                  'พิมพ์ "2" อายุ '. "\n".
-                                  'พิมพ์ "3" ส่วนสูง '."\n".
-                                  'พิมพ์ "4" น้ำหนักก่อนตั้งครรภ์ '."\n".
-                                  'พิมพ์ "5" น้ำหนักปัจจุบัน '."\n".
-                                  'พิมพ์ "6" อายุครรภ์ '."\n".
-                                  'พิมพ์ "7" เบอร์โทรศัพท์ '."\n".
-                                  'พิมพ์ "8" อีเมล '."\n".
-                                  'พิมพ์ "9" โรงพยาบาลที่ฝากครรภ์ '."\n".
-                                  // 'พิมพ์ "10" เลขประจำตัวผู้ป่วย '."\n".
-                                  // 'พิมพ์ "11" แพ้ยา '."\n".
-                                  'พิมพ์ "10" แพ้อาหาร ';
-                   $case = 1;  
-            }elseif (is_numeric($userMessage) !== false && $sequentsteps->seqcode == '0040' && $userMessage <=12) {
-                switch($userMessage) {
-                 case '1' : 
-                       $userMessage = 'ขอทราบชื่อและนามสกุลของคุณแม่อีกครั้งค่ะ';
-                       $case = 1;
-                       $seqcode = '0140' ;
-                       $nextseqcode = '0000';
-                    
-                    break;
-                 case '2' : 
-                       $seqcode = '0007' ;
-                       $case = 1;
-                       $userMessage  = (new SqlController)->sequents_question($seqcode);
-                       $seqcode = '0240' ;
-                       $nextseqcode = '0000';
-        
-                    break;
-                 case '3' : 
-                       $seqcode = '0009' ;
-                       $case = 1;
-                       $userMessage  = (new SqlController)->sequents_question($seqcode);
-                       $seqcode = '0340' ;
-                       $nextseqcode = '0000';
-                    break;
-                 case '4' : 
-                       $seqcode = '0011' ;
-                       $case = 1;
-                       $userMessage  = (new SqlController)->sequents_question($seqcode);
-                       $seqcode = '0440' ;
-                       $nextseqcode = '0000';
-                    break;
-                 case '5' : 
-                       $seqcode = '0013' ;
-                       $case = 1;
-                       $userMessage  = (new SqlController)->sequents_question($seqcode);
-                       $seqcode = '0540' ;
-                       $nextseqcode = '0000';
-
-                    break;
-                 case '6' : 
-                       $seqcode = '0015' ;
-                       $case = 1;
-                       $userMessage  = (new SqlController)->sequents_question($seqcode);
-                       $seqcode = '0640' ;
-                       $nextseqcode = '0000';
-                       $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                       $case = 2;
-                        return (new ReplyMessageController)->replymessage($replyToken,$userMessage,$case);
-                    break;
-                 case '7' : 
-                       $seqcode = '0017' ;
-                       $case = 1;
-                       $userMessage  = (new SqlController)->sequents_question($seqcode);
-                       $seqcode = '0740' ;
-                       $nextseqcode = '0000';
-                    break;
-                 case '8' : 
-                       $seqcode = '0019' ;
-                       $case = 1;
-                       $userMessage  = (new SqlController)->sequents_question($seqcode);
-                       $seqcode = '0840' ;
-                       $nextseqcode = '0000';
-                    break;
-                 case '9' : 
-                       $seqcode = '0021' ;
-                       $case = 17;
-                       $userMessage  = (new SqlController)->sequents_question($seqcode);
-                       $seqcode = '0940' ;
-                       $nextseqcode = '0000';
-                    break;
-                 // case '10' : 
-                 //       $seqcode = '0023' ;
-                 //       $case = 1;
-                 //       $userMessage  = $this->sequents_question($seqcode);
-                 //       $seqcode = '1040' ;
-                 //       $nextseqcode = '0000';
-                 //    break;
-                 // case '11' : 
-                 //       $seqcode = '0025' ;
-                 //       $case = 9;
-                 //       $userMessage  = $this->sequents_question($seqcode);
-                 //       $seqcode = '1140' ;
-                 //       $nextseqcode = '0000';
-                 //    break;
-                 case '10' : 
-                       $seqcode = '0027' ;
-                       $case = 10;
-                       $userMessage  = (new SqlController)->sequents_question($seqcode);
-                       $seqcode = '1240' ;
-                       $nextseqcode = '0000';
-                    break;
-                }
-                   
-                    $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0140') {
-       
-                  $answer = $userMessage;
-                  $case = 5;
-                  $seqcode = '0040';
-                  $nextseqcode = '0000';
-                  $update = 1;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0240') {
-
-                if(is_numeric($userMessage) !== false){
-                  $answer = $userMessage;
-                  $today_years = date("Y");
-                  $yearsofbirth = $today_years - $userMessage;
-                  $dateofbirth = $yearsofbirth.'-01-01';
-                  $case = 5;
-                  $seqcode = '0040';
-                  $nextseqcode = '0000';
-                  $update = 2;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $update_dateofbirth = (new SqlController)->update_dateofbirth($dateofbirth,$user);
-                       
-  
-                }else{
-                  $case = 1;
-                  $userMessage = 'อายุตอบเป็นตัวเลขเท่านั้นนะคะ กรุณาพิมพ์ใหม่';
-                }
-
-             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0340') {
-
-               if(is_numeric($userMessage) !== false && $userMessage<200){
-                  $answer = $userMessage;
-                  $case = 5;
-                  $seqcode = '0040';
-                  $nextseqcode = '0000';
-                  $update = 3;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-
-                }else{
-                  $case = 1;
-                  $userMessage = 'ส่วนสูงตอบเป็นตัวเลขเท่านั้น หน่วยเซนติเมตรนะคะ กรุณาพิมพ์ใหม่';
-                }
-             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0440') {
-
-                if(is_numeric($userMessage) !== false && $userMessage<150 && $userMessage>0){
-                  $answer = $userMessage;
-                  $case = 5;
-                  $seqcode = '0040';
-                  $nextseqcode = '0000';
-                  $update = 4;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                }else{
-                  $case = 1;
-                  $userMessage = 'น้ำหนักตอบเป็นตัวเลขเท่านั้น หน่วยเป็นกิโลกรัม กรุณาพิมพ์ใหม่';
-                }
-                 
-
-             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0540') {
-                if(is_numeric($userMessage) !== false && $userMessage<150 && $userMessage>0){
-                  $answer = $userMessage;
-                  $case = 5;
-                  $seqcode = '0040';
-                  $nextseqcode = '0000';
-                  $update = 5;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-
-                }else{
-                  $case = 1;
-                  $userMessage = 'น้ำหนักตอบเป็นตัวเลขเท่านั้น หน่วยเป็นกิโลกรัม กรุณาพิมพ์ใหม่';
-                }
-                 
-
-             }elseif ($userMessage == 'ครั้งสุดท้ายที่มีประจำเดือน' && $sequentsteps->seqcode == '0640') {
-                  $answer = $userMessage;
-                  $case = 1;
-                  $seqcode = '10640';
-                  $nextseqcode = '0000';
-                  $userMessage  = 'ขอทราบครั้งสุดท้ายที่คุณมีประจำเดือนเพื่อคำนวณอายุครรภ์ค่ะ (กรุณาตอบวันที่และเดือนเป็นตัวเลขนะคะ เช่น 17 04 คือ วันที่ 17 เมษายน)';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-
-             }elseif ($userMessage == 'กำหนดการคลอด' && $sequentsteps->seqcode == '0640') {
-                 $answer = $userMessage;
-                  $case = 1;
-                  $seqcode = '20640';
-                  $nextseqcode = '0000';
-                  $userMessage  = 'ขอทราบกำหนดการคลอดของคุณหน่อยค่ะ (กรุณาตอบวันที่และเดือนเป็นตัวเลขนะคะ เช่น 17 04 คือ วันที่ 17 เมษายน';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-             }elseif ($userMessage == 'อายุครรภ์ถูกต้อง'  && ($sequentsteps->seqcode == '10640' ||  $sequentsteps->seqcode == '20640')  ) {
-                  $answer = $sequentsteps->answer;
-                  $case = 5;
-                  $seqcode = '0040';
-                  $nextseqcode = '0000';
-                  $update = 6;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-
-            }elseif ( is_string($userMessage) !== false   && ($sequentsteps->seqcode == '10640' || $sequentsteps->seqcode == '20640') ) {
-                  $seqcode = $sequentsteps->seqcode;
-                  $userMessage = (new CalController)->pregnancy_calculator($user,$userMessage,$seqcode);
-
-            if($userMessage == 'ดูเหมือนคุณจะพิมพ์ไม่ถูกต้อง' || strpos($userMessage, 'วันเท่านั้น') !== false ||strpos($userMessage, 'ฉันคิดว่า') !== false ){
-                     $case = 1;
-                  }else{
-                     $case = 3;
-                  }
-      
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0740') {
-
-                if(is_numeric($userMessage) !== false && strlen($userMessage) == 10){
-                  $answer = $userMessage;
-                  $case = 5;
-                  $seqcode = '0040';
-                  $nextseqcode = '0000';
-                  $update = 7;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                $userMessage  = (new checkmessageController)->user_data($user);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                }else{
-                  $case = 1;
-                  $userMessage = 'ฉันคิดว่าคุณพิมพ์เบอร์โทรศัพท์ผิดนะคะ กรุณาพิมพ์ใหม่';
-                }
-                      
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0840') {
-        
-
-                 if(strpos($userMessage, '@') !== false){
-                      $answer = $userMessage;
-                      $case = 5;
-                      $seqcode = '0040';
-                      $nextseqcode = '0000';
-                      $update = 8;
-                      $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                      $userMessage  = (new checkmessageController)->user_data($user);
-                      $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  }else{
-                    $case = 1;
-                    $userMessage = 'ฉันคิดว่าคุณพิมพ์อีเมลผิดนะ กรุณาพิมพ์ใหม่';
-                  }
-                
-
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '0940') {
-       
-                  $answer = $userMessage;
-                  $case = 5;
-                  $seqcode = '0040';
-                  $nextseqcode = '0000';
-                  $update = 9;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                             
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '1040') {
-       
-                  $answer = $userMessage;
-                  $case = 5;
-                  $seqcode = '0040';
-                  $nextseqcode = '0000';
-                  $update = 10;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-            }elseif (  $userMessage == 'แพ้ยา'&& $sequentsteps->seqcode == '1140') {
-    
-                  $answer = $userMessage;
-                  $case = 1;
-                  $userMessage  = 'คุณแพ้ยาอะไรคะ?';
-                  // $seqcode = '0040';
-                  // $nextseqcode = '0000';
-                  // $update = 11;
-                  // $user_update = $this->user_update($user,$answer,$update); 
-                  // $userMessage  = $this->user_data($user);
-                  // $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
-
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '1140') {
-      
-                  $answer = $userMessage;
-                  $case = 5;
-                  $seqcode = '0040';
-                  $nextseqcode = '0000';
-                  $update = 11;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-            }elseif (  $userMessage == 'แพ้อาหาร'&& $sequentsteps->seqcode == '1240') {
-    
-                  $answer = $userMessage;
-                  $case = 1;
-                  $userMessage  = 'คุณแพ้อาหารอะไรคะ?';
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '1240') {
-       
-                  $answer = $userMessage;
-                  $case = 5;
-                  $seqcode = '0040';
-                  $nextseqcode = '0000';
-                  $update = 12;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
 ///ถามน้ำหนักทุกวันจันทร์            
 //             }elseif ($userMessage == 'น้ำหนักถูกต้อง' && $sequentsteps->seqcode == '1003' ) {
 //                   // $case = 7;
