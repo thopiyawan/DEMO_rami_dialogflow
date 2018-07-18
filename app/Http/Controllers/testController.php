@@ -75,12 +75,12 @@ class testController extends Controller
     {       
      $user ='U2dc636d2cd052e82c29f5284e00f69b9';
      // $re = [];
-     // $record = tracker::select('user_id')
-     //                     ->where('user_id',$id)
-     //                           ->whereNull('deleted_at')
-     //                           ->orderBy('created_at', 'DESC')
-     //                           ->get()->toArray();
-     //                           echo var_dump($record);
+     $record = tracker::select('user_id')
+                         ->where('user_id',$id)
+                               // ->whereNull('deleted_at')
+                               ->orderBy('created_at', 'DESC')
+                               ->get()->toArray();
+    echo var_dump($record);
                                 //   foreach( $record as $item1){
                               
 
@@ -129,14 +129,14 @@ class testController extends Controller
     //                        echo $da[$i],",";
                         // }
     //               // }
-        $data = presenting_gift::where('presenting_gift.presenting_status',1)
-                 ->where('presenting_gift.user_id',$user)
-                 ->join('reward_gift', 'reward_gift.code_gift', '=', 'presenting_gift.code_gift')
-                 ->select('reward_gift.name_gift','presenting_gift.code_gift', DB::raw('count(*) as total'))
-                 ->groupBy('presenting_gift.code_gift')
-                 // ->orderBy('presenting_gift.id','asc')
-                 ->get();
-       print_r($data);
+       //  $data = presenting_gift::where('presenting_gift.presenting_status',1)
+       //           ->where('presenting_gift.user_id',$user)
+       //           ->join('reward_gift', 'reward_gift.code_gift', '=', 'presenting_gift.code_gift')
+       //           ->select('reward_gift.name_gift','presenting_gift.code_gift', DB::raw('count(*) as total'))
+       //           ->groupBy('presenting_gift.code_gift')
+       //           // ->orderBy('presenting_gift.id','asc')
+       //           ->get();
+       // print_r($data);
 
 ///////////////////////////////////////////////////////////////////////////
 
