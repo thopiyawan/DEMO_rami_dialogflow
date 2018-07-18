@@ -1683,1637 +1683,1637 @@ class GetMessageController extends Controller
                   $userMessage  = (new checkmessageController)->user_data($user);
                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
 ///ถามน้ำหนักทุกวันจันทร์            
-            }elseif ($userMessage == 'น้ำหนักถูกต้อง' && $sequentsteps->seqcode == '1003' ) {
-                  // $case = 7;
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                  $user_weight = $sequentsteps->answer;
+//             }elseif ($userMessage == 'น้ำหนักถูกต้อง' && $sequentsteps->seqcode == '1003' ) {
+//                   // $case = 7;
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                   $user_weight = $sequentsteps->answer;
                   
 
-                  $RecordOfPregnancy = (new SqlController)->RecordOfPregnancy_select($user);
-                  $updated_at = $RecordOfPregnancy->updated_at;
+//                   $RecordOfPregnancy = (new SqlController)->RecordOfPregnancy_select($user);
+//                   $updated_at = $RecordOfPregnancy->updated_at;
                
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
                  
-                  $update = 5;
-                  $answer = $user_weight;
-                  $update_user = (new SqlController)->user_update($user,$answer,$update);
-                  // $userMessage = $user;
-                  // $replymessage = $this->replymessage($replyToken,$userMessage,$case);
+//                   $update = 5;
+//                   $answer = $user_weight;
+//                   $update_user = (new SqlController)->user_update($user,$answer,$update);
+//                   // $userMessage = $user;
+//                   // $replymessage = $this->replymessage($replyToken,$userMessage,$case);
 
                
   
-                  $users_register = (new SqlController)->users_register_select($user);
+//                   $users_register = (new SqlController)->users_register_select($user);
                 
-                  $preg_week = $users_register->preg_week;
+//                   $preg_week = $users_register->preg_week;
 
-                  $user_Pre_weight = $users_register->user_Pre_weight;
-                  $user_weight = $users_register->user_weight;
-                  $user_height =  $users_register->user_height;
+//                   $user_Pre_weight = $users_register->user_Pre_weight;
+//                   $user_weight = $users_register->user_weight;
+//                   $user_height =  $users_register->user_height;
 
-                  $bmi  = (new CalController)->bmi_calculator($user_Pre_weight,$user_height);
+//                   $bmi  = (new CalController)->bmi_calculator($user_Pre_weight,$user_height);
                   
-                  $user_age =  $users_register->user_age;
-                  $active_lifestyle =  $users_register->active_lifestyle;
-                  $weight_criteria  = (new CalController)->weight_criteria($bmi);
-                  $cal  = (new CalController)->cal_calculator($user_age,$active_lifestyle,$user_Pre_weight,$preg_week);
+//                   $user_age =  $users_register->user_age;
+//                   $active_lifestyle =  $users_register->active_lifestyle;
+//                   $weight_criteria  = (new CalController)->weight_criteria($bmi);
+//                   $cal  = (new CalController)->cal_calculator($user_age,$active_lifestyle,$user_Pre_weight,$preg_week);
 
-                       $num = RecordOfPregnancy::where('user_id', $user)
-                                    ->whereNull('deleted_at')
-                                    ->where('preg_week',$preg_week)
-                                    ->count();
+//                        $num = RecordOfPregnancy::where('user_id', $user)
+//                                     ->whereNull('deleted_at')
+//                                     ->where('preg_week',$preg_week)
+//                                     ->count();
 
-                if ($bmi>=24.9 ) {
-                    $text = 'น้ำหนักของคุณเกินเกณฑ์ ลองปรับการรับประทานอาหารหรือออกกำลังกายดูไหมคะ'."\n".
-                       'หากคุณแม่ไม่ทราบว่าจะทานอะไรดีหรือออกกำลังกายแบบไหนดีสามารถกดที่เมนูกิจกรรมด้านล่างได้เลยนะคะ';
-                }else{
-                    $text = 'หากคุณแม่ไม่ทราบว่าจะทานอะไรดีหรือออกกำลังกายแบบไหนดีสามารถกดที่เมนูกิจกรรมด้านล่างได้เลยนะคะ';
-                }
+//                 if ($bmi>=24.9 ) {
+//                     $text = 'น้ำหนักของคุณเกินเกณฑ์ ลองปรับการรับประทานอาหารหรือออกกำลังกายดูไหมคะ'."\n".
+//                        'หากคุณแม่ไม่ทราบว่าจะทานอะไรดีหรือออกกำลังกายแบบไหนดีสามารถกดที่เมนูกิจกรรมด้านล่างได้เลยนะคะ';
+//                 }else{
+//                     $text = 'หากคุณแม่ไม่ทราบว่าจะทานอะไรดีหรือออกกำลังกายแบบไหนดีสามารถกดที่เมนูกิจกรรมด้านล่างได้เลยนะคะ';
+//                 }
                
-                // if( $sequentsteps->seqcode == '0029'){
+//                 // if( $sequentsteps->seqcode == '0029'){
 
-                if($num==0)         
-                 {  
-                        $RecordOfPregnancy = (new SqlController)->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
-                 }else{
+//                 if($num==0)         
+//                  {  
+//                         $RecordOfPregnancy = (new SqlController)->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
+//                  }else{
 
-                   // $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
-                   //     ->where('deleted_status', '1')
-                   //     ->orderBy('updated_at', 'asc')
-                   //     ->first();
-                   // $created_at = $RecordOfPregnancy->created_at;
+//                    // $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
+//                    //     ->where('deleted_status', '1')
+//                    //     ->orderBy('updated_at', 'asc')
+//                    //     ->first();
+//                    // $created_at = $RecordOfPregnancy->created_at;
                
-                    // $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
-                    //       ->where('created_at', $created_at)
-                    //       ->where('preg_week',$preg_week)
-                    //       ->update(['preg_weight' =>$user_weight,'preg_week' =>$preg_week]);
+//                     // $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
+//                     //       ->where('created_at', $created_at)
+//                     //       ->where('preg_week',$preg_week)
+//                     //       ->update(['preg_weight' =>$user_weight,'preg_week' =>$preg_week]);
 
-                        $num1 =  RecordOfPregnancy::where('user_id', $user)
-                                    ->where('preg_week',$preg_week)
-                                    ->count(); 
+//                         $num1 =  RecordOfPregnancy::where('user_id', $user)
+//                                     ->where('preg_week',$preg_week)
+//                                     ->count(); 
 
-                       // if($num1 == 0){
-                       //    $RecordOfPregnancy = $this->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
-                       // }else{
-                         $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
-                          // ->where('created_at', $created_at)
-                          ->where('preg_week',$preg_week)
-                          ->update(['preg_weight' =>$user_weight,'preg_week' =>$preg_week]);
-                       // }
+//                        // if($num1 == 0){
+//                        //    $RecordOfPregnancy = $this->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
+//                        // }else{
+//                          $RecordOfPregnancy = RecordOfPregnancy::where('user_id', $user)
+//                           // ->where('created_at', $created_at)
+//                           ->where('preg_week',$preg_week)
+//                           ->update(['preg_weight' =>$user_weight,'preg_week' =>$preg_week]);
+//                        // }
                         
-                 }
+//                  }
 
     
-                // }else{
-                // $delete = $this->RecordOfPregnancy_delete($user);
-                // $RecordOfPregnancy = $this->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
-                // }
-                $date =  $preg_week ;
-                $RecordOfPregnancy = (new SqlController)->RecordOfPregnancy_update($user_weight,$user,$date);
-                $format = (new SqlController)->sequentsteps_update2($user,$cal);
-                $seqcode = '0000';
-                $nextseqcode = '0000';
-                $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                $users_register =   (new SqlController)->users_register_select($user);
-                $key = $users_register->ulife_connect;
-                $api_weight = (new ApiController)->setgraph_api($key,$user);
+//                 // }else{
+//                 // $delete = $this->RecordOfPregnancy_delete($user);
+//                 // $RecordOfPregnancy = $this->RecordOfPregnancy_insert($preg_week, $user_weight,$user);
+//                 // }
+//                 $date =  $preg_week ;
+//                 $RecordOfPregnancy = (new SqlController)->RecordOfPregnancy_update($user_weight,$user,$date);
+//                 $format = (new SqlController)->sequentsteps_update2($user,$cal);
+//                 $seqcode = '0000';
+//                 $nextseqcode = '0000';
+//                 $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                 $users_register =   (new SqlController)->users_register_select($user);
+//                 $key = $users_register->ulife_connect;
+//                 $api_weight = (new ApiController)->setgraph_api($key,$user);
          
-                return (new ReplyMessageController)->replymessage_result($replyToken,$preg_week,$bmi,$cal,$weight_criteria,$text,$user);
-//น้ำหนักทุกวันจันทร์
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '1003' ) {
+//                 return (new ReplyMessageController)->replymessage_result($replyToken,$preg_week,$bmi,$cal,$weight_criteria,$text,$user);
+// //น้ำหนักทุกวันจันทร์
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '1003' ) {
 
-                if(is_numeric($userMessage) !== false){
-                  $answer = $userMessage;
-                  $case = 8;    
-                  $seqcode = '1003';
-                  $nextseqcode = '0000'; 
-                  $sequentsteps = sequentsteps::where('sender_id', $user)
-                                              ->update(['seqcode' =>$seqcode,'answer'=>$answer,'nextseqcode' => $nextseqcode]);
+//                 if(is_numeric($userMessage) !== false){
+//                   $answer = $userMessage;
+//                   $case = 8;    
+//                   $seqcode = '1003';
+//                   $nextseqcode = '0000'; 
+//                   $sequentsteps = sequentsteps::where('sender_id', $user)
+//                                               ->update(['seqcode' =>$seqcode,'answer'=>$answer,'nextseqcode' => $nextseqcode]);
 
-                  $replymessage = (new ReplyMessageController)->replymessage($replyToken,$userMessage,$case);  
+//                   $replymessage = (new ReplyMessageController)->replymessage($replyToken,$userMessage,$case);  
 
                   
-                }else{
-                  $case = 1;
-                  $userMessage = 'กรุณาตอบเป็นตัวเลขเท่านั้นค่ะ กรุณาพิมพ์ใหม่';
-                }
+//                 }else{
+//                   $case = 1;
+//                   $userMessage = 'กรุณาตอบเป็นตัวเลขเท่านั้นค่ะ กรุณาพิมพ์ใหม่';
+//                 }
                  
-//ถามทุกวันเกี่ยวกับการกินอาหาร/ออกกำลังกาย/วิตามิน
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2001'  ) {
+// //ถามทุกวันเกี่ยวกับการกินอาหาร/ออกกำลังกาย/วิตามิน
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2001'  ) {
 
-               if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                  }else{
-                  $tracker1 = $userMessage;
+//                if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+//                   }else{
+//                   $tracker1 = $userMessage;
                 
-                  //$tracker_update =  $this->tracker_update($user,$column,$tracker);
-                  $case = 1;
-                  // $update = 8;
-                  $seqcode = '2002_1';
-                  $nextseqcode = '2003';
-                  $userMessage  = 'ทานขนมหรือของว่างระหว่างวันไหมคะ?';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  // $userMessage  = $this->sequents_question($seqcode);
-                       $num = tracker::where('user_id', $user)
-                                    ->whereNull('deleted_at')
-                                    ->count();
-                      if($num==0)         
-                   {    
-                         $tracker= 'NULL';
-                         $tracker_insert =  (new SqlController)->tracker_insert1($user,$tracker);
-                         $tracker= $tracker1 ;
-                         $column = 'dinner';
-                         $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker);
-                   }else{
-                         $tracker= $tracker1 ;
-                         $column = 'dinner';
-                         $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
-                   }
-                }
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2002_1'  ) {
-                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                  }else{
-                  $tracker = $userMessage;
-                  $column = 'dessert_din';
-                  $tracker_update =  (new SqlController)->tracker_update($user,$column,$tracker);
-                  $case = 11;
-                  // $update = 8;
-                  $seqcode = '2002';
-                  $nextseqcode = '2003';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  }          
+//                   //$tracker_update =  $this->tracker_update($user,$column,$tracker);
+//                   $case = 1;
+//                   // $update = 8;
+//                   $seqcode = '2002_1';
+//                   $nextseqcode = '2003';
+//                   $userMessage  = 'ทานขนมหรือของว่างระหว่างวันไหมคะ?';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   // $userMessage  = $this->sequents_question($seqcode);
+//                        $num = tracker::where('user_id', $user)
+//                                     ->whereNull('deleted_at')
+//                                     ->count();
+//                       if($num==0)         
+//                    {    
+//                          $tracker= 'NULL';
+//                          $tracker_insert =  (new SqlController)->tracker_insert1($user,$tracker);
+//                          $tracker= $tracker1 ;
+//                          $column = 'dinner';
+//                          $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker);
+//                    }else{
+//                          $tracker= $tracker1 ;
+//                          $column = 'dinner';
+//                          $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
+//                    }
+//                 }
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2002_1'  ) {
+//                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+//                   }else{
+//                   $tracker = $userMessage;
+//                   $column = 'dessert_din';
+//                   $tracker_update =  (new SqlController)->tracker_update($user,$column,$tracker);
+//                   $case = 11;
+//                   // $update = 8;
+//                   $seqcode = '2002';
+//                   $nextseqcode = '2003';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $userMessage  = (new SqlController)->sequents_question($seqcode);
+//                   }          
             
-            }elseif ($userMessage == 'ทานแล้ว'  && $sequentsteps->seqcode == '2002'  ) {
+//             }elseif ($userMessage == 'ทานแล้ว'  && $sequentsteps->seqcode == '2002'  ) {
 
-                  $tracker = '1';
-                  $column = 'vitamin';
-                  $tracker_update =  (new SqlController)->tracker_update($user,$column,$tracker);
-                  $case = 12;
-                  // $update = 8;
-                  $seqcode = '2003';
-                  $nextseqcode = '2004';
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $tracker = '1';
+//                   $column = 'vitamin';
+//                   $tracker_update =  (new SqlController)->tracker_update($user,$column,$tracker);
+//                   $case = 12;
+//                   // $update = 8;
+//                   $seqcode = '2003';
+//                   $nextseqcode = '2004';
+//                   $userMessage  = (new SqlController)->sequents_question($seqcode);
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
                  
 
-            }elseif ($userMessage == 'ยังไม่ได้ทาน' && $sequentsteps->seqcode == '2002'  ) {
-                  $tracker = '0';
-                  $column = 'vitamin';
-                  $tracker_update =  (new SqlController)->tracker_update($user,$column,$tracker);  
-                  $case = 12;
-                  // $update = 8;
-                  $seqcode = '2003';
-                  $nextseqcode = '2004';
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//             }elseif ($userMessage == 'ยังไม่ได้ทาน' && $sequentsteps->seqcode == '2002'  ) {
+//                   $tracker = '0';
+//                   $column = 'vitamin';
+//                   $tracker_update =  (new SqlController)->tracker_update($user,$column,$tracker);  
+//                   $case = 12;
+//                   // $update = 8;
+//                   $seqcode = '2003';
+//                   $nextseqcode = '2004';
+//                   $userMessage  = (new SqlController)->sequents_question($seqcode);
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
                  
 
-            }elseif ($userMessage == 'ออกแล้ว'  && $sequentsteps->seqcode == '2003'  ) {
-                  $answer = $userMessage;
-                  $case = 1;
-                  // $update = 8;
-                  $seqcode = '2004';
-                  $nextseqcode = '0000';
-                  $userMessage  = (new SqlController)->sequents_question($seqcode);
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);  
+//             }elseif ($userMessage == 'ออกแล้ว'  && $sequentsteps->seqcode == '2003'  ) {
+//                   $answer = $userMessage;
+//                   $case = 1;
+//                   // $update = 8;
+//                   $seqcode = '2004';
+//                   $nextseqcode = '0000';
+//                   $userMessage  = (new SqlController)->sequents_question($seqcode);
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);  
 
-            }elseif ($userMessage == 'ยัง'  && $sequentsteps->seqcode == '2003'  ) {
-                  $tracker = $userMessage;
-                  $column = 'exercise';
-                  $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
-                  $case = 1;
-                  // $update = 8;
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
+//             }elseif ($userMessage == 'ยัง'  && $sequentsteps->seqcode == '2003'  ) {
+//                   $tracker = $userMessage;
+//                   $column = 'exercise';
+//                   $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
+//                   $case = 1;
+//                   // $update = 8;
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
 
                  
-                  //    $reward_se =  (new SqlController)->reward_select1($user);
-                  //    $feq_ans_week = $reward_se->feq_ans_week;
-                  //    $feq_ans_meals = $reward_se->feq_ans_meals;
+//                   //    $reward_se =  (new SqlController)->reward_select1($user);
+//                   //    $feq_ans_week = $reward_se->feq_ans_week;
+//                   //    $feq_ans_meals = $reward_se->feq_ans_meals;
 
-                  //     if($reward_se == null){
-                  //       $point = 0;
-                  //       $feq_ans_meals = 1;
-                  //       $feq_ans_week =0;
-                  //       $reward_ins =  (new SqlController)->ins_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
-                  //            $u1  = '😋คุณแม่สามารถสะสมแต้มจากการตอบคำถามทุกวันนะคะ สะสมแต้มเพื่อแลกของรางวัลค่ะ';
+//                   //     if($reward_se == null){
+//                   //       $point = 0;
+//                   //       $feq_ans_meals = 1;
+//                   //       $feq_ans_week =0;
+//                   //       $reward_ins =  (new SqlController)->ins_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                   //            $u1  = '😋คุณแม่สามารถสะสมแต้มจากการตอบคำถามทุกวันนะคะ สะสมแต้มเพื่อแลกของรางวัลค่ะ';
 
-                  //     }else{
+//                   //     }else{
 
 
-                  //         if($feq_ans_week>=7){
-                  //             $p = $reward_se->point;
-                  //             $point = $p+1;
-                  //             $feq_ans_week = 0;
-                  //             $feq_ans_meals = 0;
-                  //             $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
-                  //             $u1  = '😆ยินดีด้ววยค่ะ คุณแม่ได้รับแต้มสะสมเพิ่ม 1 แต้ม จากการตอบคำถามทุกวันเป็นเวลา 1 สัปดาห์ค่ะ';
-                  //         }elseif($feq_ans_meals>=2 ){
-                  //             $p = $reward_se->point;
-                  //             $point = $p+1;
-                  //             $feqweek = $reward_se->point;
-                  //             $feq_ans_week = $feqweek+1;
-                  //             $feq_ans_meals = 0;
-                  //             $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                   //         if($feq_ans_week>=7){
+//                   //             $p = $reward_se->point;
+//                   //             $point = $p+1;
+//                   //             $feq_ans_week = 0;
+//                   //             $feq_ans_meals = 0;
+//                   //             $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                   //             $u1  = '😆ยินดีด้ววยค่ะ คุณแม่ได้รับแต้มสะสมเพิ่ม 1 แต้ม จากการตอบคำถามทุกวันเป็นเวลา 1 สัปดาห์ค่ะ';
+//                   //         }elseif($feq_ans_meals>=2 ){
+//                   //             $p = $reward_se->point;
+//                   //             $point = $p+1;
+//                   //             $feqweek = $reward_se->point;
+//                   //             $feq_ans_week = $feqweek+1;
+//                   //             $feq_ans_meals = 0;
+//                   //             $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
 
-                  //             $u1  = '😆คุณแม่ได้รับแต้มสะสม 1 แต้ม จากการตอบคำถามวันนี้ค่ะ';
+//                   //             $u1  = '😆คุณแม่ได้รับแต้มสะสม 1 แต้ม จากการตอบคำถามวันนี้ค่ะ';
 
-                  //         }elseif($feq_ans_meals>=2 && $feq_ans_week>=7){
-                  //             $p = $reward_se->point;
-                  //             $point = $p+2;
-                  //             $feq_ans_week = 0;
-                  //             $feq_ans_meals = 0;
-                  //             $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
-                  //             $u1  = '😆คุณแม่ได้รับแต้มสะสม 2 แต้ม จากการตอบคำถามวันนี้ และตอบคำถามทุกวันเป็นเวลา 1 สัปดาห์ค่ะ';
+//                   //         }elseif($feq_ans_meals>=2 && $feq_ans_week>=7){
+//                   //             $p = $reward_se->point;
+//                   //             $point = $p+2;
+//                   //             $feq_ans_week = 0;
+//                   //             $feq_ans_meals = 0;
+//                   //             $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                   //             $u1  = '😆คุณแม่ได้รับแต้มสะสม 2 แต้ม จากการตอบคำถามวันนี้ และตอบคำถามทุกวันเป็นเวลา 1 สัปดาห์ค่ะ';
 
-                  //         }else{
-                  //             $p = $reward_se->point;
-                  //             $point = $p+0;
-                  //             $feq_ans_week = 0;
-                  //             $feq_ans_meals = 0;
-                  //             $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
-                  //             $u1  = 'วันนี้คุณแม่ไม่ได้รับแต้มจากการตอบคำถามค่ะ พรุ่งนี้มาตอบคำถามกันนะคะจะได้รับแต้มสะสม';
-                  //         }
+//                   //         }else{
+//                   //             $p = $reward_se->point;
+//                   //             $point = $p+0;
+//                   //             $feq_ans_week = 0;
+//                   //             $feq_ans_meals = 0;
+//                   //             $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                   //             $u1  = 'วันนี้คุณแม่ไม่ได้รับแต้มจากการตอบคำถามค่ะ พรุ่งนี้มาตอบคำถามกันนะคะจะได้รับแต้มสะสม';
+//                   //         }
                           
-                  //     }  
-                  // $reward_se2 =  (new SqlController)->reward_select1($user);
-                  // $point = $reward_se2->point;  
+//                   //     }  
+//                   // $reward_se2 =  (new SqlController)->reward_select1($user);
+//                   // $point = $reward_se2->point;  
               
-                  // $userMessage1 = $u1.' ตอนนี้คุณแม่มีแต้มสะสม '.$point.' แต้มค่ะ';
-                  // $userMessage2  = 'อย่าลืมออกกำลังกายนะคะ เรามีคำแนะนำการออกกำลังกายให้คุณกดที่menuด้านล่างได้เลยค่ะ';
+//                   // $userMessage1 = $u1.' ตอนนี้คุณแม่มีแต้มสะสม '.$point.' แต้มค่ะ';
+//                   // $userMessage2  = 'อย่าลืมออกกำลังกายนะคะ เรามีคำแนะนำการออกกำลังกายให้คุณกดที่menuด้านล่างได้เลยค่ะ';
 
-                  // (new ReplyMessageController)->replymessage2($replyToken,$userMessage1,$userMessage2);
-                  // $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  // $user_update = $this->user_update($user,$answer,$update);
-                  $userMessage  = 'อย่าลืมออกกำลังกายนะคะ เรามีคำแนะนำการออกกำลังกายและการทานอาหารให้คุณแม่กดที่ MENU ด้านล่างได้เลยนะคะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   // (new ReplyMessageController)->replymessage2($replyToken,$userMessage1,$userMessage2);
+//                   // $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   // $user_update = $this->user_update($user,$answer,$update);
+//                   $userMessage  = 'อย่าลืมออกกำลังกายนะคะ เรามีคำแนะนำการออกกำลังกายและการทานอาหารให้คุณแม่กดที่ MENU ด้านล่างได้เลยนะคะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
               
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2004'  ) {
-                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                  }else{
-                  $tracker = $userMessage;
-                  $column = 'exercise';
-                  $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
-                  $case = 1;
-                  // $update = 8;
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $userMessage  = 'เรามีคำแนะนำการออกกำลังกายและการทานอาหารให้คุณแม่กดที่ MENU ด้านล่างได้เลยนะคะ';
-                      $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-               // (new ReplyMessageController)->replymessage($replyToken,$userMessage);
-                  }
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2004'  ) {
+//                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+//                   }else{
+//                   $tracker = $userMessage;
+//                   $column = 'exercise';
+//                   $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
+//                   $case = 1;
+//                   // $update = 8;
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $userMessage  = 'เรามีคำแนะนำการออกกำลังกายและการทานอาหารให้คุณแม่กดที่ MENU ด้านล่างได้เลยนะคะ';
+//                       $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                // (new ReplyMessageController)->replymessage($replyToken,$userMessage);
+//                   }
              
-               //    $reward_se =  (new SqlController)->reward_select1($user);
-               //    $feq_ans_week = $reward_se->feq_ans_week;
-               //    $feq_ans_meals = $reward_se->feq_ans_meals;
+//                //    $reward_se =  (new SqlController)->reward_select1($user);
+//                //    $feq_ans_week = $reward_se->feq_ans_week;
+//                //    $feq_ans_meals = $reward_se->feq_ans_meals;
 
-               //        if($reward_se == null){
-               //          $point = 0;
-               //          $feq_ans_meals = 1;
-               //          $feq_ans_week =0;
-               //          $reward_ins =  (new SqlController)->ins_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
-               //               $u1  = 'คุณแม่สามารถสะสมแต้มจากการตอบคำถามทุกวันนะคะ สะสมแต้มเพื่อแลกของรางวัลค่ะ😋';
+//                //        if($reward_se == null){
+//                //          $point = 0;
+//                //          $feq_ans_meals = 1;
+//                //          $feq_ans_week =0;
+//                //          $reward_ins =  (new SqlController)->ins_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                //               $u1  = 'คุณแม่สามารถสะสมแต้มจากการตอบคำถามทุกวันนะคะ สะสมแต้มเพื่อแลกของรางวัลค่ะ😋';
 
-               //        }else{
+//                //        }else{
 
 
-               //            if($feq_ans_week>=7){
-               //                $p = $reward_se->point;
-               //                $point = $p+1;
-               //                $feq_ans_week = 0;
-               //                $feq_ans_meals = 0;
-               //                $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
-               //                $u1  = 'ยินดีด้ววยค่ะ คุณแม่ได้รับแต้มสะสมเพิ่ม 1 แต้ม จากการตอบคำถามทุกวันเป็นเวลา 1 สัปดาห์ค่ะ😆';
-               //            }elseif($feq_ans_meals>=2 ){
-               //                $p = $reward_se->point;
-               //                $point = $p+1;
-               //                $feqweek = $reward_se->point;
-               //                $feq_ans_week = $feqweek+1;
-               //                $feq_ans_meals = 0;
-               //                $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                //            if($feq_ans_week>=7){
+//                //                $p = $reward_se->point;
+//                //                $point = $p+1;
+//                //                $feq_ans_week = 0;
+//                //                $feq_ans_meals = 0;
+//                //                $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                //                $u1  = 'ยินดีด้ววยค่ะ คุณแม่ได้รับแต้มสะสมเพิ่ม 1 แต้ม จากการตอบคำถามทุกวันเป็นเวลา 1 สัปดาห์ค่ะ😆';
+//                //            }elseif($feq_ans_meals>=2 ){
+//                //                $p = $reward_se->point;
+//                //                $point = $p+1;
+//                //                $feqweek = $reward_se->point;
+//                //                $feq_ans_week = $feqweek+1;
+//                //                $feq_ans_meals = 0;
+//                //                $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
 
-               //                $u1  = 'คุณแม่ได้รับแต้มสะสม 1 แต้ม จากการตอบคำถามวันนี้ค่ะ😆';
+//                //                $u1  = 'คุณแม่ได้รับแต้มสะสม 1 แต้ม จากการตอบคำถามวันนี้ค่ะ😆';
 
-               //            }elseif($feq_ans_meals>=2 && $feq_ans_week>=7){
-               //                $p = $reward_se->point;
-               //                $point = $p+2;
-               //                $feq_ans_week = 0;
-               //                $feq_ans_meals = 0;
-               //                $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
-               //                $u1  = 'คุณแม่ได้รับแต้มสะสม 2 แต้ม จากการตอบคำถามวันนี้ และตอบคำถามทุกวันเป็นเวลา 1 สัปดาห์ค่ะ😆';
+//                //            }elseif($feq_ans_meals>=2 && $feq_ans_week>=7){
+//                //                $p = $reward_se->point;
+//                //                $point = $p+2;
+//                //                $feq_ans_week = 0;
+//                //                $feq_ans_meals = 0;
+//                //                $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                //                $u1  = 'คุณแม่ได้รับแต้มสะสม 2 แต้ม จากการตอบคำถามวันนี้ และตอบคำถามทุกวันเป็นเวลา 1 สัปดาห์ค่ะ😆';
 
-               //            }else{
-               //                $p = $reward_se->point;
-               //                $point = $p+0;
-               //                $feq_ans_week = 0;
-               //                $feq_ans_meals = 0;
-               //                $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
-               //                $u1  = '☺วันนี้คุณแม่ไม่ได้รับแต้มจากการตอบคำถามค่ะ มาตอบคำถามกันนะคะจะได้รับแต้มสะสม ไว้แลกของรางวัลค่ะ';
-               //            }
+//                //            }else{
+//                //                $p = $reward_se->point;
+//                //                $point = $p+0;
+//                //                $feq_ans_week = 0;
+//                //                $feq_ans_meals = 0;
+//                //                $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                //                $u1  = '☺วันนี้คุณแม่ไม่ได้รับแต้มจากการตอบคำถามค่ะ มาตอบคำถามกันนะคะจะได้รับแต้มสะสม ไว้แลกของรางวัลค่ะ';
+//                //            }
                           
-               //        }  
-               //    $reward_se2 =  (new SqlController)->reward_select1($user);
-               //    $point = $reward_se2->point;  
+//                //        }  
+//                //    $reward_se2 =  (new SqlController)->reward_select1($user);
+//                //    $point = $reward_se2->point;  
               
-               //    $userMessage1 = $u1."\n".'ตอนนี้คุณแม่มีแต้มสะสม '.$point.' แต้มค่ะ';
-               //    $userMessage2  = 'อย่าลืมออกกำลังกายนะคะ เรามีคำแนะนำการออกกำลังกายให้คุณกดที่menuด้านล่างได้เลยค่ะ';
+//                //    $userMessage1 = $u1."\n".'ตอนนี้คุณแม่มีแต้มสะสม '.$point.' แต้มค่ะ';
+//                //    $userMessage2  = 'อย่าลืมออกกำลังกายนะคะ เรามีคำแนะนำการออกกำลังกายให้คุณกดที่menuด้านล่างได้เลยค่ะ';
 
                   
-               //    $userMessage2  = 'เรามีคำแนะนำการออกกำลังกายให้คุณกดด้านล่างได้เลย';
-              // $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-              //  (new ReplyMessageController)->replymessage2($replyToken,$userMessage1,$userMessage2);
+//                //    $userMessage2  = 'เรามีคำแนะนำการออกกำลังกายให้คุณกดด้านล่างได้เลย';
+//               // $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//               //  (new ReplyMessageController)->replymessage2($replyToken,$userMessage1,$userMessage2);
 
               
-//////ถามตอนเช้า
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2005'  ) {
+// //////ถามตอนเช้า
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2005'  ) {
 
-                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                  }else{
-                  $tracker = $userMessage;
-                  // $tracker_insert =  $this->tracker_insert1($user,$tracker);
-                  $column = 'breakfast';
-                  $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
-                 // dd($tracker_update);
-                  $case = 1;
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+//                   }else{
+//                   $tracker = $userMessage;
+//                   // $tracker_insert =  $this->tracker_insert1($user,$tracker);
+//                   $column = 'breakfast';
+//                   $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
+//                  // dd($tracker_update);
+//                   $case = 1;
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
 
                 
-                  $userMessage  = '😋';
+//                   $userMessage  = '😋';
                       
-                      // $reward_se =  (new SqlController)->reward_select1($user);
+//                       // $reward_se =  (new SqlController)->reward_select1($user);
 
-                      // if($reward_se == null){
-                      //   $point = 0;
-                      //   $feq_ans_meals = 1;
-                      //   $feq_ans_week =0;
-                      //   $reward_ins =  (new SqlController)->ins_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                       // if($reward_se == null){
+//                       //   $point = 0;
+//                       //   $feq_ans_meals = 1;
+//                       //   $feq_ans_week =0;
+//                       //   $reward_ins =  (new SqlController)->ins_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
 
-                      // }else{
-                      //   $point = $reward_se->point;
-                      //   $feq_ans_week = $reward_se->feq_ans_week;
-                      //   $feq_ans_meals = 1 ;
-                      //   $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
-                      // }    
+//                       // }else{
+//                       //   $point = $reward_se->point;
+//                       //   $feq_ans_week = $reward_se->feq_ans_week;
+//                       //   $feq_ans_meals = 1 ;
+//                       //   $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                       // }    
 
                   
-                  $date = date('d-m-Y');
-                  $dt = DateTime::createFromFormat('d-m-Y', $date  )->format('Y-m-d');   
-                   (new ApiController)->check_ulife_tracker_edit($user,$dt);
+//                   $date = date('d-m-Y');
+//                   $dt = DateTime::createFromFormat('d-m-Y', $date  )->format('Y-m-d');   
+//                    (new ApiController)->check_ulife_tracker_edit($user,$dt);
 
-                }
-//////ถามตอนกลางวัน
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2006'  ) {
+//                 }
+// //////ถามตอนกลางวัน
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2006'  ) {
             
 
-                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                  }else{
-                  $case = 1;
-                  $tracker1 = $userMessage;
+//                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+//                   }else{
+//                   $case = 1;
+//                   $tracker1 = $userMessage;
                 
-                  $seqcode = '2007';
-                  $nextseqcode = '2008';
+//                   $seqcode = '2007';
+//                   $nextseqcode = '2008';
              
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $userMessage  = 'ทานขนมหรือของว่างระหว่างวันไหมคะ?';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $userMessage  = 'ทานขนมหรือของว่างระหว่างวันไหมคะ?';
 
-                     $num = tracker::where('user_id', $user)
-                                    ->whereNull('deleted_at')
-                                    ->count();
-                 if($num==0)         
-                   {    
-                         $tracker= 'NULL';
-                         $tracker_insert =  (new SqlController)->tracker_insert1($user,$tracker);
-                         $column = 'lunch';
-                         $tracker= $tracker1 ;
-                         $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker);
-                   }else{
-                         $column = 'lunch';
-                         $tracker= $tracker1 ;
-                         $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
-                   }
-                  $date = date('d-m-Y');
-                  $dt = DateTime::createFromFormat('d-m-Y', $date  )->format('Y-m-d');   
-                   (new ApiController)->check_ulife_tracker_edit($user,$dt);
+//                      $num = tracker::where('user_id', $user)
+//                                     ->whereNull('deleted_at')
+//                                     ->count();
+//                  if($num==0)         
+//                    {    
+//                          $tracker= 'NULL';
+//                          $tracker_insert =  (new SqlController)->tracker_insert1($user,$tracker);
+//                          $column = 'lunch';
+//                          $tracker= $tracker1 ;
+//                          $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker);
+//                    }else{
+//                          $column = 'lunch';
+//                          $tracker= $tracker1 ;
+//                          $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
+//                    }
+//                   $date = date('d-m-Y');
+//                   $dt = DateTime::createFromFormat('d-m-Y', $date  )->format('Y-m-d');   
+//                    (new ApiController)->check_ulife_tracker_edit($user,$dt);
 
-                  }
+//                   }
 
                 
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2007'  ) {
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '2007'  ) {
 
-                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                  }else{
-                  $tracker = $userMessage;
-                  $column = 'dessert_lu';
-                  $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
-                  $case = 1;
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+//                   }else{
+//                   $tracker = $userMessage;
+//                   $column = 'dessert_lu';
+//                   $tracker_update = (new SqlController)->tracker_update($user,$column,$tracker); 
+//                   $case = 1;
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
                  
                
                
-                       $userMessage  = '😋';
+//                        $userMessage  = '😋';
 
-                      // $reward_se =  (new SqlController)->reward_select1($user);
+//                       // $reward_se =  (new SqlController)->reward_select1($user);
 
-                      // if($reward_se == null){
-                      //   $point = 0;
-                      //   $feq_ans_meals = 1;
-                      //   $feq_ans_week =0;
-                      //   $reward_ins =  (new SqlController)->ins_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                       // if($reward_se == null){
+//                       //   $point = 0;
+//                       //   $feq_ans_meals = 1;
+//                       //   $feq_ans_week =0;
+//                       //   $reward_ins =  (new SqlController)->ins_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
 
-                      // }else{
-                      //   $point = $reward_se->point;
-                      //   $feq_ans_week = $reward_se->feq_ans_week;
-                      //   $feqmeals = $reward_se->feq_ans_meals;
-                      //   $feq_ans_meals = $feqmeals+1;
-                      //   $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
-                      // }    
+//                       // }else{
+//                       //   $point = $reward_se->point;
+//                       //   $feq_ans_week = $reward_se->feq_ans_week;
+//                       //   $feqmeals = $reward_se->feq_ans_meals;
+//                       //   $feq_ans_meals = $feqmeals+1;
+//                       //   $select_qs =  (new SqlController)->update_reward1($user,$point,$feq_ans_week,$feq_ans_meals);
+//                       // }    
 
                 
              
-                  $date = date('d-m-Y');
-                  $dt = DateTime::createFromFormat('d-m-Y', $date  )->format('Y-m-d');   
-                   (new ApiController)->check_ulife_tracker_edit($user,$dt);
-                }
+//                   $date = date('d-m-Y');
+//                   $dt = DateTime::createFromFormat('d-m-Y', $date  )->format('Y-m-d');   
+//                    (new ApiController)->check_ulife_tracker_edit($user,$dt);
+//                 }
                   
-/////ดูบันทึกย้อนหลัง             
-            }elseif ($userMessage == 'บันทึกอาหารย้อนหลัง'  ) {
-                  $case = 25;
-                  // $seqcode = '3009';
-                  // $nextseqcode = '3010';
-                  // $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
-///[บันทึกย้อนหลังเช้า]
-            }elseif ($userMessage == 'บันทึกอาหารเช้าย้อนหลัง'   ) {
-                  $case = 1;
-                  $seqcode = '3010';
-                  $nextseqcode = '3011';
-                  $userMessage ='คุณแม่ต้องการบันทึกย้อนหลังวันไหนค่ะ? พิมพ์ในรูปแบบนี้นะคะ 01-12-2018 (วัน-เดือน-ปี) ค่ะ';
+// /////ดูบันทึกย้อนหลัง             
+//             }elseif ($userMessage == 'บันทึกอาหารย้อนหลัง'  ) {
+//                   $case = 25;
+//                   // $seqcode = '3009';
+//                   // $nextseqcode = '3010';
+//                   // $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+// ///[บันทึกย้อนหลังเช้า]
+//             }elseif ($userMessage == 'บันทึกอาหารเช้าย้อนหลัง'   ) {
+//                   $case = 1;
+//                   $seqcode = '3010';
+//                   $nextseqcode = '3011';
+//                   $userMessage ='คุณแม่ต้องการบันทึกย้อนหลังวันไหนค่ะ? พิมพ์ในรูปแบบนี้นะคะ 01-12-2018 (วัน-เดือน-ปี) ค่ะ';
                 
-                 $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010' ) {
+//                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010' ) {
 
-               if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน' ){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
-                }else{
-                  $case = 1;
-                  $seqcode = '3011';
-                  $nextseqcode = '3012';
-                  $answer = $userMessage;
+//                if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน' ){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
+//                 }else{
+//                   $case = 1;
+//                   $seqcode = '3011';
+//                   $nextseqcode = '3012';
+//                   $answer = $userMessage;
 
-                  $dt = DateTime::createFromFormat('d-m-Y', $userMessage)->format('Y-m-d');
-                  $num = tracker::where('user_id', $user)
-                                    ->whereNull('deleted_at')
-                                    ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                    ->count();
+//                   $dt = DateTime::createFromFormat('d-m-Y', $userMessage)->format('Y-m-d');
+//                   $num = tracker::where('user_id', $user)
+//                                     ->whereNull('deleted_at')
+//                                     ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                     ->count();
 
 
               
-                  if($num >= '1' ){
-                    $userMessage = 'มื้อนี้คุณแม่ทานอะไรไปบ้างค่ะ';
-                    $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
-                                                                         ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
-                  }else{
+//                   if($num >= '1' ){
+//                     $userMessage = 'มื้อนี้คุณแม่ทานอะไรไปบ้างค่ะ';
+//                     $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
+//                                                                          ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
+//                   }else{
                     
-                   // $userMessage = $a;
-                    $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
-                  }
+//                    // $userMessage = $a;
+//                     $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
+//                   }
 
-                }
+//                 }
                  
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3011'  ) {
-                  $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                  $date = $sequentsteps->answer;
-                  $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');    
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3011'  ) {
+//                   $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                   $date = $sequentsteps->answer;
+//                   $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');    
 
-                  $tracker_update = tracker::where('user_id', $user)
-                                         ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                         ->update(['breakfast' =>$userMessage]);
+//                   $tracker_update = tracker::where('user_id', $user)
+//                                          ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                          ->update(['breakfast' =>$userMessage]);
 
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $case = 1;
-                  $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
-                   (new ApiController)->check_ulife_tracker_edit($user,$dt);
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $case = 1;
+//                   $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
+//                    (new ApiController)->check_ulife_tracker_edit($user,$dt);
 
-///[บันทึกย้อนหลังกลางวัน]
-            }elseif ($userMessage == 'บันทึกอาหารกลางวันย้อนหลัง' ) {
-                  $case = 1;
-                  $seqcode = '3010_1';
-                  $nextseqcode = '3011_1';
-                  $userMessage ='คุณแม่ต้องการบันทึกย้อนหลังวันไหนค่ะ? พิมพ์ในรูปแบบนี้นะคะ 01-12-2018 (วัน-เดือน-ปี) ค่ะ';
-                 $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+// ///[บันทึกย้อนหลังกลางวัน]
+//             }elseif ($userMessage == 'บันทึกอาหารกลางวันย้อนหลัง' ) {
+//                   $case = 1;
+//                   $seqcode = '3010_1';
+//                   $nextseqcode = '3011_1';
+//                   $userMessage ='คุณแม่ต้องการบันทึกย้อนหลังวันไหนค่ะ? พิมพ์ในรูปแบบนี้นะคะ 01-12-2018 (วัน-เดือน-ปี) ค่ะ';
+//                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
 
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010_1' ) {
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010_1' ) {
 
-                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
-                }else{
-                  $case = 1;
-                  $seqcode = '3011_1';
-                  $nextseqcode = '3012_1';
-                  $answer = $userMessage;
+//                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
+//                 }else{
+//                   $case = 1;
+//                   $seqcode = '3011_1';
+//                   $nextseqcode = '3012_1';
+//                   $answer = $userMessage;
 
-                  $dt = DateTime::createFromFormat('d-m-Y', $userMessage)->format('Y-m-d');
-                  $num = tracker::where('user_id', $user)
-                                    ->whereNull('deleted_at')
-                                    ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                    ->count();
-                  if($num >= '1'){
-                    $userMessage = 'มื้อนี้คุณแม่ทานอะไรไปบ้างค่ะ';
-                    $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
-                                                                         ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
-                  }else{
-                    $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
-                  }
+//                   $dt = DateTime::createFromFormat('d-m-Y', $userMessage)->format('Y-m-d');
+//                   $num = tracker::where('user_id', $user)
+//                                     ->whereNull('deleted_at')
+//                                     ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                     ->count();
+//                   if($num >= '1'){
+//                     $userMessage = 'มื้อนี้คุณแม่ทานอะไรไปบ้างค่ะ';
+//                     $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
+//                                                                          ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
+//                   }else{
+//                     $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
+//                   }
 
-                }
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3011_1'  ) {
-                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                }else{
-                  $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                  $date = $sequentsteps->answer;
-                  $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
-                  $tracker_update = tracker::where('user_id', $user)
-                                         ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                         ->update(['lunch' =>$userMessage]);
-                  $seqcode = '3012_1';
-                  $nextseqcode = '3013_1';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $case = 1;
-                  $userMessage  = 'คุณแม่ทานของว่างไหมคะ';
-                    (new ApiController)->check_ulife_tracker_edit($user,$dt);
-                }
-             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3012_1'  ) {
-                  $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                  $date = $sequentsteps->answer;
-                  $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
-                  $tracker_update = tracker::where('user_id', $user)
-                                         ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                         ->update(['dessert_lu' =>$userMessage]);
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $case = 1;
-                  $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
-                    (new ApiController)->check_ulife_tracker_edit($user,$dt);
-///[บันทึกย้อนหลังกลางเย็น]
-            }elseif ($userMessage == 'บันทึกอาหารเย็นย้อนหลัง' ) {
+//                 }
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3011_1'  ) {
+//                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+//                 }else{
+//                   $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                   $date = $sequentsteps->answer;
+//                   $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
+//                   $tracker_update = tracker::where('user_id', $user)
+//                                          ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                          ->update(['lunch' =>$userMessage]);
+//                   $seqcode = '3012_1';
+//                   $nextseqcode = '3013_1';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $case = 1;
+//                   $userMessage  = 'คุณแม่ทานของว่างไหมคะ';
+//                     (new ApiController)->check_ulife_tracker_edit($user,$dt);
+//                 }
+//              }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3012_1'  ) {
+//                   $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                   $date = $sequentsteps->answer;
+//                   $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
+//                   $tracker_update = tracker::where('user_id', $user)
+//                                          ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                          ->update(['dessert_lu' =>$userMessage]);
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $case = 1;
+//                   $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
+//                     (new ApiController)->check_ulife_tracker_edit($user,$dt);
+// ///[บันทึกย้อนหลังกลางเย็น]
+//             }elseif ($userMessage == 'บันทึกอาหารเย็นย้อนหลัง' ) {
                 
-                  $case = 1;
-                  $seqcode = '3010_2';
-                  $nextseqcode = '3011_2';
-                  $userMessage ='คุณแม่ต้องการบันทึกย้อนหลังวันไหนค่ะ? พิมพ์ในรูปแบบนี้นะคะ 01-12-2018 (วัน-เดือน-ปี) ค่ะ';
-                 $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $case = 1;
+//                   $seqcode = '3010_2';
+//                   $nextseqcode = '3011_2';
+//                   $userMessage ='คุณแม่ต้องการบันทึกย้อนหลังวันไหนค่ะ? พิมพ์ในรูปแบบนี้นะคะ 01-12-2018 (วัน-เดือน-ปี) ค่ะ';
+//                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
             
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010_2' ) {
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010_2' ) {
 
-                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
-                }else{
-                  $case = 1;
-                  $seqcode = '3011_2';
-                  $nextseqcode = '3012_2';
-                  $answer = $userMessage;
+//                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
+//                 }else{
+//                   $case = 1;
+//                   $seqcode = '3011_2';
+//                   $nextseqcode = '3012_2';
+//                   $answer = $userMessage;
 
-                  $dt = DateTime::createFromFormat('d-m-Y', $userMessage)->format('Y-m-d');
-                  $num = tracker::where('user_id', $user)
-                                    ->whereNull('deleted_at')
-                                    ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                    ->count();
-                  if($num >= '1'){
-                    $userMessage = 'มื้อนี้คุณแม่ทานอะไรไปบ้างค่ะ';
-                    $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
-                                                                         ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
-                  }else{
-                    $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
-                  }
-                }
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3011_2'  ) {
-                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                }else{
-                  $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                  $date = $sequentsteps->answer;
-                  $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
-                  $tracker_update = tracker::where('user_id', $user)
-                                         ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                         ->update(['dinner' =>$userMessage]);
-                  $seqcode = '3012_2';
-                  $nextseqcode = '3013_2';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $case = 1;
-                  $userMessage  = 'คุณแม่ทานของว่างไหมคะ';
-                    (new ApiController)->check_ulife_tracker_edit($user,$dt);
-                }
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3012_2'  ) {
-                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                }else{
-                  $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                  $date = $sequentsteps->answer;
-                  $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
-                  $tracker_update = tracker::where('user_id', $user)
-                                         ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                         ->update(['dessert_din' =>$userMessage]);
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $case = 1;
-                  $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
-                    (new ApiController)->check_ulife_tracker_edit($user,$dt);
-              }
-///
-            }elseif ($userMessage == 'บันทึกวิตามินย้อนหลัง'  ) {
+//                   $dt = DateTime::createFromFormat('d-m-Y', $userMessage)->format('Y-m-d');
+//                   $num = tracker::where('user_id', $user)
+//                                     ->whereNull('deleted_at')
+//                                     ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                     ->count();
+//                   if($num >= '1'){
+//                     $userMessage = 'มื้อนี้คุณแม่ทานอะไรไปบ้างค่ะ';
+//                     $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
+//                                                                          ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
+//                   }else{
+//                     $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
+//                   }
+//                 }
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3011_2'  ) {
+//                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+//                 }else{
+//                   $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                   $date = $sequentsteps->answer;
+//                   $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
+//                   $tracker_update = tracker::where('user_id', $user)
+//                                          ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                          ->update(['dinner' =>$userMessage]);
+//                   $seqcode = '3012_2';
+//                   $nextseqcode = '3013_2';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $case = 1;
+//                   $userMessage  = 'คุณแม่ทานของว่างไหมคะ';
+//                     (new ApiController)->check_ulife_tracker_edit($user,$dt);
+//                 }
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3012_2'  ) {
+//                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+//                 }else{
+//                   $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                   $date = $sequentsteps->answer;
+//                   $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
+//                   $tracker_update = tracker::where('user_id', $user)
+//                                          ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                          ->update(['dessert_din' =>$userMessage]);
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $case = 1;
+//                   $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
+//                     (new ApiController)->check_ulife_tracker_edit($user,$dt);
+//               }
+// ///
+//             }elseif ($userMessage == 'บันทึกวิตามินย้อนหลัง'  ) {
           
-                  $case = 1;
-                  $seqcode = '3010_3';
-                  $nextseqcode = '3011_3';
-                  $userMessage ='คุณแม่ต้องการบันทึกย้อนหลังวันไหนค่ะ? พิมพ์ในรูปแบบนี้นะคะ 01-12-2018 (วัน-เดือน-ปี) ค่ะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $case = 1;
+//                   $seqcode = '3010_3';
+//                   $nextseqcode = '3011_3';
+//                   $userMessage ='คุณแม่ต้องการบันทึกย้อนหลังวันไหนค่ะ? พิมพ์ในรูปแบบนี้นะคะ 01-12-2018 (วัน-เดือน-ปี) ค่ะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
 
                             
-              }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010_3' ) {
-                   if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
-                }else{
+//               }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010_3' ) {
+//                    if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
+//                 }else{
                  
-                  $seqcode = '3011_3';
-                  $nextseqcode = '3012_3';
-                  $answer = $userMessage;
+//                   $seqcode = '3011_3';
+//                   $nextseqcode = '3012_3';
+//                   $answer = $userMessage;
 
-                  $dt = DateTime::createFromFormat('d-m-Y', $userMessage)->format('Y-m-d');
-                  $num = tracker::where('user_id', $user)
-                                    ->whereNull('deleted_at')
-                                    ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                    ->count();
-                  if($num >= '1'){
-                    $case = 11;
-                    $userMessage = 'คุณแม่ได้ทานวิตามินไหมคะ';
-                    $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
-                                                                         ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
-                  }else{
-                     $case = 1;
-                    $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
-                  }
-                }
-            }elseif ($userMessage == 'ทานแล้ว'  && $sequentsteps->seqcode == '3011_3'  ) {
+//                   $dt = DateTime::createFromFormat('d-m-Y', $userMessage)->format('Y-m-d');
+//                   $num = tracker::where('user_id', $user)
+//                                     ->whereNull('deleted_at')
+//                                     ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                     ->count();
+//                   if($num >= '1'){
+//                     $case = 11;
+//                     $userMessage = 'คุณแม่ได้ทานวิตามินไหมคะ';
+//                     $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
+//                                                                          ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
+//                   }else{
+//                      $case = 1;
+//                     $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
+//                   }
+//                 }
+//             }elseif ($userMessage == 'ทานแล้ว'  && $sequentsteps->seqcode == '3011_3'  ) {
                   
-                  $case = 1;
-                  $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                  $date = $sequentsteps->answer;
-                  $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
-                  $tracker_update = tracker::where('user_id', $user)
-                                         ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                         ->update(['vitamin' =>'1']);
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                   (new ApiController)->check_ulife_tracker_edit($user,$dt);
+//                   $case = 1;
+//                   $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                   $date = $sequentsteps->answer;
+//                   $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
+//                   $tracker_update = tracker::where('user_id', $user)
+//                                          ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                          ->update(['vitamin' =>'1']);
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                    (new ApiController)->check_ulife_tracker_edit($user,$dt);
         
 
-            }elseif ($userMessage == 'ยังไม่ได้ทาน' && $sequentsteps->seqcode == '3011_3'  ) {
+//             }elseif ($userMessage == 'ยังไม่ได้ทาน' && $sequentsteps->seqcode == '3011_3'  ) {
                 
-                  $case = 1;
-                  $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                  $date = $sequentsteps->answer;
-                  $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
-                  $tracker_update = tracker::where('user_id', $user)
-                                         ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                         ->update(['vitamin' =>'0']);
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                    (new ApiController)->check_ulife_tracker_edit($user,$dt);
+//                   $case = 1;
+//                   $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                   $date = $sequentsteps->answer;
+//                   $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
+//                   $tracker_update = tracker::where('user_id', $user)
+//                                          ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                          ->update(['vitamin' =>'0']);
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                     (new ApiController)->check_ulife_tracker_edit($user,$dt);
            
-            }elseif ($userMessage == 'บันทึกออกกำลังกายย้อนหลัง'  ) {
+//             }elseif ($userMessage == 'บันทึกออกกำลังกายย้อนหลัง'  ) {
             
-                  $case = 1;
-                  $seqcode = '3010_4';
-                  $nextseqcode = '3011_4';
-                  $userMessage ='คุณแม่ต้องการบันทึกย้อนหลังวันไหนค่ะ? พิมพ์ในรูปแบบนี้นะคะ 01-12-2018 (วัน-เดือน-ปี) ค่ะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $case = 1;
+//                   $seqcode = '3010_4';
+//                   $nextseqcode = '3011_4';
+//                   $userMessage ='คุณแม่ต้องการบันทึกย้อนหลังวันไหนค่ะ? พิมพ์ในรูปแบบนี้นะคะ 01-12-2018 (วัน-เดือน-ปี) ค่ะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
             
-             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010_4' ) {
-                if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
-                }else{
-                  $seqcode = '3011_4';
-                  $nextseqcode = '3012_4';
-                  $answer = $userMessage;
+//              }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010_4' ) {
+//                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
+//                 }else{
+//                   $seqcode = '3011_4';
+//                   $nextseqcode = '3012_4';
+//                   $answer = $userMessage;
 
-                  $dt = DateTime::createFromFormat('d-m-Y', $userMessage)->format('Y-m-d');
-                  $num = tracker::where('user_id', $user)
-                                    ->whereNull('deleted_at')
-                                    ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                    ->count();
-                  if($num >= '1'){
-                    $case = 1;
-                    $userMessage = 'คุณแม่ได้ออกกำลังกายอย่างไรบ้างค่ะ';
-                    $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
-                                                                         ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
-                  }else{
-                     $case = 1;
-                    $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
-                  }
-                }
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3011_4'  ) {
-                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                }else{
-                  $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                  $date = $sequentsteps->answer;
-                  $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
-                  $tracker_update = tracker::where('user_id', $user)
-                                         ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
-                                         ->update(['exercise' =>$userMessage]);
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                  $case = 1;
-                  $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
-                   (new ApiController)->check_ulife_tracker_edit($user,$dt);
-                  }
+//                   $dt = DateTime::createFromFormat('d-m-Y', $userMessage)->format('Y-m-d');
+//                   $num = tracker::where('user_id', $user)
+//                                     ->whereNull('deleted_at')
+//                                     ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                     ->count();
+//                   if($num >= '1'){
+//                     $case = 1;
+//                     $userMessage = 'คุณแม่ได้ออกกำลังกายอย่างไรบ้างค่ะ';
+//                     $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
+//                                                                          ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
+//                   }else{
+//                      $case = 1;
+//                     $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
+//                   }
+//                 }
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3011_4'  ) {
+//                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+//                 }else{
+//                   $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                   $date = $sequentsteps->answer;
+//                   $dt = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');                   
+//                   $tracker_update = tracker::where('user_id', $user)
+//                                          ->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $dt)
+//                                          ->update(['exercise' =>$userMessage]);
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $case = 1;
+//                   $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
+//                    (new ApiController)->check_ulife_tracker_edit($user,$dt);
+//                   }
 
-            }elseif ($userMessage == 'บันทึกน้ำหนักย้อนหลัง' ) {
-                  $case = 1;
-                  $seqcode = '3010_5';
-                  $nextseqcode = '3011_5';
-                  $userMessage ='คุณแม่ต้องการแก้ไขบันทึกน้ำหนักย้อนหลังของสัปดาห์ไหนค่ะ? พิมพ์ตัวเลขของสัปดาห์ได้เลยค่ะ เช่น สัปดาห์ที่12 พิมพ์ 12 ได้เลยค่ะ';
-                 $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);  
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010_5' ) {
-               if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
-                }else{
-
-
-                  $seqcode = '3011_5';
-                  $nextseqcode = '3012_5';
-                  $answer = $userMessage;
+//             }elseif ($userMessage == 'บันทึกน้ำหนักย้อนหลัง' ) {
+//                   $case = 1;
+//                   $seqcode = '3010_5';
+//                   $nextseqcode = '3011_5';
+//                   $userMessage ='คุณแม่ต้องการแก้ไขบันทึกน้ำหนักย้อนหลังของสัปดาห์ไหนค่ะ? พิมพ์ตัวเลขของสัปดาห์ได้เลยค่ะ เช่น สัปดาห์ที่12 พิมพ์ 12 ได้เลยค่ะ';
+//                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);  
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3010_5' ) {
+//                if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ หรือ พิมพ์ Q เพื่อออกจากบันทึกย้อนหลังค่ะ';
+//                 }else{
 
 
-                  $num = RecordOfPregnancy::where('user_id', $user)
-                                    ->whereNull('deleted_at')
-                                    ->where('preg_week', $answer)
-                                    ->count();
-                  if($num >= '1'){
-                    $case = 1;
-                    $userMessage = 'สัปดาห์ที่ '.$answer.'คุณแม่น้ำหนักเท่าไรคะ';
-                    $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
-                                                                         ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
-                  }else{
-                     $case = 1;
-                    $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
-                  }  
-                }
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3011_5'  ) {
+//                   $seqcode = '3011_5';
+//                   $nextseqcode = '3012_5';
+//                   $answer = $userMessage;
 
-                 if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
-                      $case = 1;
-                      $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
-                }else{
 
-            if(is_numeric($userMessage) !== false && $userMessage<150 && $userMessage>0){
+//                   $num = RecordOfPregnancy::where('user_id', $user)
+//                                     ->whereNull('deleted_at')
+//                                     ->where('preg_week', $answer)
+//                                     ->count();
+//                   if($num >= '1'){
+//                     $case = 1;
+//                     $userMessage = 'สัปดาห์ที่ '.$answer.'คุณแม่น้ำหนักเท่าไรคะ';
+//                     $sequentsteps_insert =  $sequentsteps = sequentsteps::where('sender_id', $user)
+//                                                                          ->update(['answer'=>$answer,'seqcode'=>$seqcode,'nextseqcode'=>$nextseqcode]);
+//                   }else{
+//                      $case = 1;
+//                     $userMessage = 'คุณแม่อาจใส่ตัวเลขไม่ตรงตามรูปแบบ หรืออาจจะไม่มีวันที่ๆ ตรงกับวันที่ๆจะบันทึกค่ะ พิมพ์ใหม่หรือพิมพ์ Q ออกก็ได้ค่ะ ';
+//                   }  
+//                 }
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3011_5'  ) {
+
+//                  if($userMessage == 'แนะนำเมนูอาหาร'|| $userMessage == 'คำถามที่ถามบ่อย'|| $userMessage == 'แนะนำการออกกำลังกาย'|| $userMessage == 'บันทึกข้อมูลคุณแม่'|| $userMessage == 'แนะนำการใช้งาน'){
+//                       $case = 1;
+//                       $userMessage = 'กรุณาตอบคำถามด้านบนก่อนนะคะ';
+//                 }else{
+
+//             if(is_numeric($userMessage) !== false && $userMessage<150 && $userMessage>0){
              
-                  $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                  $date = $sequentsteps->answer;
+//                   $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                   $date = $sequentsteps->answer;
                              
-                  $tracker_update = RecordOfPregnancy::where('user_id', $user)
-                                         ->where('preg_week', $date)
-                                         ->whereNull('deleted_at')
-                                         ->update(['preg_weight' =>$userMessage]);
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $tracker_update = RecordOfPregnancy::where('user_id', $user)
+//                                          ->where('preg_week', $date)
+//                                          ->whereNull('deleted_at')
+//                                          ->update(['preg_weight' =>$userMessage]);
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
 
-                  $update = 5;
-                  $answer = $userMessage;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update);
-                  $case = 1;
-                  $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
-                  (new ApiController)->check_ulife_weight_edit($user,$date);
+//                   $update = 5;
+//                   $answer = $userMessage;
+//                   $user_update = (new SqlController)->user_update($user,$answer,$update);
+//                   $case = 1;
+//                   $userMessage  = 'บันทึกเรียบร้อยแล้วนะคะ';
+//                   (new ApiController)->check_ulife_weight_edit($user,$date);
              
-                 }else{
-                     $case = 1;
-                     $userMessage  = 'น้ำหนักตอบเป็นตัวเลขเท่านั้น หน่วยเป็นกิโลกรัม กรุณาพิมพ์ใหม่';
-                }
+//                  }else{
+//                      $case = 1;
+//                      $userMessage  = 'น้ำหนักตอบเป็นตัวเลขเท่านั้น หน่วยเป็นกิโลกรัม กรุณาพิมพ์ใหม่';
+//                 }
 
-              }       
-///  Ulife.info
-           }elseif ($userMessage == 'เชื่อม Ulife.info' && $sequentsteps->seqcode == '0000'  ) {
-                  $case = 13;
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $userMessage  = 'คุณแม่ต้องการเชื่อมข้อมูลไปยัง ulife.info หรือไม่?';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//               }       
+// ///  Ulife.info
+//            }elseif ($userMessage == 'เชื่อม Ulife.info' && $sequentsteps->seqcode == '0000'  ) {
+//                   $case = 13;
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $userMessage  = 'คุณแม่ต้องการเชื่อมข้อมูลไปยัง ulife.info หรือไม่?';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
 
-            }elseif ($userMessage == 'ไม่ต้องการเชื่อมข้อมูล' && $sequentsteps->seqcode == '0000'  ) {
-                  $case = 1;
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $userMessage  ='คุณแม่สามารถดูข้อมูลเกี่ยวกับการเชื่อมข้อมูลกับ Ulife.info ได้ทางเว็บไซต์ Ulife.info นะคะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-            }elseif ($userMessage == 'ต้องการเชื่อมข้อมูล' && $sequentsteps->seqcode == '0000'  ) {
-                  $case = 32;
-                  $seqcode = '3002';
-                  $nextseqcode = '0000';
-                  $users_register = users_register::whereNull('deleted_at')
-                                                    ->where('user_id',$user)
-                                                    ->first();
+//             }elseif ($userMessage == 'ไม่ต้องการเชื่อมข้อมูล' && $sequentsteps->seqcode == '0000'  ) {
+//                   $case = 1;
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $userMessage  ='คุณแม่สามารถดูข้อมูลเกี่ยวกับการเชื่อมข้อมูลกับ Ulife.info ได้ทางเว็บไซต์ Ulife.info นะคะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//             }elseif ($userMessage == 'ต้องการเชื่อมข้อมูล' && $sequentsteps->seqcode == '0000'  ) {
+//                   $case = 32;
+//                   $seqcode = '3002';
+//                   $nextseqcode = '0000';
+//                   $users_register = users_register::whereNull('deleted_at')
+//                                                     ->where('user_id',$user)
+//                                                     ->first();
 
-                  $email =   $users_register->email;
-                  $userMessage  ='คุณแม่ยืนยันจะใช้ '.$email.' นี้ในการเชื่อมข้อมูลหรือไม่?';
-                  // $userMessage  =$email.'ใช้อีเมลนี้เพื่อทำการเชื่อมต่อ'."\n".' ดิฉันขอทราบรหัสผ่าน ulife เพื่อยืนยันการเข้าถึงข้อมูลค่ะ หรือพิมพ์ Q เพื่อทำการออกจากการเชื่อมข้อมูลค่ะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-            // }elseif ($userMessage == 'เคยลงทะเบียน' && $sequentsteps->seqcode == '3002' ) {
-            //       $case = 1;
-            //       $seqcode = '3003';
-            //       $nextseqcode = '0000';
-            //       //$userMessage  = $this->sequents_question($seqcode);
-            //       $userMessage = 'ดิฉันขออีเมลที่ลงทะเบียนกับ Ulife.info หน่อยค่ะ';
-            //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $email =   $users_register->email;
+//                   $userMessage  ='คุณแม่ยืนยันจะใช้ '.$email.' นี้ในการเชื่อมข้อมูลหรือไม่?';
+//                   // $userMessage  =$email.'ใช้อีเมลนี้เพื่อทำการเชื่อมต่อ'."\n".' ดิฉันขอทราบรหัสผ่าน ulife เพื่อยืนยันการเข้าถึงข้อมูลค่ะ หรือพิมพ์ Q เพื่อทำการออกจากการเชื่อมข้อมูลค่ะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//             // }elseif ($userMessage == 'เคยลงทะเบียน' && $sequentsteps->seqcode == '3002' ) {
+//             //       $case = 1;
+//             //       $seqcode = '3003';
+//             //       $nextseqcode = '0000';
+//             //       //$userMessage  = $this->sequents_question($seqcode);
+//             //       $userMessage = 'ดิฉันขออีเมลที่ลงทะเบียนกับ Ulife.info หน่อยค่ะ';
+//             //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
 
-            // }elseif ($userMessage == 'ไม่เคยลงทะเบียน' && $sequentsteps->seqcode == '3002'  ) {
-            //       $case = 1;
-            //       $seqcode = '3003';
-            //       $nextseqcode = '0000';
-            //       $userMessage  ='ดิฉันขออีเมลที่คุณแม่จะเชื่อมกับ Ulife.info หน่อยค่ะ';
-            //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+//             // }elseif ($userMessage == 'ไม่เคยลงทะเบียน' && $sequentsteps->seqcode == '3002'  ) {
+//             //       $case = 1;
+//             //       $seqcode = '3003';
+//             //       $nextseqcode = '0000';
+//             //       $userMessage  ='ดิฉันขออีเมลที่คุณแม่จะเชื่อมกับ Ulife.info หน่อยค่ะ';
+//             //       $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
 
-            }elseif ($userMessage == 'ยืนยัน' && $sequentsteps->seqcode == '3002'  ) {
-                  $case = 1;
-                  $seqcode = '3002_1';
-                  $nextseqcode = '0000';
-                  $users_register = users_register::whereNull('deleted_at')
-                                                    ->where('user_id',$user)
-                                                    ->first();
+//             }elseif ($userMessage == 'ยืนยัน' && $sequentsteps->seqcode == '3002'  ) {
+//                   $case = 1;
+//                   $seqcode = '3002_1';
+//                   $nextseqcode = '0000';
+//                   $users_register = users_register::whereNull('deleted_at')
+//                                                     ->where('user_id',$user)
+//                                                     ->first();
 
-                  $email =   $users_register->email;
+//                   $email =   $users_register->email;
     
-                  $userMessage  ='ใช้อีเมล '.$email.' เพื่อทำการเชื่อมต่อ'."\n".' ดิฉันขอทราบรหัสผ่าน ulife เพื่อยืนยันการเข้าถึงข้อมูลค่ะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-            }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3002_1') {
-//****emailที่ลงทะเบียนกับ ulife***********
-                  // $answer = $userMessage;
-                     $case = 1;
+//                   $userMessage  ='ใช้อีเมล '.$email.' เพื่อทำการเชื่อมต่อ'."\n".' ดิฉันขอทราบรหัสผ่าน ulife เพื่อยืนยันการเข้าถึงข้อมูลค่ะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//             }elseif (is_string($userMessage) !== false && $sequentsteps->seqcode == '3002_1') {
+// //****emailที่ลงทะเบียนกับ ulife***********
+//                   // $answer = $userMessage;
+//                      $case = 1;
                
-                     $password = $userMessage;
-                     $users_register = users_register::whereNull('deleted_at')
-                                                      ->where('user_id',$user)
-                                                      ->first();
+//                      $password = $userMessage;
+//                      $users_register = users_register::whereNull('deleted_at')
+//                                                       ->where('user_id',$user)
+//                                                       ->first();
 
-                     $email =   $users_register->email;
-                     $name = $users_register->user_name;
-                     $line_id = $users_register->user_id;
+//                      $email =   $users_register->email;
+//                      $name = $users_register->user_name;
+//                      $line_id = $users_register->user_id;
                      
 
                
-                      $postData = array(
-                              'client_id'=>'580653df7fab2a33c03896b9',
-                              'client_secret'=>'Y6vtZlDibxbZXn4VzCdQ657phBPXMs',
-                              'name'=>$name ,
-                              'email'=>$email,
-                              'password'=>$password,
-                              'line_id'=>$line_id 
-                            );
+//                       $postData = array(
+//                               'client_id'=>'580653df7fab2a33c03896b9',
+//                               'client_secret'=>'Y6vtZlDibxbZXn4VzCdQ657phBPXMs',
+//                               'name'=>$name ,
+//                               'email'=>$email,
+//                               'password'=>$password,
+//                               'line_id'=>$line_id 
+//                             );
 
-                      //set the url, number of POST vars, POST data
-                      $data_json = json_encode($postData);    
-                      $url ='http://128.199.147.57/api/OAuth2/LocalRegister';
-                      $ch = curl_init();
-                      //set the url, number of POST vars, POST data
-                      curl_setopt($ch,CURLOPT_URL, $url);
-                     // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-                      curl_setopt($ch, CURLOPT_POST, 1);
-                      curl_setopt($ch,CURLOPT_POSTFIELDS, $data_json);
-                      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//                       //set the url, number of POST vars, POST data
+//                       $data_json = json_encode($postData);    
+//                       $url ='http://128.199.147.57/api/OAuth2/LocalRegister';
+//                       $ch = curl_init();
+//                       //set the url, number of POST vars, POST data
+//                       curl_setopt($ch,CURLOPT_URL, $url);
+//                      // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+//                       curl_setopt($ch, CURLOPT_POST, 1);
+//                       curl_setopt($ch,CURLOPT_POSTFIELDS, $data_json);
+//                       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-                      //execute post
-                      $result = curl_exec($ch);
+//                       //execute post
+//                       $result = curl_exec($ch);
 
-                      //close connection
-                      curl_close($ch);
+//                       //close connection
+//                       curl_close($ch);
                   
 
-                     $re = json_decode($result,true);
-                     // $message = $re['message'];
-                     // $userMessage = $result;
-                         //$userMessage = $re;
+//                      $re = json_decode($result,true);
+//                      // $message = $re['message'];
+//                      // $userMessage = $result;
+//                          //$userMessage = $re;
               
-                      if(strpos($result, 'errors') !== false ){
-                          $userMessage  = 'รหัสผิดพลาดหรือไม่ กรุณาตรวจสอบ';
-                      }else{    
-                                  $code = $re['code'];
-                                  if ($code == '200'){
-                                      $seqcode = '3004';
-                                      $nextseqcode = '0000';
+//                       if(strpos($result, 'errors') !== false ){
+//                           $userMessage  = 'รหัสผิดพลาดหรือไม่ กรุณาตรวจสอบ';
+//                       }else{    
+//                                   $code = $re['code'];
+//                                   if ($code == '200'){
+//                                       $seqcode = '3004';
+//                                       $nextseqcode = '0000';
                         
-                                      $userMessage  = 'ไปยังอีเมลเพื่อรับรหัส เมื่อรับรหัสแล้วโปรดกรอกเพื่อยืนยัน';
-                                      $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-                                   $answer=$password;
-                                   (new SqlController)->sequentsteps_update2($user,$answer);
+//                                       $userMessage  = 'ไปยังอีเมลเพื่อรับรหัส เมื่อรับรหัสแล้วโปรดกรอกเพื่อยืนยัน';
+//                                       $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                                    $answer=$password;
+//                                    (new SqlController)->sequentsteps_update2($user,$answer);
                                       
-                                  }else{
-                                      $seqcode = '0000';
-                                      $nextseqcode = '0000';
-                                    // $message = $re['message'];
-                                    // $userMessage = $message;
+//                                   }else{
+//                                       $seqcode = '0000';
+//                                       $nextseqcode = '0000';
+//                                     // $message = $re['message'];
+//                                     // $userMessage = $message;
                                  
-                                      // $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                                       // $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
                           
-                          $users_register = users_register::whereNull('deleted_at')
-                                                      ->where('user_id',$user)
-                                                      ->first();
-                          $email =   $users_register->email;
+//                           $users_register = users_register::whereNull('deleted_at')
+//                                                       ->where('user_id',$user)
+//                                                       ->first();
+//                           $email =   $users_register->email;
 
 
-                          $localLogin =  array('client_id'=> '580653df7fab2a33c0387111a',
-                                               'client_secret' => 'NevtZlDibxbZXn4VzCdQ657phBPzNe',
-                                               'email'=> $email,
-                                               'password'=> $password
-                                              );               
+//                           $localLogin =  array('client_id'=> '580653df7fab2a33c0387111a',
+//                                                'client_secret' => 'NevtZlDibxbZXn4VzCdQ657phBPzNe',
+//                                                'email'=> $email,
+//                                                'password'=> $password
+//                                               );               
                       
-                          $localLogin_json = json_encode($localLogin);    
-                          $url ='http://128.199.147.57/api/OAuth2/LocalLogin';
-                          $ch = curl_init();
-                          //set the url, number of POST vars, POST data
-                          curl_setopt($ch,CURLOPT_URL, $url);
-                          //curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-                          curl_setopt($ch, CURLOPT_POST, 1);
-                          curl_setopt($ch,CURLOPT_POSTFIELDS, $localLogin_json);
-                          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//                           $localLogin_json = json_encode($localLogin);    
+//                           $url ='http://128.199.147.57/api/OAuth2/LocalLogin';
+//                           $ch = curl_init();
+//                           //set the url, number of POST vars, POST data
+//                           curl_setopt($ch,CURLOPT_URL, $url);
+//                           //curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+//                           curl_setopt($ch, CURLOPT_POST, 1);
+//                           curl_setopt($ch,CURLOPT_POSTFIELDS, $localLogin_json);
+//                           curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-                          //execute post
-                          $result = curl_exec($ch);
-                          // dd($result);
+//                           //execute post
+//                           $result = curl_exec($ch);
+//                           // dd($result);
                         
-                          //close connection
-                          curl_close($ch);
-                          // echo $result;
-                          // $userMessage  = $result;
-                          // print($result);
-                          $re = json_decode($result,true);
-                          $code = $re['code'];
+//                           //close connection
+//                           curl_close($ch);
+//                           // echo $result;
+//                           // $userMessage  = $result;
+//                           // print($result);
+//                           $re = json_decode($result,true);
+//                           $code = $re['code'];
 
 
-                         if($code == '409'){
+//                          if($code == '409'){
 
-                            $userMessage = "อีเมลหรือรหัสผ่าน ไม่ตรงกันค่ะ คุณแม่กรุณาพิมพ์รหัสผ่านอีกครั้ง หรือ พิมพ์ 'Q' เพื่อทำการออกจากการเชื่อมข้อมูลค่ะ"; 
+//                             $userMessage = "อีเมลหรือรหัสผ่าน ไม่ตรงกันค่ะ คุณแม่กรุณาพิมพ์รหัสผ่านอีกครั้ง หรือ พิมพ์ 'Q' เพื่อทำการออกจากการเชื่อมข้อมูลค่ะ"; 
 
-                         }elseif($code == '200'){
-                          $key = $re['user_data']['user_key'];
-                          $token = $re['access_token'];
-                          //$setgraph = $this->setgraph_api($key,$user);
-                          $addChild = (new ApiController)->addChild_api($token,$user);
-                          $setgraph = (new ApiController)->setgraph_api($key,$user);
-                          $tracker = (new ApiController)->tracker_api($key,$user);
-                          $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                          }elseif($code == '200'){
+//                           $key = $re['user_data']['user_key'];
+//                           $token = $re['access_token'];
+//                           //$setgraph = $this->setgraph_api($key,$user);
+//                           $addChild = (new ApiController)->addChild_api($token,$user);
+//                           $setgraph = (new ApiController)->setgraph_api($key,$user);
+//                           $tracker = (new ApiController)->tracker_api($key,$user);
+//                           $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
                           
-                          $update = 15;
-                          $answer = $key;
-                          $user_update = (new SqlController)->user_update($user,$answer,$update);
-                           $userMessage = 'ทำการเชื่อมต่อแล้วนะคะ คุณสามารถเข้าไปดูข้อมูลของคุณได้ที่ Ulife.info ค่ะ';
-                         }else{
-                              $userMessage  = $re['message'];
-                         }
-                        }
+//                           $update = 15;
+//                           $answer = $key;
+//                           $user_update = (new SqlController)->user_update($user,$answer,$update);
+//                            $userMessage = 'ทำการเชื่อมต่อแล้วนะคะ คุณสามารถเข้าไปดูข้อมูลของคุณได้ที่ Ulife.info ค่ะ';
+//                          }else{
+//                               $userMessage  = $re['message'];
+//                          }
+//                         }
 
-                      }
+//                       }
 
 
                      
-            }elseif (is_numeric($userMessage) !== false && $sequentsteps->seqcode == '3004'  ) {
-                      // print('sss');
-                      $case = 1;
+//             }elseif (is_numeric($userMessage) !== false && $sequentsteps->seqcode == '3004'  ) {
+//                       // print('sss');
+//                       $case = 1;
                       
-                      $Data = array(
-                               'token' => $userMessage,
-                               'line_id' => $user
-                            );
-                      // print($Data);
-                      $data_json = json_encode($Data);    
-                      $url ='http://128.199.147.57/api/v1/peat/verify';
-                      $ch = curl_init();
-                      //set the url, number of POST vars, POST data
-                      curl_setopt($ch,CURLOPT_URL, $url);
-                      curl_setopt($ch,CURLOPT_POSTFIELDS, $data_json);
-                      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//                       $Data = array(
+//                                'token' => $userMessage,
+//                                'line_id' => $user
+//                             );
+//                       // print($Data);
+//                       $data_json = json_encode($Data);    
+//                       $url ='http://128.199.147.57/api/v1/peat/verify';
+//                       $ch = curl_init();
+//                       //set the url, number of POST vars, POST data
+//                       curl_setopt($ch,CURLOPT_URL, $url);
+//                       curl_setopt($ch,CURLOPT_POSTFIELDS, $data_json);
+//                       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-                      //execute post
-                      $result = curl_exec($ch);
+//                       //execute post
+//                       $result = curl_exec($ch);
 
-                      //close connection
-                      curl_close($ch);
-                      $re = json_decode($result,true);
-                      // print ($result);
-                       if(strpos($result, 'errors') !== false ){
-                          $userMessage  = 'รหัสผิดพลาด โปรดใส่รหัสอีกครั้ง';
-                      }else{    
-                                 $code = $re['code'];
-                                 if ($code=='200'){
+//                       //close connection
+//                       curl_close($ch);
+//                       $re = json_decode($result,true);
+//                       // print ($result);
+//                        if(strpos($result, 'errors') !== false ){
+//                           $userMessage  = 'รหัสผิดพลาด โปรดใส่รหัสอีกครั้ง';
+//                       }else{    
+//                                  $code = $re['code'];
+//                                  if ($code=='200'){
                                    
-                                    $seqcode = '0000';
-                                    $nextseqcode = '0000';
-                                    $userMessage  = 'ทำการเชื่อมต่อแล้วนะคะ คุณสามารถเข้าไปดูข้อมูลของคุณได้ที่ Ulife.info ค่ะ';
+//                                     $seqcode = '0000';
+//                                     $nextseqcode = '0000';
+//                                     $userMessage  = 'ทำการเชื่อมต่อแล้วนะคะ คุณสามารถเข้าไปดูข้อมูลของคุณได้ที่ Ulife.info ค่ะ';
 
 
-                          $users_register = users_register::whereNull('deleted_at')
-                                                      ->where('user_id',$user)
-                                                      ->first();
-                          $email =   $users_register->email;
+//                           $users_register = users_register::whereNull('deleted_at')
+//                                                       ->where('user_id',$user)
+//                                                       ->first();
+//                           $email =   $users_register->email;
 
-                          $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                          $password = $sequentsteps->answer;
+//                           $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                           $password = $sequentsteps->answer;
 
 
 
-                          $localLogin =  array('client_id'=> '580653df7fab2a33c0387111a',
-                                               'client_secret' => 'NevtZlDibxbZXn4VzCdQ657phBPzNe',
-                                               'email'=> $email,
-                                               'password'=> $password
-                                              );               
+//                           $localLogin =  array('client_id'=> '580653df7fab2a33c0387111a',
+//                                                'client_secret' => 'NevtZlDibxbZXn4VzCdQ657phBPzNe',
+//                                                'email'=> $email,
+//                                                'password'=> $password
+//                                               );               
                       
-                          $localLogin_json = json_encode($localLogin);    
-                          $url ='http://128.199.147.57/api/OAuth2/LocalLogin';
-                          $ch = curl_init();
-                          //set the url, number of POST vars, POST data
-                          curl_setopt($ch,CURLOPT_URL, $url);
-                          //curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-                          curl_setopt($ch, CURLOPT_POST, 1);
-                          curl_setopt($ch,CURLOPT_POSTFIELDS, $localLogin_json);
-                          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//                           $localLogin_json = json_encode($localLogin);    
+//                           $url ='http://128.199.147.57/api/OAuth2/LocalLogin';
+//                           $ch = curl_init();
+//                           //set the url, number of POST vars, POST data
+//                           curl_setopt($ch,CURLOPT_URL, $url);
+//                           //curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+//                           curl_setopt($ch, CURLOPT_POST, 1);
+//                           curl_setopt($ch,CURLOPT_POSTFIELDS, $localLogin_json);
+//                           curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-                          //execute post
-                          $result = curl_exec($ch);
+//                           //execute post
+//                           $result = curl_exec($ch);
                         
-                          //close connection
-                          curl_close($ch);
-                          // echo $result;
-                          // $userMessage  = $result;
+//                           //close connection
+//                           curl_close($ch);
+//                           // echo $result;
+//                           // $userMessage  = $result;
 
-                          $re = json_decode($result,true);
+//                           $re = json_decode($result,true);
 
-                                     $code = $re['code'];
-                                     if($code == '409'){
+//                                      $code = $re['code'];
+//                                      if($code == '409'){
 
-                                        $userMessage = "อีเมลหรือรหัสผ่าน ไม่ตรงกันค่ะ คุณแม่กรุณาพิมพ์รหัสผ่านอีกครั้ง หรือ พิมพ์ 'Q' เพื่อทำการออกจากการเชื่อมข้อมูลค่ะ"; 
+//                                         $userMessage = "อีเมลหรือรหัสผ่าน ไม่ตรงกันค่ะ คุณแม่กรุณาพิมพ์รหัสผ่านอีกครั้ง หรือ พิมพ์ 'Q' เพื่อทำการออกจากการเชื่อมข้อมูลค่ะ"; 
 
-                                     }else{
-                                      $key = $re['user_data']['user_key'];
-                                      $token = $re['access_token'];
-                                      // $setgraph = $this->setgraph_api($key,$user);
-                                      $addChild = (new ApiController)->addChild_api($token,$user);
-                                      $setgraph = (new ApiController)->setgraph_api($key,$user);
-                                      $tracker = (new ApiController)->tracker_api($key,$user);
-                                      $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                                      }else{
+//                                       $key = $re['user_data']['user_key'];
+//                                       $token = $re['access_token'];
+//                                       // $setgraph = $this->setgraph_api($key,$user);
+//                                       $addChild = (new ApiController)->addChild_api($token,$user);
+//                                       $setgraph = (new ApiController)->setgraph_api($key,$user);
+//                                       $tracker = (new ApiController)->tracker_api($key,$user);
+//                                       $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
                                       
-                                      $update = 15;
-                                      $answer = $key;
-                                      $user_update = (new SqlController)->user_update($user,$answer,$update);
+//                                       $update = 15;
+//                                       $answer = $key;
+//                                       $user_update = (new SqlController)->user_update($user,$answer,$update);
 
-                                      }
+//                                       }
                                       
                                  
-                                }else{
-                                    $userMessage  = $re['message'];
-                                }
+//                                 }else{
+//                                     $userMessage  = $re['message'];
+//                                 }
 
                                   
-                      }
+//                       }
   
 
-            // }elseif ((is_string($userMessage) !== false && $sequentsteps->seqcode == '3005' )||(is_string($userMessage) !== false && $sequentsteps->seqcode == '3006' ) ) {
-            //                         $case = 1;
-            //                         $seqcode = '0000';
-            //                         $nextseqcode = '0000';
+//             // }elseif ((is_string($userMessage) !== false && $sequentsteps->seqcode == '3005' )||(is_string($userMessage) !== false && $sequentsteps->seqcode == '3006' ) ) {
+//             //                         $case = 1;
+//             //                         $seqcode = '0000';
+//             //                         $nextseqcode = '0000';
                       
-            //                         $password = $userMessage;
-            //                         $userMessage  = 'ทำการเชื่อมต่อแล้ว';
-            //                         $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+//             //                         $password = $userMessage;
+//             //                         $userMessage  = 'ทำการเชื่อมต่อแล้ว';
+//             //                         $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
                                     
 
-            //                         $users_register = users_register::where('deleted_status','1')
-            //                                                         ->where('user_id',$user)
-            //                                                         ->first();
-            //                         $email =  $users_register->email;
-            //                         $regis = $this->localRegister_api($user,$password);
-            //                         // $key = $this->localLogin_api($email,$password);
-            //                         //$setgraph = $this->setgraph_api($key,$user);
-            //                         $userMessage =  $regis;
+//             //                         $users_register = users_register::where('deleted_status','1')
+//             //                                                         ->where('user_id',$user)
+//             //                                                         ->first();
+//             //                         $email =  $users_register->email;
+//             //                         $regis = $this->localRegister_api($user,$password);
+//             //                         // $key = $this->localLogin_api($email,$password);
+//             //                         //$setgraph = $this->setgraph_api($key,$user);
+//             //                         $userMessage =  $regis;
                                           
                                           
 
-//ข้อมูลการใช้งาน
-            }elseif ($userMessage == 'แนะนำการใช้งาน' && $sequentsteps->seqcode == '0000'  ) {
-                  $case = 27;
+// //ข้อมูลการใช้งาน
+//             }elseif ($userMessage == 'แนะนำการใช้งาน' && $sequentsteps->seqcode == '0000'  ) {
+//                   $case = 27;
             
-            }elseif ($userMessage == 'ข้อมูลการใช้งาน' && $sequentsteps->seqcode == '0000'  ) {
-                  $case = 1;
-                  $userMessage  = 'คุณสามารถพิมพ์'. "\n".
-                                  // '1."เริ่มต้นการใช้งาน" :ลบข้อมูลทั้งหมดเพื่อบันทึกข้อมูลใหม่'. "\n".
-                /*  แนน*/
-                                  // '👉 "ดูข้อมูล" สำหรับ ดูข้อมูลของตัวเอง'. "\n".
-                                  '👉 "เริ่มการแจ้งเตือน" สำหรับ เริ่มการแจ้งเตือนทั้งหมด'. "\n".
-                                  '👉 "หยุดการแจ้งเตือนทั้งหมด" สำหรับ หยุดการแจ้งเตือนทั้งหมด'. "\n".
-                                  '👉 "หยุดการแจ้งเตือนรายวัน" สำหรับ หยุดการแจ้งเตือนรายวัน'. "\n".
-                                  '👉 "หยุดการแจ้งเตือนรายสัปดาห์" สำหรับ หยุดการแจ้งเตือนรายสัปดาห์'. "\n".
-                                  '👉 "ทำอะไรได้บ้าง" แนะนำ REMI ว่าสามารถทำอะไรได้บ้าง';
-                  // $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
-            }elseif (strpos($userMessage, 'แนะนำเมนูอาหาร') !== false ||strpos($userMessage, 'เมนูอาหาร') !== false ||strpos($userMessage, 'แนะนำเมนู') !== false ||strpos($userMessage, 'แนะนำอาหาร') !== false ){
+//             }elseif ($userMessage == 'ข้อมูลการใช้งาน' && $sequentsteps->seqcode == '0000'  ) {
+//                   $case = 1;
+//                   $userMessage  = 'คุณสามารถพิมพ์'. "\n".
+//                                   // '1."เริ่มต้นการใช้งาน" :ลบข้อมูลทั้งหมดเพื่อบันทึกข้อมูลใหม่'. "\n".
+//                 /*  แนน*/
+//                                   // '👉 "ดูข้อมูล" สำหรับ ดูข้อมูลของตัวเอง'. "\n".
+//                                   '👉 "เริ่มการแจ้งเตือน" สำหรับ เริ่มการแจ้งเตือนทั้งหมด'. "\n".
+//                                   '👉 "หยุดการแจ้งเตือนทั้งหมด" สำหรับ หยุดการแจ้งเตือนทั้งหมด'. "\n".
+//                                   '👉 "หยุดการแจ้งเตือนรายวัน" สำหรับ หยุดการแจ้งเตือนรายวัน'. "\n".
+//                                   '👉 "หยุดการแจ้งเตือนรายสัปดาห์" สำหรับ หยุดการแจ้งเตือนรายสัปดาห์'. "\n".
+//                                   '👉 "ทำอะไรได้บ้าง" แนะนำ REMI ว่าสามารถทำอะไรได้บ้าง';
+//                   // $sequentsteps_insert =  $this->sequentsteps_update($user,$seqcode,$nextseqcode);
+//             }elseif (strpos($userMessage, 'แนะนำเมนูอาหาร') !== false ||strpos($userMessage, 'เมนูอาหาร') !== false ||strpos($userMessage, 'แนะนำเมนู') !== false ||strpos($userMessage, 'แนะนำอาหาร') !== false ){
                    
-                 $case = 26;     
-            }elseif ($userMessage == 'คำถามที่ถามบ่อย' && $sequentsteps->seqcode == '0000'  ) {
-                  $case = 19;
-                  $userMessage  = '0';
+//                  $case = 26;     
+//             }elseif ($userMessage == 'คำถามที่ถามบ่อย' && $sequentsteps->seqcode == '0000'  ) {
+//                   $case = 19;
+//                   $userMessage  = '0';
 
-            }elseif ($userMessage == 'แนะนำการออกกำลังกาย' && $sequentsteps->seqcode == '0000'  ) {
-                  //$case = 16;
-                  $case = 20 ;
-            }elseif ($userMessage == 'บันทึกข้อมูลคุณแม่'  ) {
-                  $case = 24;
-                  $userMessage  = $user;
+//             }elseif ($userMessage == 'แนะนำการออกกำลังกาย' && $sequentsteps->seqcode == '0000'  ) {
+//                   //$case = 16;
+//                   $case = 20 ;
+//             }elseif ($userMessage == 'บันทึกข้อมูลคุณแม่'  ) {
+//                   $case = 24;
+//                   $userMessage  = $user;
 
-//////////////////////////////////////////////
-            }elseif ($userMessage == 'หยุดการแจ้งเตือนทั้งหมด') {
-                  $answer = '0';
-                  $case = 1;
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $update = 14;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = 'หยุดการแจ้งเตือนทั้งหมดแล้วนะคะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-            }elseif ($userMessage == 'หยุดการแจ้งเตือนรายสัปดาห์') {
-                  $answer = '3';
-                  $case = 1;
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $update = 14;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = 'หยุดการแจ้งเตือนรายสัปดาห์แล้วนะคะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+// //////////////////////////////////////////////
+//             }elseif ($userMessage == 'หยุดการแจ้งเตือนทั้งหมด') {
+//                   $answer = '0';
+//                   $case = 1;
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $update = 14;
+//                   $user_update = (new SqlController)->user_update($user,$answer,$update); 
+//                   $userMessage  = 'หยุดการแจ้งเตือนทั้งหมดแล้วนะคะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//             }elseif ($userMessage == 'หยุดการแจ้งเตือนรายสัปดาห์') {
+//                   $answer = '3';
+//                   $case = 1;
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $update = 14;
+//                   $user_update = (new SqlController)->user_update($user,$answer,$update); 
+//                   $userMessage  = 'หยุดการแจ้งเตือนรายสัปดาห์แล้วนะคะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
 
-             }elseif ($userMessage == 'หยุดการแจ้งเตือนรายวัน') {
-                  $answer = '2';
-                  $case = 1;
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $update = 14;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = 'หยุดการแจ้งเตือนรายวันแล้วนะคะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-            }elseif ($userMessage == 'เริ่มการแจ้งเตือน') {
-                  $answer = '1';
-                  $case = 1;
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $update = 14;
-                  $user_update = (new SqlController)->user_update($user,$answer,$update); 
-                  $userMessage  = 'เริ่มการแจ้งเตือนแล้วนะคะ';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
-//กราฟน้ำหนัก
-           }elseif ($userMessage == 'กราฟน้ำหนัก') {
+//              }elseif ($userMessage == 'หยุดการแจ้งเตือนรายวัน') {
+//                   $answer = '2';
+//                   $case = 1;
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $update = 14;
+//                   $user_update = (new SqlController)->user_update($user,$answer,$update); 
+//                   $userMessage  = 'หยุดการแจ้งเตือนรายวันแล้วนะคะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//             }elseif ($userMessage == 'เริ่มการแจ้งเตือน') {
+//                   $answer = '1';
+//                   $case = 1;
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $update = 14;
+//                   $user_update = (new SqlController)->user_update($user,$answer,$update); 
+//                   $userMessage  = 'เริ่มการแจ้งเตือนแล้วนะคะ';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+// //กราฟน้ำหนัก
+//            }elseif ($userMessage == 'กราฟน้ำหนัก') {
                  
 
-                  $case = 18;
-                  $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
-                  $img = $sequentsteps->answer;
-                  $userMessage = 'https://peat.none.codes/uploads/'.$img ;
+//                   $case = 18;
+//                   $sequentsteps = (new SqlController)->sequentsteps_seqcode($user);
+//                   $img = $sequentsteps->answer;
+//                   $userMessage = 'https://peat.none.codes/uploads/'.$img ;
                  
                 
-//////////////////////////////////////////////////////////////////
-             }elseif ($userMessage == 'ดูข้อมูล'  ) {
+// //////////////////////////////////////////////////////////////////
+//              }elseif ($userMessage == 'ดูข้อมูล'  ) {
 
-                  $case = 5;
-                  // $update = 13;
-                  //$case = 1;
-                  $userMessage  = (new checkmessageController)->user_data($user);
-                  // $user_update = $this->user_update($user,$answer,$update);
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
+//                   $case = 5;
+//                   // $update = 13;
+//                   //$case = 1;
+//                   $userMessage  = (new checkmessageController)->user_data($user);
+//                   // $user_update = $this->user_update($user,$answer,$update);
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $sequentsteps_insert =  (new SqlController)->sequentsteps_update($user,$seqcode,$nextseqcode);
 
-             }elseif ($userMessage == 'ไม่กิน [อาหารบางชนิด] กินอะไรแทนดี?' || $userMessage == 'แพ้ท้อง กินอย่างไร?'||$userMessage == 'ผลไม้ 1 ส่วนคือเท่าไร?'||$userMessage == 'ซื้ออาหารกินข้างนอก จะกะปริมาณอย่างไร?'||$userMessage == 'กินไม่ถึง หรือกินเกิน ทำอย่างไร?'||$userMessage == 'ท้องผูก ท้องอืด ทำอย่างไร?'||$userMessage == 'อื่น ๆ (ฝากคำถามไว้ได้)'||$userMessage == 'อาหารอะไรที่ควรหลีกเลี่ยง?'||$userMessage == 'ไม่อิ่ม ทำอย่างไร?' && $sequentsteps->seqcode == '0000' ) {
+//              }elseif ($userMessage == 'ไม่กิน [อาหารบางชนิด] กินอะไรแทนดี?' || $userMessage == 'แพ้ท้อง กินอย่างไร?'||$userMessage == 'ผลไม้ 1 ส่วนคือเท่าไร?'||$userMessage == 'ซื้ออาหารกินข้างนอก จะกะปริมาณอย่างไร?'||$userMessage == 'กินไม่ถึง หรือกินเกิน ทำอย่างไร?'||$userMessage == 'ท้องผูก ท้องอืด ทำอย่างไร?'||$userMessage == 'อื่น ๆ (ฝากคำถามไว้ได้)'||$userMessage == 'อาหารอะไรที่ควรหลีกเลี่ยง?'||$userMessage == 'ไม่อิ่ม ทำอย่างไร?' && $sequentsteps->seqcode == '0000' ) {
 
-                      $case = 1;
-                    switch($userMessage) {
+//                       $case = 1;
+//                     switch($userMessage) {
                         
-                  case ($userMessage == 'ไม่กิน [อาหารบางชนิด] กินอะไรแทนดี?'): 
-                        $userMessage = '👼 ไม่ต้องห่วงค่ะ หากคุณไม่กินอาหารบางชนิด สามารถเปลี่ยนเป็นอาหารอย่างอื่นได้ โดยสามารถแลกเปลี่ยนคร่าว ๆ ดังนี้ค่ะ'."\n".'👉 ข้าวสวย 1 ทัพพี สามารถเปลี่ยนเป็น เส้นก๋วยเตี๋ยว เส้นบะหมี่สุก 2/3 ถ้วยตวง หรือ ขนมจีน 1 จับใหญ่ หรือ ข้าวเหนียว ½ ทัพพี หรือ มันฝรั่ง ½ ลูก หรือข้าวโพดต้ม ½ ฝัก หรือ ขนมปัง 1 แผ่น'."\n".
-                          '👉 ผัก 1 ทัพพี สามารถเปลี่ยนผักเป็นผักชนิดอื่นได้ โดยเน้นผักให้หลากหลาย ทั้งผักที่มีแป้งมาก (เช่น ฟักทอง แครอท ถั่วลันเตา ฯลฯ) และผักที่ไม่มีแป้งมาก (ผักกาดขาว ผักบุ้ง กะหล่ำปลี มะเขือเทศ แตงกวา ฯลฯ)'."\n".
-                          '👉 เนื้อสัตว์ แลกเปลี่ยนในปริมาณที่เท่ากัน (เช่นเนื้อไก่ 2 ช้อนโต๊ะ ก็กินเนื้อปลา 2 ช้อนโต๊ะแทน) หรือเปลี่ยนเป็นเต้าหู้แข็ง ½ แผ่น หรือเต้าหู้ไข่ 2/3 หลอดแทนได้'."\n".
-                          '👉 ไขมัน น้ำมัน 1 ช้อนชา แลกเปลี่ยนเป็น กะทิ 1 ช้อนโต๊ะ หรือ น้ำสลัด 1 ช้อนโต๊ะ หรือ ถั่วลิสง 10 เม็ด หรือ เนยสด 1 ช้อนชา หรือ มายองเนส 1 ช้อนชา ได้ อย่างไรก็ตาม ควรเลือกกินน้ำมันชนิดดี เช่น น้ำมันรำข้าว สลับกับน้ำมันถั่วเหลือง มากกว่ากะทิ หรือเนยสด';
-                    break;
-                  case ($userMessage == 'ผลไม้ 1 ส่วนคือเท่าไร?'): 
-                        $userMessage = '👉 ผลไม้ 1 ส่วน คือ กล้วยน้ำว้า 1 ลูก หรือ กล้วยหอม ½ ลูก หรือ เงาะ 4 ลูก หรือ ชมพู่ 4 ลูก หรือ แตงโม 1 ชิ้น หรือ ฝรั่ง ½ ผล หรือ มะม่วงสุก ½ ผลกลาง หรือ มะละกอ สับปะรด 8 ชิ้นคำ หรือ ส้มเขียวหวาน 2 ผลกลาง หรือ ส้มโอ 2 กลีบใหญ่ หรือแอปเปิ้ล 1 ผลเล็ก หรือ องุ่น 20 เม็ด'."\n".
-                        '👉 หมายความว่า ทุกตัวเลือกให้พลังงานเท่ากัน คือ 60 กิโลแคลอรีต่อส่วน เช่น ถ้าหนึ่งวันกินกล้วยน้ำว้าได้ 2 ลูก อาจเปลี่ยนเป็นกล้วยน้ำว้า 1 ลูก และ สับปะรด 8 ชิ้นคำก็ได้ค่ะ';
-                    break;
-                  case ($userMessage == 'ซื้ออาหารกินข้างนอก จะกะปริมาณอย่างไร?'): 
-                        $userMessage = '👉 ถ้าไม่ได้ทำอาหารเอง บางครั้งเราอาจจะพบว่าการกะปริมาณอาหารทำได้ยากขึ้น โดยเฉพาะอย่างยิ่งปริมาณน้ำมันนะคะ วิธีที่ง่ายที่สุดคือ พยายามเลือกอาหารที่ใช้น้ำมันในการปรุงประกอบ สลับกับอาหารที่ไม่ได้มีน้ำมันเป็นส่วนประกอบ แล้วพยายามกะปริมาณของอาหารหมวดที่กะได้ เช่น ปริมาณข้าว ปริมาณเนื้อสัตว์ ปริมาณผัก แล้วติดตามน้ำหนักตัวค่ะ ถ้าน้ำหนักตัวเพิ่มขึ้นในอัตราที่เหมาะสม ก็แสดงว่าปริมาณอาหารที่กินเหมาะสมแล้วค่ะ ถ้าเกิดน้ำหนักตัวขึ้นเยอะเกินไป ก็อาจจะลดความถี่ของการกินอาหารที่ใช้ไขมันปรุงประกอบมาก ๆ ร่วมกับการลดปริมาณข้าวแป้งและผลไม้ทีละน้อย ถ้าเกิดน้ำหนักตัวขึ้นน้อยเกินไป ก็อาจเพิ่มปริมาณอาหาร ร่วมกับการเลือกอาหารที่มีการใช้น้ำมันปรุงประกอบให้บ่อยขึ้นค่ะ';
-                    break;
+//                   case ($userMessage == 'ไม่กิน [อาหารบางชนิด] กินอะไรแทนดี?'): 
+//                         $userMessage = '👼 ไม่ต้องห่วงค่ะ หากคุณไม่กินอาหารบางชนิด สามารถเปลี่ยนเป็นอาหารอย่างอื่นได้ โดยสามารถแลกเปลี่ยนคร่าว ๆ ดังนี้ค่ะ'."\n".'👉 ข้าวสวย 1 ทัพพี สามารถเปลี่ยนเป็น เส้นก๋วยเตี๋ยว เส้นบะหมี่สุก 2/3 ถ้วยตวง หรือ ขนมจีน 1 จับใหญ่ หรือ ข้าวเหนียว ½ ทัพพี หรือ มันฝรั่ง ½ ลูก หรือข้าวโพดต้ม ½ ฝัก หรือ ขนมปัง 1 แผ่น'."\n".
+//                           '👉 ผัก 1 ทัพพี สามารถเปลี่ยนผักเป็นผักชนิดอื่นได้ โดยเน้นผักให้หลากหลาย ทั้งผักที่มีแป้งมาก (เช่น ฟักทอง แครอท ถั่วลันเตา ฯลฯ) และผักที่ไม่มีแป้งมาก (ผักกาดขาว ผักบุ้ง กะหล่ำปลี มะเขือเทศ แตงกวา ฯลฯ)'."\n".
+//                           '👉 เนื้อสัตว์ แลกเปลี่ยนในปริมาณที่เท่ากัน (เช่นเนื้อไก่ 2 ช้อนโต๊ะ ก็กินเนื้อปลา 2 ช้อนโต๊ะแทน) หรือเปลี่ยนเป็นเต้าหู้แข็ง ½ แผ่น หรือเต้าหู้ไข่ 2/3 หลอดแทนได้'."\n".
+//                           '👉 ไขมัน น้ำมัน 1 ช้อนชา แลกเปลี่ยนเป็น กะทิ 1 ช้อนโต๊ะ หรือ น้ำสลัด 1 ช้อนโต๊ะ หรือ ถั่วลิสง 10 เม็ด หรือ เนยสด 1 ช้อนชา หรือ มายองเนส 1 ช้อนชา ได้ อย่างไรก็ตาม ควรเลือกกินน้ำมันชนิดดี เช่น น้ำมันรำข้าว สลับกับน้ำมันถั่วเหลือง มากกว่ากะทิ หรือเนยสด';
+//                     break;
+//                   case ($userMessage == 'ผลไม้ 1 ส่วนคือเท่าไร?'): 
+//                         $userMessage = '👉 ผลไม้ 1 ส่วน คือ กล้วยน้ำว้า 1 ลูก หรือ กล้วยหอม ½ ลูก หรือ เงาะ 4 ลูก หรือ ชมพู่ 4 ลูก หรือ แตงโม 1 ชิ้น หรือ ฝรั่ง ½ ผล หรือ มะม่วงสุก ½ ผลกลาง หรือ มะละกอ สับปะรด 8 ชิ้นคำ หรือ ส้มเขียวหวาน 2 ผลกลาง หรือ ส้มโอ 2 กลีบใหญ่ หรือแอปเปิ้ล 1 ผลเล็ก หรือ องุ่น 20 เม็ด'."\n".
+//                         '👉 หมายความว่า ทุกตัวเลือกให้พลังงานเท่ากัน คือ 60 กิโลแคลอรีต่อส่วน เช่น ถ้าหนึ่งวันกินกล้วยน้ำว้าได้ 2 ลูก อาจเปลี่ยนเป็นกล้วยน้ำว้า 1 ลูก และ สับปะรด 8 ชิ้นคำก็ได้ค่ะ';
+//                     break;
+//                   case ($userMessage == 'ซื้ออาหารกินข้างนอก จะกะปริมาณอย่างไร?'): 
+//                         $userMessage = '👉 ถ้าไม่ได้ทำอาหารเอง บางครั้งเราอาจจะพบว่าการกะปริมาณอาหารทำได้ยากขึ้น โดยเฉพาะอย่างยิ่งปริมาณน้ำมันนะคะ วิธีที่ง่ายที่สุดคือ พยายามเลือกอาหารที่ใช้น้ำมันในการปรุงประกอบ สลับกับอาหารที่ไม่ได้มีน้ำมันเป็นส่วนประกอบ แล้วพยายามกะปริมาณของอาหารหมวดที่กะได้ เช่น ปริมาณข้าว ปริมาณเนื้อสัตว์ ปริมาณผัก แล้วติดตามน้ำหนักตัวค่ะ ถ้าน้ำหนักตัวเพิ่มขึ้นในอัตราที่เหมาะสม ก็แสดงว่าปริมาณอาหารที่กินเหมาะสมแล้วค่ะ ถ้าเกิดน้ำหนักตัวขึ้นเยอะเกินไป ก็อาจจะลดความถี่ของการกินอาหารที่ใช้ไขมันปรุงประกอบมาก ๆ ร่วมกับการลดปริมาณข้าวแป้งและผลไม้ทีละน้อย ถ้าเกิดน้ำหนักตัวขึ้นน้อยเกินไป ก็อาจเพิ่มปริมาณอาหาร ร่วมกับการเลือกอาหารที่มีการใช้น้ำมันปรุงประกอบให้บ่อยขึ้นค่ะ';
+//                     break;
 
-                  case ($userMessage == 'กินไม่ถึง หรือกินเกิน ทำอย่างไร?'): 
-                        $userMessage = '👉 ไม่ต้องกังวลนะคะ ว่าถ้าไม่ได้กินอาหารตามปริมาณที่แนะนำเป๊ะ ๆ แล้วจะได้รับสารอาหารไม่พอ หรือได้รับสารอาหารเกิน เพียงแต่ให้ในภาพรวมในแต่ละวันเราได้ตามปริมาณที่แนะนำก็เพียงพอค่ะ บางมื้อเราอาจจะกินน้อย ก็ไปชดเชยในมื้อถัดไป บางมื้อกินเยอะ ก็ไปลดลงในมื้อถัดไป โดยเฉพาะอย่างยิ่งผัก ถ้าบางมื้อกินน้อย ก็ไปชดเชย กินผักให้มากขึ้นในมื้อถัดไป ก็ได้เช่นกันค่ะ ';
-                    break;
-                  case ($userMessage == 'ท้องผูก ท้องอืด ทำอย่างไร?'): 
-                        $userMessage = '👼 จริง ๆ แล้วปัญหาท้องผูกหรือท้องอืดอาจจะเกิดขึ้นได้เป็นปกติในคุณแม่ที่ตั้งครรภ์นะคะ เพราะมดลูกมีขนาดใหญ่ขึ้น เลยอาจจะไปกดทับลำไส้ได้ อย่างไรก็ตามคำแนะนำโดยทั่วไปเพื่อช่วยลดอาการท้องผูกก็คือ'."\n".
-                        '👉 เพิ่มการกินผักผลไม้ทีละน้อย เพื่อให้ได้รับใยอาหารมากขึ้น'."\n".
-                        '👉 ดื่มน้ำให้เพียงพอ โดยเฉพาะอย่างยิ่งเมื่อเพิ่มผักผลไม้ เพื่อให้อาหารผ่านลำไส้ได้ดีขึ้น'."\n".
-                        '👉 ออกกำลังกายอย่างสม่ำเสมอ ภายใต้คำแนะนำของแพทย์ผู้ดูแล เพราะการออกกำลังกายจะช่วยให้ลำไส้มีการเคลื่อนไหวมากขึ้นค่ะ'."\n".
-                        '👉 ถ้าท้องอืด อาจจะเกิดจากการกินอาหารด้วยความรวดเร็วเกินไป อาจจะลดปริมาณอาหารในแต่ละมื้อ แต่เพิ่มความถี่แทน หลีกเลี่ยงอาหารที่ทำให้เกิดแก๊ส เช่น กะหล่ำปลี หัวหอมใหญ่ ถั่วเมล็ดแห้ง และน้ำอัดลมค่ะ';
-                    break;
-                  case ($userMessage == 'แพ้ท้อง กินอย่างไร?'): 
-                        $userMessage = '👼 ปกติแล้วอาการแพ้ท้องสามารถเกิดขึ้นได้จากการแปรปรวนของระดับฮอร์โมนในคุณแม่ตั้งครรภ์ และสามารถหายได้เองนะคะ โดยทั่วไปแล้วคำแนะนำด้านอาหารเพื่อช่วยบรรเทาอาการแพ้ท้องก็คือ'."\n".
-                        '👉 กินอาหารทีละน้อย แต่บ่อยครั้งขึ้น'."\n".
-                        '👉 หลีกเลี่ยงอาหารผัด ทอด ที่มีน้ำมันในปริมาณมาก เพราะอาจทำให้คลื่นไส้เพิ่มขึ้นได้'."\n".
-                        '👉 ดื่มเครื่องดื่มที่มีรสเปรี้ยว เช่น น้ำมะนาว น้ำส้ม หรือน้ำขิง อาจช่วยบรรเทาอาการได้ค่ะ'."\n".
-                        '👉 หลีกเลี่ยงอาหารที่มีกลิ่นแรง เพราะอาจทำให้คลื่นไส้ได้'."\n".
-                        '👉 คุณแม่บางท่านจะมีอาการแพ้ท้องเป็นช่วงเวลาในแต่ละวัน พยายามสังเกตตัวเอง และกินอาหารในช่วงเวลาที่ไม่มีอาการแพ้ท้องค่ะ'."\n".
-                        '👼 อย่างไรก็ตาม ถ้าอาการแพ้ท้องเป็นรุนแรง ไม่สามารถกินอาหารได้เป็นระยะเวลานาน ควรไปพบแพทย์เพื่อให้การรักษาที่เหมาะสมค่ะ';
-                    break;
-                   case ($userMessage == 'ไม่อิ่ม ทำอย่างไร?'): 
-                        $userMessage = '👉 ก่อนอื่นเลย ให้ตรวจสอบตัวเองก่อนนะคะว่าเป็นคนที่กินอาหารเร็วแค่ไหน เพราะในบางครั้ง เพียงแต่กินอาหารให้ช้าลง เราก็จะพบว่าปริมาณอาหารเท่าเดิม ก็ทำให้เราอิ่มได้ค่ะ'."\n".
-                        '👉 แต่ถ้าเรากินอาหารช้าลงแล้ว ยังพบว่าปริมาณอาหารที่แนะนำ ยังไม่อิ่ม ก็อาจจะค่อย ๆ เพิ่มปริมาณอาหารได้นะคะ อย่างไรก็ตามควรเพิ่มทีละน้อย และเพิ่มในสัดส่วนที่เหมาะสม (เพิ่มผักก่อน แล้วจึงเพิ่มเนื้อสัตว์ แล้วจึงเพิ่มข้าว) แล้วค่อย ๆ ตรวจสอบความอิ่มดู ก็จะทำให้เราหาปริมาณการกินที่เหมาะสมของตัวเองได้ในที่สุดค่ะ';
-                    break;
-                  case ($userMessage == 'อาหารอะไรที่ควรหลีกเลี่ยง?'): 
-                        $userMessage = '👉 อาหารหมักดอง เพราะอาจมีสารพิษปนเปื้อน '."\n".
-                        '👉 อาหารรสจัด เพราะอาจทำให้ไม่สบายท้องได้ง่ายขึ้น'."\n".
-                        '👉 อาหารสุก ๆ ดิบ ๆ ไม่สะอาด เรื่องของความปลอดภัยในอาหารถือว่าสำคัญมากในช่วงนี้ค่ะ'."\n".
-                        '👉 เครื่องดื่มที่มีแอลกอฮอล์ เพราะอาจเกิดอันตรายแก่ทารกในครรภ์ได้ค่ะ'."\n".
-                        '👉 เครื่องดื่มที่มีคาเฟอีน ในปริมาณน้อยอาจไม่มีปัญหา แต่ในบางคนอาจกระตุ้นให้เกิดอาการใจสั่น นอนไม่หลับ และทำให้ระบบขับถ่ายและระบบปัสสาวะรวนได้ ดังนั้นควรหลีกเลี่ยงในช่วงนี้ค่ะ';
-                    break;
-                  case ($userMessage == 'อื่น ๆ (ฝากคำถามไว้ได้)'): 
-                        $userMessage = 'หากมีข้อสงสัยสามารถสอบถามได้เลยค่ะ';
-                    break;
+//                   case ($userMessage == 'กินไม่ถึง หรือกินเกิน ทำอย่างไร?'): 
+//                         $userMessage = '👉 ไม่ต้องกังวลนะคะ ว่าถ้าไม่ได้กินอาหารตามปริมาณที่แนะนำเป๊ะ ๆ แล้วจะได้รับสารอาหารไม่พอ หรือได้รับสารอาหารเกิน เพียงแต่ให้ในภาพรวมในแต่ละวันเราได้ตามปริมาณที่แนะนำก็เพียงพอค่ะ บางมื้อเราอาจจะกินน้อย ก็ไปชดเชยในมื้อถัดไป บางมื้อกินเยอะ ก็ไปลดลงในมื้อถัดไป โดยเฉพาะอย่างยิ่งผัก ถ้าบางมื้อกินน้อย ก็ไปชดเชย กินผักให้มากขึ้นในมื้อถัดไป ก็ได้เช่นกันค่ะ ';
+//                     break;
+//                   case ($userMessage == 'ท้องผูก ท้องอืด ทำอย่างไร?'): 
+//                         $userMessage = '👼 จริง ๆ แล้วปัญหาท้องผูกหรือท้องอืดอาจจะเกิดขึ้นได้เป็นปกติในคุณแม่ที่ตั้งครรภ์นะคะ เพราะมดลูกมีขนาดใหญ่ขึ้น เลยอาจจะไปกดทับลำไส้ได้ อย่างไรก็ตามคำแนะนำโดยทั่วไปเพื่อช่วยลดอาการท้องผูกก็คือ'."\n".
+//                         '👉 เพิ่มการกินผักผลไม้ทีละน้อย เพื่อให้ได้รับใยอาหารมากขึ้น'."\n".
+//                         '👉 ดื่มน้ำให้เพียงพอ โดยเฉพาะอย่างยิ่งเมื่อเพิ่มผักผลไม้ เพื่อให้อาหารผ่านลำไส้ได้ดีขึ้น'."\n".
+//                         '👉 ออกกำลังกายอย่างสม่ำเสมอ ภายใต้คำแนะนำของแพทย์ผู้ดูแล เพราะการออกกำลังกายจะช่วยให้ลำไส้มีการเคลื่อนไหวมากขึ้นค่ะ'."\n".
+//                         '👉 ถ้าท้องอืด อาจจะเกิดจากการกินอาหารด้วยความรวดเร็วเกินไป อาจจะลดปริมาณอาหารในแต่ละมื้อ แต่เพิ่มความถี่แทน หลีกเลี่ยงอาหารที่ทำให้เกิดแก๊ส เช่น กะหล่ำปลี หัวหอมใหญ่ ถั่วเมล็ดแห้ง และน้ำอัดลมค่ะ';
+//                     break;
+//                   case ($userMessage == 'แพ้ท้อง กินอย่างไร?'): 
+//                         $userMessage = '👼 ปกติแล้วอาการแพ้ท้องสามารถเกิดขึ้นได้จากการแปรปรวนของระดับฮอร์โมนในคุณแม่ตั้งครรภ์ และสามารถหายได้เองนะคะ โดยทั่วไปแล้วคำแนะนำด้านอาหารเพื่อช่วยบรรเทาอาการแพ้ท้องก็คือ'."\n".
+//                         '👉 กินอาหารทีละน้อย แต่บ่อยครั้งขึ้น'."\n".
+//                         '👉 หลีกเลี่ยงอาหารผัด ทอด ที่มีน้ำมันในปริมาณมาก เพราะอาจทำให้คลื่นไส้เพิ่มขึ้นได้'."\n".
+//                         '👉 ดื่มเครื่องดื่มที่มีรสเปรี้ยว เช่น น้ำมะนาว น้ำส้ม หรือน้ำขิง อาจช่วยบรรเทาอาการได้ค่ะ'."\n".
+//                         '👉 หลีกเลี่ยงอาหารที่มีกลิ่นแรง เพราะอาจทำให้คลื่นไส้ได้'."\n".
+//                         '👉 คุณแม่บางท่านจะมีอาการแพ้ท้องเป็นช่วงเวลาในแต่ละวัน พยายามสังเกตตัวเอง และกินอาหารในช่วงเวลาที่ไม่มีอาการแพ้ท้องค่ะ'."\n".
+//                         '👼 อย่างไรก็ตาม ถ้าอาการแพ้ท้องเป็นรุนแรง ไม่สามารถกินอาหารได้เป็นระยะเวลานาน ควรไปพบแพทย์เพื่อให้การรักษาที่เหมาะสมค่ะ';
+//                     break;
+//                    case ($userMessage == 'ไม่อิ่ม ทำอย่างไร?'): 
+//                         $userMessage = '👉 ก่อนอื่นเลย ให้ตรวจสอบตัวเองก่อนนะคะว่าเป็นคนที่กินอาหารเร็วแค่ไหน เพราะในบางครั้ง เพียงแต่กินอาหารให้ช้าลง เราก็จะพบว่าปริมาณอาหารเท่าเดิม ก็ทำให้เราอิ่มได้ค่ะ'."\n".
+//                         '👉 แต่ถ้าเรากินอาหารช้าลงแล้ว ยังพบว่าปริมาณอาหารที่แนะนำ ยังไม่อิ่ม ก็อาจจะค่อย ๆ เพิ่มปริมาณอาหารได้นะคะ อย่างไรก็ตามควรเพิ่มทีละน้อย และเพิ่มในสัดส่วนที่เหมาะสม (เพิ่มผักก่อน แล้วจึงเพิ่มเนื้อสัตว์ แล้วจึงเพิ่มข้าว) แล้วค่อย ๆ ตรวจสอบความอิ่มดู ก็จะทำให้เราหาปริมาณการกินที่เหมาะสมของตัวเองได้ในที่สุดค่ะ';
+//                     break;
+//                   case ($userMessage == 'อาหารอะไรที่ควรหลีกเลี่ยง?'): 
+//                         $userMessage = '👉 อาหารหมักดอง เพราะอาจมีสารพิษปนเปื้อน '."\n".
+//                         '👉 อาหารรสจัด เพราะอาจทำให้ไม่สบายท้องได้ง่ายขึ้น'."\n".
+//                         '👉 อาหารสุก ๆ ดิบ ๆ ไม่สะอาด เรื่องของความปลอดภัยในอาหารถือว่าสำคัญมากในช่วงนี้ค่ะ'."\n".
+//                         '👉 เครื่องดื่มที่มีแอลกอฮอล์ เพราะอาจเกิดอันตรายแก่ทารกในครรภ์ได้ค่ะ'."\n".
+//                         '👉 เครื่องดื่มที่มีคาเฟอีน ในปริมาณน้อยอาจไม่มีปัญหา แต่ในบางคนอาจกระตุ้นให้เกิดอาการใจสั่น นอนไม่หลับ และทำให้ระบบขับถ่ายและระบบปัสสาวะรวนได้ ดังนั้นควรหลีกเลี่ยงในช่วงนี้ค่ะ';
+//                     break;
+//                   case ($userMessage == 'อื่น ๆ (ฝากคำถามไว้ได้)'): 
+//                         $userMessage = 'หากมีข้อสงสัยสามารถสอบถามได้เลยค่ะ';
+//                     break;
 
 
-                }
-             }elseif ($userMessage == 'กระดกข้อเท้า' || $userMessage == 'ยกก้น'||$userMessage == 'นอนเตะขา'||$userMessage == 'นอนตะแคงยกขา'||$userMessage == 'คลานสี่ขา'||$userMessage == 'แมวขู่'||$userMessage == 'นั่งโยกตัว'||$userMessage == 'นั่งเตะขา'||$userMessage == 'ยืนงอเข่า' || $userMessage == 'ยืนเตะขาไปข้างหลัง'||$userMessage == 'ยืนเตะขาไปด้านข้าง'||$userMessage == 'ยืนเขย่งเท้า'||$userMessage == 'ยืนกางแขน'||$userMessage == 'ยืนแกว่งแขนสลับขึ้นลง'||$userMessage == 'ยืนย่ำอยู่กับที่' && $sequentsteps->seqcode == '0000') {
+//                 }
+//              }elseif ($userMessage == 'กระดกข้อเท้า' || $userMessage == 'ยกก้น'||$userMessage == 'นอนเตะขา'||$userMessage == 'นอนตะแคงยกขา'||$userMessage == 'คลานสี่ขา'||$userMessage == 'แมวขู่'||$userMessage == 'นั่งโยกตัว'||$userMessage == 'นั่งเตะขา'||$userMessage == 'ยืนงอเข่า' || $userMessage == 'ยืนเตะขาไปข้างหลัง'||$userMessage == 'ยืนเตะขาไปด้านข้าง'||$userMessage == 'ยืนเขย่งเท้า'||$userMessage == 'ยืนกางแขน'||$userMessage == 'ยืนแกว่งแขนสลับขึ้นลง'||$userMessage == 'ยืนย่ำอยู่กับที่' && $sequentsteps->seqcode == '0000') {
 
-                      $case = 21;
-                    switch($userMessage) {
+//                       $case = 21;
+//                     switch($userMessage) {
                         
-                  case ($userMessage == 'กระดกข้อเท้า'): 
+//                   case ($userMessage == 'กระดกข้อเท้า'): 
 
-                        $userMessage = '1';
-                    break;
-                  case ($userMessage == 'ยกก้น'): 
-                        $userMessage = '2';
-                    break;
-                  case ($userMessage == 'นอนเตะขา'): 
-                        $userMessage = '3';
-                    break;
+//                         $userMessage = '1';
+//                     break;
+//                   case ($userMessage == 'ยกก้น'): 
+//                         $userMessage = '2';
+//                     break;
+//                   case ($userMessage == 'นอนเตะขา'): 
+//                         $userMessage = '3';
+//                     break;
 
-                  case ($userMessage == 'นอนตะแคงยกขา'): 
-                        $userMessage = '4';
-                    break;
-                  case ($userMessage == 'คลานสี่ขา'): 
-                        $userMessage = '5';
-                    break;
-                  case ($userMessage == 'แมวขู่'): 
-                        $userMessage = '6';
-                    break;
+//                   case ($userMessage == 'นอนตะแคงยกขา'): 
+//                         $userMessage = '4';
+//                     break;
+//                   case ($userMessage == 'คลานสี่ขา'): 
+//                         $userMessage = '5';
+//                     break;
+//                   case ($userMessage == 'แมวขู่'): 
+//                         $userMessage = '6';
+//                     break;
 
-                   case ($userMessage == 'นั่งโยกตัว'): 
-                        $userMessage = '7';
-                    break;
-                  case ($userMessage == 'นั่งเตะขา'): 
-                        $userMessage = '8';
-                    break;
-                  case ($userMessage == 'ยืนงอเข่า'): 
-                        $userMessage = '9';
-                    break;
+//                    case ($userMessage == 'นั่งโยกตัว'): 
+//                         $userMessage = '7';
+//                     break;
+//                   case ($userMessage == 'นั่งเตะขา'): 
+//                         $userMessage = '8';
+//                     break;
+//                   case ($userMessage == 'ยืนงอเข่า'): 
+//                         $userMessage = '9';
+//                     break;
 
 
-                  case ($userMessage == 'ยืนเตะขาไปข้างหลัง'): 
-                        $userMessage = '10';
-                    break;
-                  case ($userMessage == 'ยืนเตะขาไปด้านข้าง'): 
-                        $userMessage = '11';
-                    break;
-                  case ($userMessage == 'ยืนเขย่งเท้า'): 
-                        $userMessage = '12';
-                    break;
+//                   case ($userMessage == 'ยืนเตะขาไปข้างหลัง'): 
+//                         $userMessage = '10';
+//                     break;
+//                   case ($userMessage == 'ยืนเตะขาไปด้านข้าง'): 
+//                         $userMessage = '11';
+//                     break;
+//                   case ($userMessage == 'ยืนเขย่งเท้า'): 
+//                         $userMessage = '12';
+//                     break;
 
-                   case ($userMessage == 'ยืนกางแขน'): 
-                        $userMessage = '13';
-                    break;
-                  case ($userMessage == 'ยืนแกว่งแขนสลับขึ้นลง'): 
-                        $userMessage = '14';
-                    break;
-                  case ($userMessage == 'ยืนย่ำอยู่กับที่'): 
-                        $userMessage = '15';
-                    break;
+//                    case ($userMessage == 'ยืนกางแขน'): 
+//                         $userMessage = '13';
+//                     break;
+//                   case ($userMessage == 'ยืนแกว่งแขนสลับขึ้นลง'): 
+//                         $userMessage = '14';
+//                     break;
+//                   case ($userMessage == 'ยืนย่ำอยู่กับที่'): 
+//                         $userMessage = '15';
+//                     break;
 
-                }
+//                 }
             
-             }elseif ($userMessage == 'น้ำหนักตัวที่เหมาะสม' ||(new checkmessageController)->match($array4, $userMessage) ) {
-              $message_type = '02';
-              $Message = $userMessage;
-              $log_message = (new SqlController)->log_message($user,$Message,$message_type);
-                  $users_register = (new SqlController)->users_register_select($user);
-                  $user_Pre_weight = $users_register->user_Pre_weight;
-                  $user_weight = $users_register->user_weight;
-                  $user_height =  $users_register->user_height;
-                  $bmi  = (new CalController)->bmi_calculator($user_Pre_weight,$user_height);
-                  $weight_criteria  = (new CalController)->weight_criteria($bmi);
+//              }elseif ($userMessage == 'น้ำหนักตัวที่เหมาะสม' ||(new checkmessageController)->match($array4, $userMessage) ) {
+//               $message_type = '02';
+//               $Message = $userMessage;
+//               $log_message = (new SqlController)->log_message($user,$Message,$message_type);
+//                   $users_register = (new SqlController)->users_register_select($user);
+//                   $user_Pre_weight = $users_register->user_Pre_weight;
+//                   $user_weight = $users_register->user_weight;
+//                   $user_height =  $users_register->user_height;
+//                   $bmi  = (new CalController)->bmi_calculator($user_Pre_weight,$user_height);
+//                   $weight_criteria  = (new CalController)->weight_criteria($bmi);
 
-                    if ($weight_criteria =='น้ำหนักน้อย') {
-                      $result='1';
-                    } elseif ($weight_criteria =='น้ำหนักปกติ') {
-                      $result='2';
-                    } elseif ($weight_criteria == 'น้ำหนักเกิน') {
-                      $result='3';
-                    } elseif ($weight_criteria =='อ้วน') {
-                      $result='4';
-                    }
+//                     if ($weight_criteria =='น้ำหนักน้อย') {
+//                       $result='1';
+//                     } elseif ($weight_criteria =='น้ำหนักปกติ') {
+//                       $result='2';
+//                     } elseif ($weight_criteria == 'น้ำหนักเกิน') {
+//                       $result='3';
+//                     } elseif ($weight_criteria =='อ้วน') {
+//                       $result='4';
+//                     }
                   
-                  $case = 18;
-                  $userMessage  = 'https://peat.none.codes/food/'.$result.'.jpg';
+//                   $case = 18;
+//                   $userMessage  = 'https://peat.none.codes/food/'.$result.'.jpg';
 
-             }elseif ((new checkmessageController)->match($array, $userMessage )){
-                  // $userMessage = 'hhihih';
-              $message_type = '03';
-              $Message = $userMessage;
-              $log_message = (new SqlController)->log_message($user,$Message,$message_type);
+//              }elseif ((new checkmessageController)->match($array, $userMessage )){
+//                   // $userMessage = 'hhihih';
+//               $message_type = '03';
+//               $Message = $userMessage;
+//               $log_message = (new SqlController)->log_message($user,$Message,$message_type);
 
-              $json1 = file_get_contents('data.json');
-              $json= json_decode($json1);
+//               $json1 = file_get_contents('data.json');
+//               $json= json_decode($json1);
 
-              if(strpos($userMessage, 'อาบน้ำ') !== false ){
-                $input = 'อาบน้ำ';
-              }elseif (strpos($userMessage, 'อุจจาระ') !== false || strpos($userMessage, 'ขี้') !== false || strpos($userMessage, 'อึ') !== false ) {
-                $input = 'อุจจาระ';
-              }elseif (strpos($userMessage, 'ทาครีม') !== false ) {
-                $input = 'การดูแลผิวพรรณ';
-              }elseif (strpos($userMessage, 'ครีมช่วยลดท้องลาย') !== false ) {
-                $input = 'ยาหรือครีมลดท้องลาย';
-              }elseif (strpos($userMessage, 'แต่งตัว') !== false ||strpos($userMessage, 'เสื้อผ้า') !== false  ) {
-                $input = 'แต่งตัว';
-              }elseif (strpos($userMessage, 'รองเท้า') !== false ) {
-                $input = 'รองเท้า';
-              }elseif (strpos($userMessage, 'แหวน') !== false ) {
-                $input = 'แหวน';
-              }elseif (strpos($userMessage, 'เพศสัมพันธ์') !== false ||strpos($userMessage, 'มีอะไรกัน') !== false ||strpos($userMessage, 'มีอะไรกับแฟน') !== false) {
-                $input = 'เพศสัมพันธ์';
-              }elseif (strpos($userMessage, 'เดินห้าง') !== false ) {
-                $input = 'เดินห้าง';
-              }elseif (strpos($userMessage, 'ใส่ตุ้มสะดือ') !== false ) {
-                $input = 'ใส่ตุ้มสะดือ';
-              }elseif (strpos($userMessage, 'ทาเล็บ') !== false ) {
-                $input = 'การทาเล็บ';
-              }elseif (strpos($userMessage, 'ย้อมผม') !== false || strpos($userMessage, 'สีผม') !== false || strpos($userMessage, 'ไฮไลต์') !== false) {
-                $input = 'ย้อมหรือไฮไลต์สีผม';
-              }elseif (strpos($userMessage, 'แต่งหน้า') !== false ||strpos($userMessage, 'ทาลิปสติก') !== false||strpos($userMessage, 'ทาปาก') !== false ||strpos($userMessage, 'ทาลิป') !== false ) {
-                $input = 'แต่งหน้าทาปาก';
-              }elseif (strpos($userMessage, 'ทำงาน') !== false ) {
-                $input = 'การทำงาน';
-              }elseif (strpos($userMessage, 'เดินทาง') !== false ) {
-                $input = 'เดินทาง';
-              }elseif (strpos($userMessage, 'ทำฟัน') !== false ) {
-                $input = 'ทำฟัน';
-              }elseif (strpos($userMessage, 'ออกกำลังกาย') !== false ) {
-                $input = 'ออกกำลังกาย';
-              }elseif (strpos($userMessage, 'กินยา') !== false ) {
-                $input = 'การใช้ยา';
-              }elseif (strpos($userMessage, 'ปัสสาวะบ่อย') !== false || strpos($userMessage, 'ฉี่บ่อย') !== false) {
-                $input = 'ปัสสาวะบ่อย';
-              }elseif (strpos($userMessage, 'ปัสสาวะ') !== false || strpos($userMessage, 'ฉี่') !== false ) {
-                $input = 'ปัสสาวะ';
-              }elseif (strpos($userMessage, 'เหนื่อย') !== false ) {
-                $input = 'เหนื่อยง่ายเวลาออกแรง';
-              }elseif (strpos($userMessage, 'คัดตึงเต้านม') !== false ||strpos($userMessage, 'เจ็บเต้านม') !== false ||strpos($userMessage, 'เจ็บนม') !== false ) {
-                $input = 'คัดตึงเต้านม';
-              }elseif (strpos($userMessage, 'คันบริเวณหน้าท้อง') !== false ||strpos($userMessage, 'คันหน้าท้อง') !== false||strpos($userMessage, 'คันท้อง') !== false ||strpos($userMessage, 'คันตรงท้อง') !== false ||strpos($userMessage, 'คันตรงหน้าท้อง') !== false ) {
-                $input = 'คันบริเวณหน้าท้อง';
-              }elseif (strpos($userMessage, 'ปวดเมื่อยบริเวณหลัง') !== false ||strpos($userMessage, 'ปวดหลัง') !== false||strpos($userMessage, 'เมื่อยหลัง') !== false ||strpos($userMessage, 'เจ็บเอว') !== false ||strpos($userMessage, 'ปวดเอว') !== false ||strpos($userMessage, 'เจ็บหลัง') !== false) {
-                $input = 'ปวดเมื่อยบริเวณหลัง';
-              }elseif (strpos($userMessage, 'ตะคริวที่ขา') !== false ||strpos($userMessage, 'ตะคริว') !== false) {
-                $input = 'ตะคริวที่ขา';
-              }elseif (strpos($userMessage, 'เท้าบวม') !== false ) {
-                $input = 'เท้าบวม';
-              }elseif (strpos($userMessage, 'เส้นเลือดขอด') !== false ) {
-                $input = 'ป้องกันเส้นเลือดขอดที่ขา';
-              }elseif (strpos($userMessage, 'เลือดออกจากช่องคลอด') !== false ||strpos($userMessage, 'เลือดออก') !== false ) {
-                $input = 'เลือดออกจากช่องคลอด';
-              }elseif (strpos($userMessage, 'แพ้ท้องรุนแรง') !== false ||strpos($userMessage, 'แพ้ท้องหนัก') !== false) {
-                $input = 'แพ้ท้องรุนแรง';
-              }elseif (strpos($userMessage, 'แพ้ท้อง') !== false ||strpos($userMessage, 'อ้วก') !== false ||strpos($userMessage, 'อาเจียน') !== false  ) {
-                $input = 'แพ้ท้อง';
-              }elseif (strpos($userMessage, 'เจ็บครรภ์คลอดก่อนกำหนด') !== false ||strpos($userMessage, 'เจ็บท้องคลอดก่อนกำหนด') !== false ||strpos($userMessage, 'เจ็บท้องคลอด') !== false ||strpos($userMessage, 'ปวดท้อง') !== false ||strpos($userMessage, 'เจ็บท้อง') !== false ) {
-                $input = 'เจ็บครรภ์คลอดก่อนกำหนด';
-              }elseif (strpos($userMessage, 'น้ำเดิน') !== false ) {
-                $input = 'น้ำเดิน';
-              }elseif (strpos($userMessage, 'ปวดศีรษะ') !== false || strpos($userMessage, 'ตามัว') !== false||strpos($userMessage, 'จุกแน่นใต้ลิ้นปี่') !== false || strpos($userMessage, 'ปวดหัว') !== false || strpos($userMessage, 'อุจจาระลำบาก') !== false || strpos($userMessage, 'ขี้ลำบาก') !== false || strpos($userMessage, 'เวียนหัว') !== false ) {
-                $input = 'ปวดศีรษะ/ตามัว/จุกแน่นใต้ลิ้นปี่';
-              }elseif (strpos($userMessage, 'ลูกดิ้นลดลง') !== false ||strpos($userMessage, 'ลูกไม่ดิ้น') !== false ||strpos($userMessage, 'ลูกไม่ค่อยดิ้น') !== false) {
-                $input = 'ลูกดิ้นลดลงหรือไม่ดิ้น';
-              }elseif (strpos($userMessage, 'ไข้') !== false ) {
-                $input = 'ไข้ระหว่างการตั้งครรภ์';
-              }elseif (strpos($userMessage, 'อาหารเสริม') !== false ) {
-                $input = 'อาหารเสริมขณะตั้งครรภ์';
-              }elseif (strpos($userMessage, 'อาหาร') !== false || strpos($userMessage, 'กลัวอ้วน') !== false ) {
-                $input = 'ความจำเป็นของอาหารขณะตั้งครรภ์';
-              }elseif (strpos($userMessage, 'ของแสลง') !== false ||strpos($userMessage, 'ของที่ห้ามกิน') !== false ||strpos($userMessage, 'ของที่ไม่ควรกิน') !== false) {
-                $input = 'ของแสลง';
-              }elseif (strpos($userMessage, 'ริดสีดวงทวารหนัก') !== false ||strpos($userMessage, 'ท้องผูก') !== false ||strpos($userMessage, 'ริดสีดวง') !== false ) {
-                $input = 'ริดสีดวงทวารหนัก';
-              }elseif (strpos($userMessage, 'ท้องอืดหลังรับประทานอาหาร') !== false ||strpos($userMessage, 'ท้องอืดหลังกินข้าว') !== false ||strpos($userMessage, 'ท้องอืด') !== false ) {
-                $input = 'ท้องอืดหลังรับประทานอาหาร';
-              }elseif (strpos($userMessage, 'ท้องลาย') !== false ) {
-                $input = 'ท้องลาย';
-              }elseif (strpos($userMessage, 'คลอดตอนไหน') !== false ||strpos($userMessage, 'เมื่อไรจะคลอด') !== false ||strpos($userMessage, 'คลอดเมื่อไร') !== false  ) {
-                $input = 'คลอดตอนไหน';
-              }elseif (strpos($userMessage, 'อาการใกล้คลอด') !== false ||strpos($userMessage, 'ใกล้คลอด') !== false ||strpos($userMessage, 'ใกล้คลอดจะมีอาการ') !== false ) {
-                $input = 'อาการแบบนี้แหละที่คุณแม่กำลังจะคลอด';
-              }elseif (strpos($userMessage, 'คลอดเจ็บ') !== false ) {
-                $input = 'เวลาคลอดเจ็บไหม';
-              }elseif (strpos($userMessage, 'พ่อ') !== false ) {
-                $input = 'คุณพ่อกับการคลอด';
-              }elseif (strpos($userMessage, 'เตรียมตัวไปคลอด') !== false || strpos($userMessage, 'เตรียมตัวคลอด') !== false ) {
-                $input = 'เตรียมตัวไปคลอด';
+//               if(strpos($userMessage, 'อาบน้ำ') !== false ){
+//                 $input = 'อาบน้ำ';
+//               }elseif (strpos($userMessage, 'อุจจาระ') !== false || strpos($userMessage, 'ขี้') !== false || strpos($userMessage, 'อึ') !== false ) {
+//                 $input = 'อุจจาระ';
+//               }elseif (strpos($userMessage, 'ทาครีม') !== false ) {
+//                 $input = 'การดูแลผิวพรรณ';
+//               }elseif (strpos($userMessage, 'ครีมช่วยลดท้องลาย') !== false ) {
+//                 $input = 'ยาหรือครีมลดท้องลาย';
+//               }elseif (strpos($userMessage, 'แต่งตัว') !== false ||strpos($userMessage, 'เสื้อผ้า') !== false  ) {
+//                 $input = 'แต่งตัว';
+//               }elseif (strpos($userMessage, 'รองเท้า') !== false ) {
+//                 $input = 'รองเท้า';
+//               }elseif (strpos($userMessage, 'แหวน') !== false ) {
+//                 $input = 'แหวน';
+//               }elseif (strpos($userMessage, 'เพศสัมพันธ์') !== false ||strpos($userMessage, 'มีอะไรกัน') !== false ||strpos($userMessage, 'มีอะไรกับแฟน') !== false) {
+//                 $input = 'เพศสัมพันธ์';
+//               }elseif (strpos($userMessage, 'เดินห้าง') !== false ) {
+//                 $input = 'เดินห้าง';
+//               }elseif (strpos($userMessage, 'ใส่ตุ้มสะดือ') !== false ) {
+//                 $input = 'ใส่ตุ้มสะดือ';
+//               }elseif (strpos($userMessage, 'ทาเล็บ') !== false ) {
+//                 $input = 'การทาเล็บ';
+//               }elseif (strpos($userMessage, 'ย้อมผม') !== false || strpos($userMessage, 'สีผม') !== false || strpos($userMessage, 'ไฮไลต์') !== false) {
+//                 $input = 'ย้อมหรือไฮไลต์สีผม';
+//               }elseif (strpos($userMessage, 'แต่งหน้า') !== false ||strpos($userMessage, 'ทาลิปสติก') !== false||strpos($userMessage, 'ทาปาก') !== false ||strpos($userMessage, 'ทาลิป') !== false ) {
+//                 $input = 'แต่งหน้าทาปาก';
+//               }elseif (strpos($userMessage, 'ทำงาน') !== false ) {
+//                 $input = 'การทำงาน';
+//               }elseif (strpos($userMessage, 'เดินทาง') !== false ) {
+//                 $input = 'เดินทาง';
+//               }elseif (strpos($userMessage, 'ทำฟัน') !== false ) {
+//                 $input = 'ทำฟัน';
+//               }elseif (strpos($userMessage, 'ออกกำลังกาย') !== false ) {
+//                 $input = 'ออกกำลังกาย';
+//               }elseif (strpos($userMessage, 'กินยา') !== false ) {
+//                 $input = 'การใช้ยา';
+//               }elseif (strpos($userMessage, 'ปัสสาวะบ่อย') !== false || strpos($userMessage, 'ฉี่บ่อย') !== false) {
+//                 $input = 'ปัสสาวะบ่อย';
+//               }elseif (strpos($userMessage, 'ปัสสาวะ') !== false || strpos($userMessage, 'ฉี่') !== false ) {
+//                 $input = 'ปัสสาวะ';
+//               }elseif (strpos($userMessage, 'เหนื่อย') !== false ) {
+//                 $input = 'เหนื่อยง่ายเวลาออกแรง';
+//               }elseif (strpos($userMessage, 'คัดตึงเต้านม') !== false ||strpos($userMessage, 'เจ็บเต้านม') !== false ||strpos($userMessage, 'เจ็บนม') !== false ) {
+//                 $input = 'คัดตึงเต้านม';
+//               }elseif (strpos($userMessage, 'คันบริเวณหน้าท้อง') !== false ||strpos($userMessage, 'คันหน้าท้อง') !== false||strpos($userMessage, 'คันท้อง') !== false ||strpos($userMessage, 'คันตรงท้อง') !== false ||strpos($userMessage, 'คันตรงหน้าท้อง') !== false ) {
+//                 $input = 'คันบริเวณหน้าท้อง';
+//               }elseif (strpos($userMessage, 'ปวดเมื่อยบริเวณหลัง') !== false ||strpos($userMessage, 'ปวดหลัง') !== false||strpos($userMessage, 'เมื่อยหลัง') !== false ||strpos($userMessage, 'เจ็บเอว') !== false ||strpos($userMessage, 'ปวดเอว') !== false ||strpos($userMessage, 'เจ็บหลัง') !== false) {
+//                 $input = 'ปวดเมื่อยบริเวณหลัง';
+//               }elseif (strpos($userMessage, 'ตะคริวที่ขา') !== false ||strpos($userMessage, 'ตะคริว') !== false) {
+//                 $input = 'ตะคริวที่ขา';
+//               }elseif (strpos($userMessage, 'เท้าบวม') !== false ) {
+//                 $input = 'เท้าบวม';
+//               }elseif (strpos($userMessage, 'เส้นเลือดขอด') !== false ) {
+//                 $input = 'ป้องกันเส้นเลือดขอดที่ขา';
+//               }elseif (strpos($userMessage, 'เลือดออกจากช่องคลอด') !== false ||strpos($userMessage, 'เลือดออก') !== false ) {
+//                 $input = 'เลือดออกจากช่องคลอด';
+//               }elseif (strpos($userMessage, 'แพ้ท้องรุนแรง') !== false ||strpos($userMessage, 'แพ้ท้องหนัก') !== false) {
+//                 $input = 'แพ้ท้องรุนแรง';
+//               }elseif (strpos($userMessage, 'แพ้ท้อง') !== false ||strpos($userMessage, 'อ้วก') !== false ||strpos($userMessage, 'อาเจียน') !== false  ) {
+//                 $input = 'แพ้ท้อง';
+//               }elseif (strpos($userMessage, 'เจ็บครรภ์คลอดก่อนกำหนด') !== false ||strpos($userMessage, 'เจ็บท้องคลอดก่อนกำหนด') !== false ||strpos($userMessage, 'เจ็บท้องคลอด') !== false ||strpos($userMessage, 'ปวดท้อง') !== false ||strpos($userMessage, 'เจ็บท้อง') !== false ) {
+//                 $input = 'เจ็บครรภ์คลอดก่อนกำหนด';
+//               }elseif (strpos($userMessage, 'น้ำเดิน') !== false ) {
+//                 $input = 'น้ำเดิน';
+//               }elseif (strpos($userMessage, 'ปวดศีรษะ') !== false || strpos($userMessage, 'ตามัว') !== false||strpos($userMessage, 'จุกแน่นใต้ลิ้นปี่') !== false || strpos($userMessage, 'ปวดหัว') !== false || strpos($userMessage, 'อุจจาระลำบาก') !== false || strpos($userMessage, 'ขี้ลำบาก') !== false || strpos($userMessage, 'เวียนหัว') !== false ) {
+//                 $input = 'ปวดศีรษะ/ตามัว/จุกแน่นใต้ลิ้นปี่';
+//               }elseif (strpos($userMessage, 'ลูกดิ้นลดลง') !== false ||strpos($userMessage, 'ลูกไม่ดิ้น') !== false ||strpos($userMessage, 'ลูกไม่ค่อยดิ้น') !== false) {
+//                 $input = 'ลูกดิ้นลดลงหรือไม่ดิ้น';
+//               }elseif (strpos($userMessage, 'ไข้') !== false ) {
+//                 $input = 'ไข้ระหว่างการตั้งครรภ์';
+//               }elseif (strpos($userMessage, 'อาหารเสริม') !== false ) {
+//                 $input = 'อาหารเสริมขณะตั้งครรภ์';
+//               }elseif (strpos($userMessage, 'อาหาร') !== false || strpos($userMessage, 'กลัวอ้วน') !== false ) {
+//                 $input = 'ความจำเป็นของอาหารขณะตั้งครรภ์';
+//               }elseif (strpos($userMessage, 'ของแสลง') !== false ||strpos($userMessage, 'ของที่ห้ามกิน') !== false ||strpos($userMessage, 'ของที่ไม่ควรกิน') !== false) {
+//                 $input = 'ของแสลง';
+//               }elseif (strpos($userMessage, 'ริดสีดวงทวารหนัก') !== false ||strpos($userMessage, 'ท้องผูก') !== false ||strpos($userMessage, 'ริดสีดวง') !== false ) {
+//                 $input = 'ริดสีดวงทวารหนัก';
+//               }elseif (strpos($userMessage, 'ท้องอืดหลังรับประทานอาหาร') !== false ||strpos($userMessage, 'ท้องอืดหลังกินข้าว') !== false ||strpos($userMessage, 'ท้องอืด') !== false ) {
+//                 $input = 'ท้องอืดหลังรับประทานอาหาร';
+//               }elseif (strpos($userMessage, 'ท้องลาย') !== false ) {
+//                 $input = 'ท้องลาย';
+//               }elseif (strpos($userMessage, 'คลอดตอนไหน') !== false ||strpos($userMessage, 'เมื่อไรจะคลอด') !== false ||strpos($userMessage, 'คลอดเมื่อไร') !== false  ) {
+//                 $input = 'คลอดตอนไหน';
+//               }elseif (strpos($userMessage, 'อาการใกล้คลอด') !== false ||strpos($userMessage, 'ใกล้คลอด') !== false ||strpos($userMessage, 'ใกล้คลอดจะมีอาการ') !== false ) {
+//                 $input = 'อาการแบบนี้แหละที่คุณแม่กำลังจะคลอด';
+//               }elseif (strpos($userMessage, 'คลอดเจ็บ') !== false ) {
+//                 $input = 'เวลาคลอดเจ็บไหม';
+//               }elseif (strpos($userMessage, 'พ่อ') !== false ) {
+//                 $input = 'คุณพ่อกับการคลอด';
+//               }elseif (strpos($userMessage, 'เตรียมตัวไปคลอด') !== false || strpos($userMessage, 'เตรียมตัวคลอด') !== false ) {
+//                 $input = 'เตรียมตัวไปคลอด';
 
-              }elseif (strpos($userMessage, 'ดื่มกาแฟ') !== false || strpos($userMessage, 'กินกาแฟ') !== false ) {
-                $input = 'ดื่มกาแฟ';
-              }elseif (strpos($userMessage, 'วัคซีน') !== false || strpos($userMessage, 'ฉีดยา') !== false ) {
-                $input = 'วัคซีนต่างๆระหว่างตั้งครรภ์';
-              }elseif (strpos($userMessage, 'ยารักษาสิว') !== false || strpos($userMessage, 'ยาอันตราย') !== false ) {
-                $input = 'การใช้ยาอันตรายยารักษาสิว';
-              }elseif (strpos($userMessage, 'วิตามินเสริม') !== false || strpos($userMessage, 'ยาบำรุง') !== false ) {
-                $input = 'ควรทานวิตามินเสริมหรือยาบำรุง';
-              }elseif (strpos($userMessage, 'ดื่มนมวัว') !== false || strpos($userMessage, 'กินนมวัว') !== false ) {
-                $input = 'ดื่มนมวัว';
-              }elseif (strpos($userMessage, 'ภาวะครรภ์เสี่ยง') !== false ) {
-                $input = 'ภาวะครรภ์เสี่ยง';
-              }elseif (strpos($userMessage, 'เนื้องอก') !== false || strpos($userMessage, 'กินนมวัว') !== false ) {
-                $input = 'เนื้องอกระหว่างตั้งครรภ์';
-              }elseif (strpos($userMessage, 'ปวดนิ้วมือ') !== false || strpos($userMessage, 'นิ้วเท้า') !== false ) {
-                $input = 'ปวดนิ้วมือนิ้วเท้า';
-              }elseif (strpos($userMessage, 'ดื่มนม') !== false || strpos($userMessage, 'กินนม') !== false ) {
-                $input = 'การดื่มนม';
-              }elseif (strpos($userMessage, 'นอนคว่ำ') !== false ) {
-                $input = 'นอนคว่ำ';
-              }elseif (strpos($userMessage, 'อัลตร้าซาวด์') !== false ) {
-                $input = 'อัลตร้าซาวด์';
-              }elseif (strpos($userMessage, 'ห้ามวิ่ง') !== false ) {
-                $input = 'ห้ามวิ่ง';
-              }elseif (strpos($userMessage, 'ป่วยกินยา') !== false || strpos($userMessage, 'ป่วยทานยา') !== false|| strpos($userMessage, 'ไม่สบายทานยา' ) !== false|| strpos($userMessage, 'ไม่สบายกินยา') !== false ) {
-                $input = 'ป่วยกินยา';
-              }elseif (strpos($userMessage, 'บุหรี่') !== false ) {
-                $input = 'บุหรี่';
-              }elseif (strpos($userMessage, 'เหล้า') !== false ) {
-                $input = 'เหล้า';
-              }elseif (strpos($userMessage, 'ลูกโต') !== false ) {
-                $input = 'ทำให้ลูกโต';
-              }elseif (strpos($userMessage, 'น้ำมะพร้าว') !== false ) {
-                $input = 'น้ำมะพร้าว';
-              }elseif (strpos($userMessage, 'ทุเรียน') !== false) {
-                $input = 'ทุเรียน';
-              }elseif (strpos($userMessage, 'เพลงโมสาท') !== false ) {
-                $input = 'เพลงโมสาท';
-              }elseif (strpos($userMessage, 'เสียงดนตรี') !== false ) {
-                $input = 'เสียงดนตรี';
-              }elseif (strpos($userMessage, 'ความเครียด') !== false ||strpos($userMessage, 'รู้สึกเครียด') !== false) {
-                $input = 'ความเครียดของแม่';
-              }elseif (strpos($userMessage, 'เก้าอี้โยก') !== false) {
-                $input = 'เก้าอี้โยก';
-              }elseif (strpos($userMessage, 'คุยกับลูก') !== false ||strpos($userMessage, 'คุยกับเด็ก') !== false) {
-                $input = 'การพูดคุยกับเด็ก';
-              }elseif (strpos($userMessage, 'เครื่องบิน') !== false) {
-                $input = 'คนท้องขึ้นเครื่องบิน';
-              }elseif (strpos($userMessage, 'ลูกสะอึก') !== false) {
-                $input = 'ลูกสะอึก';
-              }elseif (strpos($userMessage, 'อาหารที่ควรหลีกเลี่ยง') !== false || strpos($userMessage, 'อาหารที่ไม่ควรกิน') !== false || strpos($userMessage, 'อาหารที่ควรงด') !== false|| strpos($userMessage, 'อาหารที่ห้ามกิน') !== false) {
-                $input = 'อาหารที่ควรหลีกเลี่ยง';
-              }elseif (strpos($userMessage, 'เจาะถุงน้ำคร่ำ') !== false) {
-                $input = 'เจาะถุงน้ำคร่ำ';
-              }
+//               }elseif (strpos($userMessage, 'ดื่มกาแฟ') !== false || strpos($userMessage, 'กินกาแฟ') !== false ) {
+//                 $input = 'ดื่มกาแฟ';
+//               }elseif (strpos($userMessage, 'วัคซีน') !== false || strpos($userMessage, 'ฉีดยา') !== false ) {
+//                 $input = 'วัคซีนต่างๆระหว่างตั้งครรภ์';
+//               }elseif (strpos($userMessage, 'ยารักษาสิว') !== false || strpos($userMessage, 'ยาอันตราย') !== false ) {
+//                 $input = 'การใช้ยาอันตรายยารักษาสิว';
+//               }elseif (strpos($userMessage, 'วิตามินเสริม') !== false || strpos($userMessage, 'ยาบำรุง') !== false ) {
+//                 $input = 'ควรทานวิตามินเสริมหรือยาบำรุง';
+//               }elseif (strpos($userMessage, 'ดื่มนมวัว') !== false || strpos($userMessage, 'กินนมวัว') !== false ) {
+//                 $input = 'ดื่มนมวัว';
+//               }elseif (strpos($userMessage, 'ภาวะครรภ์เสี่ยง') !== false ) {
+//                 $input = 'ภาวะครรภ์เสี่ยง';
+//               }elseif (strpos($userMessage, 'เนื้องอก') !== false || strpos($userMessage, 'กินนมวัว') !== false ) {
+//                 $input = 'เนื้องอกระหว่างตั้งครรภ์';
+//               }elseif (strpos($userMessage, 'ปวดนิ้วมือ') !== false || strpos($userMessage, 'นิ้วเท้า') !== false ) {
+//                 $input = 'ปวดนิ้วมือนิ้วเท้า';
+//               }elseif (strpos($userMessage, 'ดื่มนม') !== false || strpos($userMessage, 'กินนม') !== false ) {
+//                 $input = 'การดื่มนม';
+//               }elseif (strpos($userMessage, 'นอนคว่ำ') !== false ) {
+//                 $input = 'นอนคว่ำ';
+//               }elseif (strpos($userMessage, 'อัลตร้าซาวด์') !== false ) {
+//                 $input = 'อัลตร้าซาวด์';
+//               }elseif (strpos($userMessage, 'ห้ามวิ่ง') !== false ) {
+//                 $input = 'ห้ามวิ่ง';
+//               }elseif (strpos($userMessage, 'ป่วยกินยา') !== false || strpos($userMessage, 'ป่วยทานยา') !== false|| strpos($userMessage, 'ไม่สบายทานยา' ) !== false|| strpos($userMessage, 'ไม่สบายกินยา') !== false ) {
+//                 $input = 'ป่วยกินยา';
+//               }elseif (strpos($userMessage, 'บุหรี่') !== false ) {
+//                 $input = 'บุหรี่';
+//               }elseif (strpos($userMessage, 'เหล้า') !== false ) {
+//                 $input = 'เหล้า';
+//               }elseif (strpos($userMessage, 'ลูกโต') !== false ) {
+//                 $input = 'ทำให้ลูกโต';
+//               }elseif (strpos($userMessage, 'น้ำมะพร้าว') !== false ) {
+//                 $input = 'น้ำมะพร้าว';
+//               }elseif (strpos($userMessage, 'ทุเรียน') !== false) {
+//                 $input = 'ทุเรียน';
+//               }elseif (strpos($userMessage, 'เพลงโมสาท') !== false ) {
+//                 $input = 'เพลงโมสาท';
+//               }elseif (strpos($userMessage, 'เสียงดนตรี') !== false ) {
+//                 $input = 'เสียงดนตรี';
+//               }elseif (strpos($userMessage, 'ความเครียด') !== false ||strpos($userMessage, 'รู้สึกเครียด') !== false) {
+//                 $input = 'ความเครียดของแม่';
+//               }elseif (strpos($userMessage, 'เก้าอี้โยก') !== false) {
+//                 $input = 'เก้าอี้โยก';
+//               }elseif (strpos($userMessage, 'คุยกับลูก') !== false ||strpos($userMessage, 'คุยกับเด็ก') !== false) {
+//                 $input = 'การพูดคุยกับเด็ก';
+//               }elseif (strpos($userMessage, 'เครื่องบิน') !== false) {
+//                 $input = 'คนท้องขึ้นเครื่องบิน';
+//               }elseif (strpos($userMessage, 'ลูกสะอึก') !== false) {
+//                 $input = 'ลูกสะอึก';
+//               }elseif (strpos($userMessage, 'อาหารที่ควรหลีกเลี่ยง') !== false || strpos($userMessage, 'อาหารที่ไม่ควรกิน') !== false || strpos($userMessage, 'อาหารที่ควรงด') !== false|| strpos($userMessage, 'อาหารที่ห้ามกิน') !== false) {
+//                 $input = 'อาหารที่ควรหลีกเลี่ยง';
+//               }elseif (strpos($userMessage, 'เจาะถุงน้ำคร่ำ') !== false) {
+//                 $input = 'เจาะถุงน้ำคร่ำ';
+//               }
 
-              elseif (strpos($userMessage, 'แกงบอน') !== false) {
-                $input = 'แกงบอน';
-              }elseif (strpos($userMessage, 'ลาบดิบ') !== false) {
-                $input = 'ลาบดิบ';
-              }elseif (strpos($userMessage, 'ซูชิ') !== false) {
-                $input = 'ซูชิ';
-              }elseif (strpos($userMessage, 'เบียร์') !== false) {
-                $input = 'เบียร์';
-              }elseif (strpos($userMessage, 'น้ำชา') !== false) {
-                $input = 'น้ำชา';
-              }elseif (strpos($userMessage, 'ชาดอกคำฝอย') !== false) {
-                $input = 'ชาดอกคำฝอย';
-              }elseif (strpos($userMessage, 'ชาสมุนไพร') !== false) {
-                $input = 'ชาสมุนไพร';
-              }elseif (strpos($userMessage, 'ชาขิง') !== false) {
-                $input = 'ชาขิง';
-              }elseif (strpos($userMessage, 'ชาตะไคร้') !== false) {
-                $input = 'ชาตะไคร้';
-              }elseif (strpos($userMessage, 'ชาใบเตย') !== false) {
-                $input = 'ชาใบเตย';
-              }elseif (strpos($userMessage, 'ชามะตูม') !== false) {
-                $input = 'ชามะตูม';
-              }elseif (strpos($userMessage, 'ชาโป๊ยกั๊ก') !== false) {
-                $input = 'ชาโป๊ยกั๊ก';
-              }elseif (strpos($userMessage, 'ชาเปปเปอร์มินต์') !== false) {
-                $input = 'ชาเปปเปอร์มินต์';
-              }elseif (strpos($userMessage, 'ชากุหลาบ') !== false) {
-                $input = 'ชากุหลาบ';
-              }elseif (strpos($userMessage, 'ชาเขียว') !== false) {
-                $input = 'ชาเขียว';
-              }elseif (strpos($userMessage, 'ชานมไข่มุก') !== false) {
-                $input = 'ชานมไข่มุก';
-              }elseif (strpos($userMessage, 'กุ้งเต้น') !== false) {
-                $input = 'กุ้งเต้น';
-              }elseif (strpos($userMessage, 'ส้มตำ') !== false) {
-                $input = 'ส้มตำ';
-              }elseif (strpos($userMessage, 'กิมจิ') !== false) {
-                $input = 'กิมจิ';
-              }elseif (strpos($userMessage, 'รสจัด') !== false ||strpos($userMessage, 'ทานเผ็ดมาก') !== false ||strpos($userMessage, 'กินเผ็ดมาก') !== false|| strpos($userMessage, 'กินเผ็ดบ่อย') !== false  ) {
-                $input = 'รสจัด';
-              }elseif (strpos($userMessage, 'ปลาแซลมอน') !== false) {
-                $input = 'ปลาแซลมอน';
-              }elseif (strpos($userMessage, 'มะม่วงหาวมะนาวโห่') !== false) {
-                $input = 'มะม่วงหาวมะนาวโห่';
-              }elseif (strpos($userMessage, 'ยาระบาย') !== false) {
-                $input = 'ยาระบาย';
-              }elseif (strpos($userMessage, 'กินคลีน') !== false || strpos($userMessage, 'กินอาหารคลีน') !== false || strpos($userMessage, 'ทานคลีน') !== false|| strpos($userMessage, 'ทานอาหารคลีน') !== false) {
-                $input = 'กินคลีน';
-              }elseif (strpos($userMessage, 'ถั่วงอก') !== false) {
-                $input = 'ถั่วงอก';
-              }elseif (strpos($userMessage, 'ว่านหางจรเข้') !== false ||strpos($userMessage, 'ว่านหางจระเข้') !== false ) {
-                $input = 'ว่านหางจระเข้';
-              }elseif (strpos($userMessage, 'ปลาร้า') !== false) {
-                $input = 'ปลาร้า';
-              }elseif (strpos($userMessage, 'โกโก้') !== false) {
-                $input = 'โกโก้';
-              }elseif (strpos($userMessage, 'กรดไหลย้อน') !== false) {
-                $input = 'กรดไหลย้อน';
-              }elseif (strpos($userMessage, 'เบื่ออาหาร') !== false ||strpos($userMessage, 'ไม่อยากกินข้าว') !== false||strpos($userMessage, 'ไม่อยากอาหาร') !== false) {
-                $input = 'เบื่ออาหาร';
-              }
+//               elseif (strpos($userMessage, 'แกงบอน') !== false) {
+//                 $input = 'แกงบอน';
+//               }elseif (strpos($userMessage, 'ลาบดิบ') !== false) {
+//                 $input = 'ลาบดิบ';
+//               }elseif (strpos($userMessage, 'ซูชิ') !== false) {
+//                 $input = 'ซูชิ';
+//               }elseif (strpos($userMessage, 'เบียร์') !== false) {
+//                 $input = 'เบียร์';
+//               }elseif (strpos($userMessage, 'น้ำชา') !== false) {
+//                 $input = 'น้ำชา';
+//               }elseif (strpos($userMessage, 'ชาดอกคำฝอย') !== false) {
+//                 $input = 'ชาดอกคำฝอย';
+//               }elseif (strpos($userMessage, 'ชาสมุนไพร') !== false) {
+//                 $input = 'ชาสมุนไพร';
+//               }elseif (strpos($userMessage, 'ชาขิง') !== false) {
+//                 $input = 'ชาขิง';
+//               }elseif (strpos($userMessage, 'ชาตะไคร้') !== false) {
+//                 $input = 'ชาตะไคร้';
+//               }elseif (strpos($userMessage, 'ชาใบเตย') !== false) {
+//                 $input = 'ชาใบเตย';
+//               }elseif (strpos($userMessage, 'ชามะตูม') !== false) {
+//                 $input = 'ชามะตูม';
+//               }elseif (strpos($userMessage, 'ชาโป๊ยกั๊ก') !== false) {
+//                 $input = 'ชาโป๊ยกั๊ก';
+//               }elseif (strpos($userMessage, 'ชาเปปเปอร์มินต์') !== false) {
+//                 $input = 'ชาเปปเปอร์มินต์';
+//               }elseif (strpos($userMessage, 'ชากุหลาบ') !== false) {
+//                 $input = 'ชากุหลาบ';
+//               }elseif (strpos($userMessage, 'ชาเขียว') !== false) {
+//                 $input = 'ชาเขียว';
+//               }elseif (strpos($userMessage, 'ชานมไข่มุก') !== false) {
+//                 $input = 'ชานมไข่มุก';
+//               }elseif (strpos($userMessage, 'กุ้งเต้น') !== false) {
+//                 $input = 'กุ้งเต้น';
+//               }elseif (strpos($userMessage, 'ส้มตำ') !== false) {
+//                 $input = 'ส้มตำ';
+//               }elseif (strpos($userMessage, 'กิมจิ') !== false) {
+//                 $input = 'กิมจิ';
+//               }elseif (strpos($userMessage, 'รสจัด') !== false ||strpos($userMessage, 'ทานเผ็ดมาก') !== false ||strpos($userMessage, 'กินเผ็ดมาก') !== false|| strpos($userMessage, 'กินเผ็ดบ่อย') !== false  ) {
+//                 $input = 'รสจัด';
+//               }elseif (strpos($userMessage, 'ปลาแซลมอน') !== false) {
+//                 $input = 'ปลาแซลมอน';
+//               }elseif (strpos($userMessage, 'มะม่วงหาวมะนาวโห่') !== false) {
+//                 $input = 'มะม่วงหาวมะนาวโห่';
+//               }elseif (strpos($userMessage, 'ยาระบาย') !== false) {
+//                 $input = 'ยาระบาย';
+//               }elseif (strpos($userMessage, 'กินคลีน') !== false || strpos($userMessage, 'กินอาหารคลีน') !== false || strpos($userMessage, 'ทานคลีน') !== false|| strpos($userMessage, 'ทานอาหารคลีน') !== false) {
+//                 $input = 'กินคลีน';
+//               }elseif (strpos($userMessage, 'ถั่วงอก') !== false) {
+//                 $input = 'ถั่วงอก';
+//               }elseif (strpos($userMessage, 'ว่านหางจรเข้') !== false ||strpos($userMessage, 'ว่านหางจระเข้') !== false ) {
+//                 $input = 'ว่านหางจระเข้';
+//               }elseif (strpos($userMessage, 'ปลาร้า') !== false) {
+//                 $input = 'ปลาร้า';
+//               }elseif (strpos($userMessage, 'โกโก้') !== false) {
+//                 $input = 'โกโก้';
+//               }elseif (strpos($userMessage, 'กรดไหลย้อน') !== false) {
+//                 $input = 'กรดไหลย้อน';
+//               }elseif (strpos($userMessage, 'เบื่ออาหาร') !== false ||strpos($userMessage, 'ไม่อยากกินข้าว') !== false||strpos($userMessage, 'ไม่อยากอาหาร') !== false) {
+//                 $input = 'เบื่ออาหาร';
+//               }
 
-                  foreach($json->data as $item)
-                  {
-                      if($item->id == $input)
-                      {
-                         $userMessage = $item->content;
-                         $case = 1;
-                      }
-                  }
-            }elseif (strpos($userMessage, 'hello') !== false || strpos($userMessage, 'สวัสดี') !== false || strpos($userMessage, 'ดีจ้า') !== false || strpos($userMessage, 'เห้ย') !== false || strpos($userMessage, 'เฮ้ย') !== false || strpos($userMessage, 'Hello') !== false || strpos($userMessage, 'หวัดดี') !== false || strpos($userMessage, 'ว่าไง') !== false || strpos($userMessage, 'hi') !== false || strpos($userMessage, 'ฮาย') !== false || strpos($userMessage, 'Hi') !== false || strpos($userMessage, 'ฮะโหล') !== false) {
+//                   foreach($json->data as $item)
+//                   {
+//                       if($item->id == $input)
+//                       {
+//                          $userMessage = $item->content;
+//                          $case = 1;
+//                       }
+//                   }
+//             }elseif (strpos($userMessage, 'hello') !== false || strpos($userMessage, 'สวัสดี') !== false || strpos($userMessage, 'ดีจ้า') !== false || strpos($userMessage, 'เห้ย') !== false || strpos($userMessage, 'เฮ้ย') !== false || strpos($userMessage, 'Hello') !== false || strpos($userMessage, 'หวัดดี') !== false || strpos($userMessage, 'ว่าไง') !== false || strpos($userMessage, 'hi') !== false || strpos($userMessage, 'ฮาย') !== false || strpos($userMessage, 'Hi') !== false || strpos($userMessage, 'ฮะโหล') !== false) {
            
-                    $message_type = '02';
-                    $Message = $userMessage;
-                    $log_message = (new SqlController)->log_message($user,$Message,$message_type);
+//                     $message_type = '02';
+//                     $Message = $userMessage;
+//                     $log_message = (new SqlController)->log_message($user,$Message,$message_type);
 
-                    $case = 1; 
-                    $res = $bot->getProfile($user);
-                    if ($res->isSucceeded()) {
-                        $profile = $res->getJSONDecodedBody();
-                        $userMessage  = $profile['displayName'];
+//                     $case = 1; 
+//                     $res = $bot->getProfile($user);
+//                     if ($res->isSucceeded()) {
+//                         $profile = $res->getJSONDecodedBody();
+//                         $userMessage  = $profile['displayName'];
                        
-                    } 
-                    $userMessage  = 'สวัสดีค่ะ คุณ'.$userMessage;
-            }elseif (strpos($userMessage, 'ขอบคุณ') !== false ||strpos($userMessage, 'โอเค') !== false ) {
-                    $message_type = '02';
-                    $Message = $userMessage;
-                    $log_message = (new SqlController)->log_message($user,$Message,$message_type);
-                    $case = 1; 
-                    $userMessage  = 'ยินดีค่ะ^^';
-            }elseif ( $userMessage == 'เรมี่' ||$userMessage == 'Remi'||$userMessage == 'remi' || strpos($userMessage, 'เรมี่') !== false  ) {
-                    $message_type = '02';
-                    $Message = $userMessage;
-                    $log_message = (new SqlController)->log_message($user,$Message,$message_type);
-                    $case = 1; 
-                    $userMessage  = 'ว่าไงคะ มีอะไรให้ช่วยไหมคะ';
+//                     } 
+//                     $userMessage  = 'สวัสดีค่ะ คุณ'.$userMessage;
+//             }elseif (strpos($userMessage, 'ขอบคุณ') !== false ||strpos($userMessage, 'โอเค') !== false ) {
+//                     $message_type = '02';
+//                     $Message = $userMessage;
+//                     $log_message = (new SqlController)->log_message($user,$Message,$message_type);
+//                     $case = 1; 
+//                     $userMessage  = 'ยินดีค่ะ^^';
+//             }elseif ( $userMessage == 'เรมี่' ||$userMessage == 'Remi'||$userMessage == 'remi' || strpos($userMessage, 'เรมี่') !== false  ) {
+//                     $message_type = '02';
+//                     $Message = $userMessage;
+//                     $log_message = (new SqlController)->log_message($user,$Message,$message_type);
+//                     $case = 1; 
+//                     $userMessage  = 'ว่าไงคะ มีอะไรให้ช่วยไหมคะ';
       
 
 
