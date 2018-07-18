@@ -3329,20 +3329,29 @@ class GetMessageController extends Controller
            if($da==null){
               $Message = $userMessage;
 
-                  $x_tra = "ตั้งครรภ์".$userMessage;
-                  $newStr =  preg_replace("[ ]","",$x_tra);
+              //     $x_tra = "ตั้งครรภ์".$userMessage;
+              //     $newStr =  preg_replace("[ ]","",$x_tra);
 
-                  $url = 'https://www.googleapis.com/customsearch/v1?&cx=011030528095328264272:_0c9oat4ztq&key=AIzaSyDmVU8aawr5mNpqbiUdYMph8r7K-siKn-0&q='. $newStr;
+              //     $url = 'https://www.googleapis.com/customsearch/v1?&cx=011030528095328264272:_0c9oat4ztq&key=AIzaSyDmVU8aawr5mNpqbiUdYMph8r7K-siKn-0&q='. $newStr;
 
-                  $json= file_get_contents($url);
-                  $events = json_decode($json, true);
-                  // $title= $events['items'][0]['title'];
-                  $userMessage = 'ฉันยังมีความรู้ไม่มากพอลองเข้าไปดูเพิ่มเติมได้ตามลิงค์นี้เลยนะคะ '."\n".$events['items'][0]['link'];
-                 // $userMessage = 'ดิฉันไม่เข้าใจค่ะ';
-                  $case = 1;
-                  $message_type = '01';
-                  $log_message = (new SqlController)->log_message($user,$Message,$message_type);
-                  // DB::insert('insert into log_message (user_id,message,created_at) values (?, ?, ?)', [$user, $Message, NOW()]);
+              //     $json= file_get_contents($url);
+              //     $events = json_decode($json, true);
+              //     // $title= $events['items'][0]['title'];
+              //     $userMessage = 'ฉันยังมีความรู้ไม่มากพอลองเข้าไปดูเพิ่มเติมได้ตามลิงค์นี้เลยนะคะ '."\n".$events['items'][0]['link'];
+              //    // $userMessage = 'ดิฉันไม่เข้าใจค่ะ';
+              //     $case = 1;
+              //     $message_type = '01';
+              //     $log_message = (new SqlController)->log_message($user,$Message,$message_type);
+              //     // DB::insert('insert into log_message (user_id,message,created_at) values (?, ?, ?)', [$user, $Message, NOW()]);
+               //   $a = 'ชื่ออะไร';
+            // $textMessageBuilder = new TextMessageBuilder($a);
+            $text =  json_encode($Message, JSON_UNESCAPED_UNICODE );
+            $projectId = 'remiai-29f47';
+            $sessionId = '123456';
+            $languageCode = 'th';
+            $userMessage =  $this->detect_intent_texts($projectId, $text, $sessionId,$languageCode);
+            $case = 1;
+
            }else{
                   $case = 1;
                   $comma_separated = implode("\n", $da);
