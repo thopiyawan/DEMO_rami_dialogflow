@@ -190,8 +190,8 @@ class SqlController extends Controller
     }
      public function user_insert($user,$user_name)
     {          
-         // $users_register = users_register::insert(['user_id'=>$user,'user_name' => $user_name ,'status' => '4','user_age'=>'0','user_height'=>'0','user_Pre_weight'=>'0','user_weight'=>'0','preg_week'=>'0', 'phone_number'=>'NULL','email' =>'NULL','hospital_name'=>'NULL','hospital_number'=>'NULL','history_medicine'=>'NULL', 'history_food'=>'NULL','active_lifestyle'=>'0','created_at'=>NOW(),'updated_at' =>NOW(),'date_preg'=>'NULL','dateofbirth'=>'NULL','ulife_connect'=>'0']);
-        $users_register = users_register::insert(['user_id'=>$user,'user_name' => $user_name ,'status' => '4','created_at'=>NOW(),'updated_at' =>NOW(),'ulife_connect'=>'0']);
+         $users_register = users_register::insert(['user_id'=>$user,'user_name' => $user_name ,'status' => '4','user_age'=>'0','user_height'=>'0','user_Pre_weight'=>'0','user_weight'=>'0','preg_week'=>'0', 'phone_number'=>'NULL','email' =>'NULL','hospital_name'=>'NULL','hospital_number'=>'NULL','history_medicine'=>'NULL', 'history_food'=>'NULL','active_lifestyle'=>'0','created_at'=>NOW(),'updated_at' =>NOW(),'date_preg'=>'NULL','dateofbirth'=>'NULL','ulife_connect'=>'0']);
+       //  $users_register = users_register::insert(['user_id'=>$user,'user_name' => $user_name ,'status' => '4','created_at'=>NOW(),'updated_at' =>NOW(),'ulife_connect'=>'0']);
        echo $users_register ;
     }
      public function tracker_insert1($user,$tracker)
