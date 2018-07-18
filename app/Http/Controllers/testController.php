@@ -76,7 +76,7 @@ class testController extends Controller
      $user ='U2dc636d2cd052e82c29f5284e00f69b9';
      // $re = [];
      $record = tracker::select('user_id')
-                         ->where('user_id',$id)
+                         ->where('user_id',$user)
                                // ->whereNull('deleted_at')
                                ->orderBy('created_at', 'DESC')
                                ->get()->toArray();
